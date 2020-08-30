@@ -2576,7 +2576,7 @@
     "@storybook/components" "6.0.20"
     core-js "^3.0.1"
 
-"@storybook/addon-viewport@6.0.20":
+"@storybook/addon-viewport@6.0.20", "@storybook/addon-viewport@^6.0.20":
   version "6.0.20"
   resolved "https://registry.yarnpkg.com/@storybook/addon-viewport/-/addon-viewport-6.0.20.tgz#62e0bc08db11efd8547053c54998c7aace1a0f1c"
   integrity sha512-QyRSA9UFIZHra69xY3mf0xUsAix+SLASD3VTkPsIq8BM8VtdlHw/STqDD3m5OCTKrlsuDJ1CAMeimjp6jWriXw==
