@@ -8,7 +8,9 @@ import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import AutoComplete from '../AutoComplete/AutoComplete';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const drawerWidth = 240;
 const mobileDrawerWidth = 200;
@@ -33,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
 
 const MenuDrawer = (props) => {
     const classes = useStyles();
+    const theme = useTheme();
+    const mobile = useMediaQuery(theme.breakpoints.down('xs'));
+    const searchBox = <div><AutoComplete width={170} /></div>
     return (
         <div>
             <Drawer
@@ -43,7 +48,13 @@ const MenuDrawer = (props) => {
                 }}
             >
                 <div className={classes.toolbar} />
+                <List>
+                    <ListItem>
+                        {mobile ? searchBox : <div></div>}
+                    </ListItem>
+                </List>
                 <Divider />
+
                 <List >
                     {['Theater', 'Streaming', 'Youtube'].map((text, index) => (
                         <ListItem button key={text}>
