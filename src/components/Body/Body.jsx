@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import MenuDrawer from '../MenuDrawer/MenuDrawer'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -8,11 +9,13 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const Body = () => {
+const Body = (props) => {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-
+            <MenuDrawer
+                mobileDrawer={props.mobileDrawer}
+                toggleDrawer={props.toggleDrawer} />
         </div>
     )
 }
