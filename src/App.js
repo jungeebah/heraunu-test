@@ -4,7 +4,6 @@ import { makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core/sty
 import { Grid, Paper } from '@material-ui/core';
 import Body from './components/Body/Body';
 
-
 const useStyles = makeStyles(() => ({
   grid: {
     width: '100%',
@@ -14,7 +13,6 @@ const useStyles = makeStyles(() => ({
 }));
 
 function App() {
-  const [darkTheme, setDarkTheme] = useState(false);
   const dark = createMuiTheme({
     palette: {
       type: "dark",
@@ -58,13 +56,13 @@ function App() {
       }
     }
   })
+  const [darkTheme, setDarkTheme] = useState(false);
   const classes = useStyles();
   const handleChangeTheme = () => {
     setDarkTheme(!darkTheme)
   }
   return (
     < ThemeProvider theme={darkTheme ? dark : light} >
-
       <Grid container className={classes.grid} >
         <Grid item xs={12} >
           <Header

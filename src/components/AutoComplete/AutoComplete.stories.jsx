@@ -1,17 +1,17 @@
 import React from 'react';
-import Header from './Header';
+import AutoComplete from './AutoComplete';
 import darkTheme from '../Theme/blackTheme';
 import lightTheme from '../Theme/lightTheme';
 import { ThemeProvider } from '@material-ui/core/styles';
 
 
 export default {
-    title: 'Section/Header',
-    component: 'Header',
+    title: 'Section/AutoComplete',
+    component: 'AutoComplete',
 }
 const theme = { dark: darkTheme, light: lightTheme };
-const DarkThemeTemplate = (...args) => <ThemeProvider theme={theme['dark']}><Header {...args} /></ThemeProvider>
-const Template = (...args) => <ThemeProvider theme={theme['light']}><Header {...args} /></ThemeProvider>;
+const DarkThemeTemplate = (...args) => <ThemeProvider theme={theme['dark']}><AutoComplete {...args} /></ThemeProvider>
+const Template = (...args) => <ThemeProvider theme={theme['light']}><AutoComplete {...args} /></ThemeProvider>;
 
 export const Default = Template.bind({});
 export const DarkTheme = DarkThemeTemplate.bind({});
