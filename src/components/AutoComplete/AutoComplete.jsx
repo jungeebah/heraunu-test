@@ -6,6 +6,11 @@ import { makeStyles } from '@material-ui/core/styles';
 
 
 const useStyles = makeStyles((theme) => ({
+    input: {
+        [theme.breakpoints.down('xs')]: {
+            fontSize: '0.87em'
+        }
+    },
     listbox: {
         [theme.breakpoints.down('xs')]: {
             maxHeight: '17vh'
@@ -39,7 +44,8 @@ const AutoComplete = (props) => {
                 classes={{
                     option: classes.option,
                     listbox: classes.listbox,
-                    groupUl: classes.groupUl
+                    groupUl: classes.groupUl,
+                    input: classes.input
                 }}
                 {...defaultProps}
                 open={openLabel}
@@ -49,7 +55,7 @@ const AutoComplete = (props) => {
                 groupBy={(option) => option.item}
                 getOptionLabel={(option) => option.title}
                 clearOnEscape
-                clearOnBlur={true}
+                onClose={(e, r) => { setOpenLabel(false) }}
                 renderInput={(params) => <TextField
                     {...params}
                     label="Search" variant="outlined"

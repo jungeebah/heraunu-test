@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         flexGrow: 1,
+        [theme.breakpoints.down('xs')]: {
+            textAlign: 'center'
+        }
     },
 }));
 
@@ -27,16 +30,19 @@ const Header = (props) => {
     const classes = useStyles();
     const theme = useTheme();
     const mobile = useMediaQuery(theme.breakpoints.down('xs'));
+    const onMobileTitle = <Typography variant="h6" edge="center" className={classes.title}>
+        Herchu
+</Typography>
     return (
         <div>
             <AppBar position="static" >
                 <Toolbar>
-                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                    {mobile ? <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                         <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" className={classes.title}>
+                    </IconButton> : <div></div>}
+                    {mobile ? onMobileTitle : <Typography variant="h6" className={classes.title}>
                         Herchu
-                    </Typography>
+                    </Typography>}
                     {mobile ?
                         <div></div>
                         : <AutoComplete />}
