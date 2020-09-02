@@ -11,6 +11,10 @@ import AutoComplete from '../AutoComplete/AutoComplete'
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+
+    },
+    appbar: {
+        zIndex: theme.zIndex.drawer + 1,
     },
     menuButton: {
         [theme.breakpoints.down('sm')]: {
@@ -35,11 +39,17 @@ const Header = (props) => {
 </Typography>
     return (
         <div>
-            <AppBar position="static" >
+            <AppBar position="fixed" className={classes.appbar}>
                 <Toolbar>
-                    {mobile ? <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                        <MenuIcon />
-                    </IconButton> : <div></div>}
+                    {mobile ?
+                        <IconButton
+                            edge="start"
+                            className={classes.menuButton}
+                            color="inherit"
+                            aria-label="menu"
+                            onClick={props.toggleDrawer(true)} >
+                            <MenuIcon />
+                        </IconButton> : <div></div>}
                     {mobile ? onMobileTitle : <Typography variant="h6" className={classes.title}>
                         Herchu
                     </Typography>}

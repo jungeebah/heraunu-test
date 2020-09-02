@@ -12,7 +12,14 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-function App() {
+const App = () => {
+  const [mobileDrawer, setMobileDrawer] = React.useState(false);
+  const toggleDrawer = (open) => (event) => {
+    if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setMobileDrawer(open);
+  };
   const dark = createMuiTheme({
     palette: {
       type: "dark",
@@ -57,6 +64,7 @@ function App() {
     }
   })
   const [darkTheme, setDarkTheme] = useState(false);
+
   const classes = useStyles();
   const handleChangeTheme = () => {
     setDarkTheme(!darkTheme)
@@ -67,11 +75,14 @@ function App() {
         <Grid item xs={12} >
           <Header
             handleChangeTheme={handleChangeTheme}
-            theme={darkTheme} />
+            theme={darkTheme}
+            toggleDrawer={toggleDrawer} />
         </Grid>
         <Grid item xs={12} >
           <Paper variant="outlined" square>
-            <Body />
+            <Body
+              mobileDrawer={mobileDrawer}
+              toggleDrawer={toggleDrawer} />
           </Paper>
         </Grid>
       </Grid>
