@@ -4,12 +4,12 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     typo: {
-        paddingBottom: '1em',
-        marginLeft: '1em'
+        paddingBottom: theme.spacing(1),
+        marginLeft: theme.spacing(3)
     }
-})
+}))
 
 const Fonts = () => {
     const theme = useTheme();
