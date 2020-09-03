@@ -1,7 +1,7 @@
 import React from 'react';
 import AutoComplete from './AutoComplete';
-import darkTheme from '../Theme/blackTheme';
-import lightTheme from '../Theme/lightTheme';
+import darkTheme from '../Styling/Theme/blackTheme';
+import lightTheme from '../Styling/Theme/lightTheme';
 import { ThemeProvider } from '@material-ui/core/styles';
 
 
