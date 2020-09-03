@@ -19,22 +19,15 @@ import HomeIcon from '@material-ui/icons/Home';
 import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
 import HdIcon from '@material-ui/icons/Hd';
 import YouTubeIcon from '@material-ui/icons/YouTube';
+import InfoIcon from '@material-ui/icons/Info';
 
 const drawerWidth = 240;
 const mobileDrawerWidth = 200;
+const ipadScreen = 180;
 const largeScreenDrawerWidth = 300;
 const useStyles = makeStyles((theme) => ({
     // necessary for content to be below app bar
     toolbar: theme.mixins.toolbar,
-    drawerPaper: {
-        [theme.breakpoints.down('xs')]: {
-            width: mobileDrawerWidth,
-        },
-        [theme.breakpoints.up('xl')]: {
-            width: largeScreenDrawerWidth,
-        },
-        width: drawerWidth,
-    },
     content: {
         flexGrow: 1,
         padding: theme.spacing(3),
@@ -45,6 +38,15 @@ const useStyles = makeStyles((theme) => ({
         whiteSpace: 'nowrap',
     },
     drawerOpen: {
+        [theme.breakpoints.down('xs')]: {
+            width: mobileDrawerWidth,
+        },
+        [theme.breakpoints.between('xs', 'sm')]: {
+            width: ipadScreen,
+        },
+        [theme.breakpoints.up('xl')]: {
+            width: largeScreenDrawerWidth,
+        },
         width: drawerWidth,
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
@@ -82,8 +84,8 @@ const MenuDrawer = (props) => {
     const handleDrawerClose = () => {
         setOpen(false);
     };
-    const menuItems = ['Home', 'Youtube', 'Streaming', 'Theater']
-    const menuIcons = [<HomeIcon />, <YouTubeIcon />, <HdIcon />, <ConfirmationNumberIcon />]
+    const menuItems = ['Home', 'Youtube', 'Streaming', 'Theater', 'About']
+    const menuIcons = [<HomeIcon />, <YouTubeIcon />, <HdIcon />, <ConfirmationNumberIcon />, <InfoIcon />]
     const classes = useStyles();
     const theme = useTheme();
     const mobile = useMediaQuery(theme.breakpoints.down('xs'));
@@ -151,7 +153,7 @@ const MenuDrawer = (props) => {
                         [classes.drawerClose]: !open,
                     })}
                     classes={{
-                        paper: clsx(classes.drawerPaper, {
+                        paper: clsx({
                             [classes.drawerOpen]: open,
                             [classes.drawerClose]: !open,
                         }),
