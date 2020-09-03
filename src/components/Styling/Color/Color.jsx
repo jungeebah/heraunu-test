@@ -14,12 +14,8 @@ const Palette = () => {
     const theme = useTheme()
     const classes = useStyles();
     const palette = Object.keys(theme.palette)
-    console.log(palette, theme.palette['common'])
     const colo = palette.map((item, index) => {
-        // console.log(Object.entries(item))
-        let title = item
-        let value = Object.keys(theme.palette[title])
-        let colorTitle = Object.entries(theme.palette[title])
+        let colorTitle = Object.entries(theme.palette[item])
         let colorItem = colorTitle.map((i, index) => (
             <Grid item xs={12} sm={2} key={index + i}>
                 <Box
@@ -44,7 +40,7 @@ const Palette = () => {
                         fontSize={32}
                         variant={'h5'}
                     >
-                        {title}
+                        {item}
                     </Typography>
                     <Grid container spacing={2} key={index + item}>
 

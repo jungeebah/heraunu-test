@@ -74,10 +74,13 @@ const Header = (props) => {
 Header.propsType = {
     handleChangeTheme: PropTypes.func,
     theme: PropTypes.string,
+    toggleDrawer: PropTypes.func,
 }
 
 Header.defaultProps = {
-    theme: false
+    theme: false,
+    toggleDrawer: () => { },
+    handleChangeTheme: () => { }
 }
 
 export default Header;
