@@ -44,18 +44,20 @@ const MenuDrawer = (props) => {
         role="presentation"
         onClick={toggleDrawer(false)}
         onKeyDown={toggleDrawer(false)}>
-        <List>
-            {mobile ?
+        {mobile ? <div>
+            <List>
                 <IconButton onClick={(e) => { toggleDrawer(false) }}>
                     <ChevronLeftIcon />
-                </IconButton> :
-                <div></div>
-            }
-            <ListItem>
-                {mobile ? searchBox : <div></div>}
-            </ListItem>
-        </List>
-        <Divider />
+                </IconButton>
+                <ListItem>
+                    {searchBox}
+                </ListItem>
+            </List>
+            <Divider />
+        </div>
+            :
+            <div></div>
+        }
 
         <List >
             {['Theater', 'Streaming', 'Youtube'].map((text, index) => (
@@ -82,6 +84,8 @@ const MenuDrawer = (props) => {
                 </SwipeableDrawer>
                 :
                 <Drawer
+                    PaperProps={{ elevation: 5 }}
+
                     className={classes.drawer}
                     variant="permanent"
                     classes={{
@@ -91,7 +95,7 @@ const MenuDrawer = (props) => {
                     <div className={classes.toolbar} />
                     {drawerList}
                 </Drawer>}
-        </div>
+        </div >
     )
 }
 

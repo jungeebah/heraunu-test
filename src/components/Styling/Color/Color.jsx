@@ -26,7 +26,6 @@ const Palette = () => {
                     boxShadow={10}
                     width="25%"
                 >
-
                 </Box>
                 <Typography>{i[0]}</Typography>
                 <Box m="2rem" key={i} />
