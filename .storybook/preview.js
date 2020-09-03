@@ -1,8 +1,5 @@
 import { MINIMAL_VIEWPORTS } from '@storybook/addon-viewport';
-import { ThemeProvider } from '@material-ui/core/styles';
-import React from 'react';
-import lightTheme from '../src/components/Theme/lightTheme';
-import darkTheme from '../src/components/Theme/blackTheme';
+
 
 const customViewports = {
   xs: {
@@ -52,13 +49,3 @@ export const parameters = {
   },
 }
 
-const themes = { darkMode: darkTheme, lightMode: lightTheme };
-const themeNames = Object.keys(themes);
-
-export const decorators = [
-  (Story) => (
-    <ThemeProvider theme={themes[themeNames[1]]}>
-      <Story />
-    </ThemeProvider>
-  ),
-];
