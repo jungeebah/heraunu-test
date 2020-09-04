@@ -27,7 +27,6 @@ const ipadScreen = 180;
 const largeScreenDrawerWidth = 300;
 const useStyles = makeStyles((theme) => ({
     // necessary for content to be below app bar
-    toolbar: theme.mixins.toolbar,
     content: {
         flexGrow: 1,
         padding: theme.spacing(3),
