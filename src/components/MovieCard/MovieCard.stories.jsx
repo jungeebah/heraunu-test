@@ -1,17 +1,17 @@
 import React from 'react';
-import Body from './Body';
+import MovieCard from './MovieCard';
 import darkTheme from '../Styling/Theme/blackTheme';
 import lightTheme from '../Styling/Theme/lightTheme';
 import { ThemeProvider } from '@material-ui/core/styles';
 
 
 export default {
-    title: 'Section/Body',
-    component: 'Body',
+    title: 'Section/Movie Card',
+    component: 'MovieCard',
 }
 const theme = { dark: darkTheme, light: lightTheme };
-const DarkThemeTemplate = (...args) => <ThemeProvider theme={theme['dark']}><Body {...args} /></ThemeProvider>
-const Template = (...args) => <ThemeProvider theme={theme['light']}><Body {...args} /></ThemeProvider>;
+const DarkThemeTemplate = (...args) => <ThemeProvider theme={theme['dark']}><MovieCard {...args} /></ThemeProvider>
+const Template = (...args) => <ThemeProvider theme={theme['light']}><MovieCard {...args} /></ThemeProvider>;
 
 export const Default = Template.bind({});
 export const DarkTheme = DarkThemeTemplate.bind({});
