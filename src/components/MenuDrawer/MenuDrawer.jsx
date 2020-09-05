@@ -21,10 +21,8 @@ import HdIcon from '@material-ui/icons/Hd';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 import InfoIcon from '@material-ui/icons/Info';
 
-const drawerWidth = 240;
+const drawerWidth = 180;
 const mobileDrawerWidth = 200;
-const ipadScreen = 180;
-const largeScreenDrawerWidth = 300;
 const useStyles = makeStyles((theme) => ({
     // necessary for content to be below app bar
     content: {
@@ -39,12 +37,6 @@ const useStyles = makeStyles((theme) => ({
     drawerOpen: {
         [theme.breakpoints.down('xs')]: {
             width: mobileDrawerWidth,
-        },
-        [theme.breakpoints.between('xs', 'sm')]: {
-            width: ipadScreen,
-        },
-        [theme.breakpoints.up('xl')]: {
-            width: largeScreenDrawerWidth,
         },
         width: drawerWidth,
         transition: theme.transitions.create('width', {
@@ -75,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
 
 const MenuDrawer = (props) => {
     const { mobileDrawer, toggleDrawer } = props
-    const [open, setOpen] = React.useState(false);
+    const { open, setOpen } = props
     const handleDrawerOpen = () => {
         setOpen(true);
     };
