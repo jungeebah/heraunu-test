@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
             height: theme.spacing(21),
         },
         width: theme.spacing(22),
-        height: theme.spacing(34),
+        height: theme.spacing(33),
     },
     card: {
         [theme.breakpoints.down('sm')]: {
@@ -33,8 +33,8 @@ const useStyles = makeStyles((theme) => ({
         width: 152
     },
     title: {
-        textAlign: 'center',
-        padding: theme.spacing(1, 0, 0, 0)
+        textAlign: 'left',
+        padding: theme.spacing(1, 0, 0, 2)
     },
     fab: {
         position: 'relative',
