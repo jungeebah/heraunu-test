@@ -72,7 +72,7 @@ const MenuDrawer = (props) => {
         setOpen(true);
     };
 
-    const handleDrawerClose = () => {
+    const handleDrawerClose = (e) => {
         setOpen(false);
     };
     const menuItems = ['Home', 'Youtube', 'Streaming', 'Theater', 'About']
@@ -83,11 +83,10 @@ const MenuDrawer = (props) => {
     const searchBox = <div><AutoComplete width={170} /></div>
     const drawerList = <div
         role="presentation"
-        onClick={toggleDrawer(false)}
-        onKeyDown={toggleDrawer(false)}>
+    >
         {mobile ? <div>
             <List>
-                <IconButton onClick={(e) => { toggleDrawer(false) }}>
+                <IconButton onClick={toggleDrawer(false)}>
                     <ChevronLeftIcon />
                 </IconButton>
                 <ListItem>
