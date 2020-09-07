@@ -3,12 +3,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import MenuDrawer from '../MenuDrawer/MenuDrawer';
 import MovieCard from '../MovieCard/MovieCard';
 import clsx from 'clsx';
+import Grid from '@material-ui/core/Grid';
 
 const drawerWidth = 180;
 const useStyles = makeStyles((theme) => ({
     root: {
         minHeight: '100%',
-        height: '100vh'
+
     },
     drawerHeader: {
         display: 'flex',
@@ -55,7 +56,26 @@ const Body = (props) => {
                 [classes.contentShift]: open,
             })}>
                 <div className={classes.drawerHeader}>
-                    <MovieCard />
+                    <Grid container spacing={2}>
+                        <Grid item sm={3} xl={2}>
+                            <MovieCard />
+                        </Grid>
+                        <Grid item sm={3} xl={2}>
+                            <MovieCard />
+                        </Grid>
+                        <Grid item sm={3} xl={2}>
+                            <MovieCard />
+                        </Grid>
+                        <Grid item sm={3} xl={2}>
+                            <MovieCard />
+                        </Grid>
+                        <Grid item sm={3} xl={2}>
+                            <MovieCard />
+                        </Grid>
+                        <Grid item sm={3} xl={2}>
+                            <MovieCard />
+                        </Grid>
+                    </Grid>
                 </div>
             </main>
         </div>
