@@ -10,6 +10,9 @@ import Brightness4Icon from '@material-ui/icons/Brightness4';
 import PropTypes from 'prop-types';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import AutoComplete from '../AutoComplete/AutoComplete'
+import SearchIcon from '@material-ui/icons/Search';
+import MobileAutocomplete from '../MobileAutocomplete/MobileAutocomplete';
+import Grow from '@material-ui/core/Grow';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,17 +34,39 @@ const useStyles = makeStyles((theme) => ({
             textAlign: 'center'
         }
     },
+    mobileAuto: {
+        position: 'absolute',
+        width: '100%',
+        maxHeight: '56px',
+        zIndex: '8000',
+    }
 }));
 
 const Header = (props) => {
     const classes = useStyles();
     const theme = useTheme();
     const mobile = useMediaQuery(theme.breakpoints.down('xs'));
+    const [mobileSearchGrow, setMobileSearchGrow] = React.useState(false);
+    const handleChange = () => {
+        setMobileSearchGrow((prev) => !prev);
+    };
     const onMobileTitle = <Typography variant="h6" edge="center" className={classes.title}>
         Herchu
 </Typography>
     return (
-        <div>
+        <div >
+            {mobile ?
+                <Grow in={mobileSearchGrow}
+                    style={{ transformOrigin: '0 0 0' }}
+                    {...(mobileSearchGrow ? { timeout: 1000 } : {})}>
+                    <div className={classes.mobileAuto}>
+
+                        <MobileAutocomplete handleChange={handleChange} />
+                    </div>
+                </Grow>
+                :
+                <div></div>
+            }
             <AppBar position="fixed" className={classes.appbar}>
                 <Toolbar>
                     {mobile ?
@@ -57,7 +82,11 @@ const Header = (props) => {
                         Herchu
                     </Typography>}
                     {mobile ?
-                        <div></div>
+                        <div>
+                            <IconButton color="inherit" onClick={handleChange}>
+                                <SearchIcon />
+                            </IconButton>
+                        </div>
                         : <AutoComplete />}
                     <IconButton
                         edge="end"
