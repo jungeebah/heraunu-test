@@ -112,7 +112,7 @@ const MenuDrawer = (props) => {
 
         <List >
             {menuItems.map((text, index) => (
-                <ListItem button key={text}>
+                <ListItem button key={text} onClick={() => props.changeTitle(text)}>
                     <ListItemIcon>{menuIcons[index]}</ListItemIcon>
                     <ListItemText primary={text} />
                 </ListItem>

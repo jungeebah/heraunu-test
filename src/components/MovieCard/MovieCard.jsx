@@ -18,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
         },
         width: theme.spacing(22),
         height: theme.spacing(33),
+        boxShadow: theme.shadows[10]
+
     },
     card: {
         [theme.breakpoints.down('sm')]: {
