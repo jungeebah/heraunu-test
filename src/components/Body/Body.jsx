@@ -104,11 +104,15 @@ const Body = (props) => {
 }
 
 Body.propsType = {
-    title: PropTypes.string
+    title: PropTypes.string,
+    data: PropTypes.array,
+    changeTitle: PropTypes.func
 }
 
 Body.defaultProps = {
-    title: 'Home'
+    title: 'Home',
+    data: movie,
+    changeTitle: () => { }
 }
 
 
