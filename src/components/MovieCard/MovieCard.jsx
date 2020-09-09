@@ -14,10 +14,10 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         [theme.breakpoints.down('sm')]: {
             width: theme.spacing(14),
-            height: theme.spacing(21),
+            height: theme.spacing(22),
         },
         width: theme.spacing(22),
-        height: theme.spacing(33),
+        height: theme.spacing(34),
         boxShadow: theme.shadows[10]
 
     },
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         textAlign: 'left',
-        padding: theme.spacing(1, 0, 0, 2)
+        padding: theme.spacing(1, 1, 0, 2),
     },
     fab: {
         position: 'relative',
@@ -83,7 +83,7 @@ const MovieCard = (props) => {
                     </CardMedia>
 
                     <Typography
-                        variant={smallScreen ? "body2" : "h6"}
+                        variant={smallScreen ? "subtitle2" : "body1"}
                         className={classes.title}>
                         {props.movie}
                     </Typography>

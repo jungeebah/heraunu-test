@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Header = (props) => {
+    const { searchFilter } = props;
     const classes = useStyles();
     const theme = useTheme();
     const mobile = useMediaQuery(theme.breakpoints.down('xs'));
@@ -61,7 +62,7 @@ const Header = (props) => {
                     {...(mobileSearchGrow ? { timeout: 1000 } : {})}>
                     <div className={classes.mobileAuto}>
 
-                        <MobileAutocomplete handleChange={handleChange} />
+                        <MobileAutocomplete searchFilter={searchFilter} handleChange={handleChange} />
                     </div>
                 </Grow>
                 :
@@ -87,7 +88,7 @@ const Header = (props) => {
                                 <SearchIcon />
                             </IconButton>
                         </div>
-                        : <AutoComplete />}
+                        : <AutoComplete searchFilter={searchFilter} />}
                     <IconButton
                         edge="end"
                         className={classes.menuButton}

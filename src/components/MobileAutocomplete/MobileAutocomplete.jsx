@@ -42,12 +42,18 @@ const useStyles = makeStyles((theme) => ({
 
 
 const MobileAutocomplete = (props) => {
+    const { searchFilter } = props
     const classes = useStyles()
     const defaultProps = {
         options: autoComplete,
         getOptionLabel: (option) => option.title,
     };
-
+    const selected = (e, v) => {
+        setOpenLabel(false)
+        if (v) {
+            searchFilter(v.title, v.item)
+        }
+    }
     const [openLabel, setOpenLabel] = React.useState(false);
     return (
         <Paper className={classes.paper} >
@@ -63,7 +69,7 @@ const MobileAutocomplete = (props) => {
                         {...defaultProps}
                         open={openLabel}
                         id="search-box"
-                        onChange={(e, v) => { setOpenLabel(false) }}
+                        onChange={selected}
                         options={autoComplete.sort((a, b) => -b.item.localeCompare(a.item))}
                         groupBy={(option) => option.item}
                         getOptionLabel={(option) => option.title}

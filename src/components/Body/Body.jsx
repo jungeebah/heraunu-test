@@ -6,6 +6,9 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import { movie } from '../../data';
+import Alert from '@material-ui/lab/Alert';
+import Paper from '@material-ui/core/Paper'
 
 const drawerWidth = 180;
 const useStyles = makeStyles((theme) => ({
@@ -41,13 +44,20 @@ const useStyles = makeStyles((theme) => ({
         }),
         marginLeft: drawerWidth,
     },
+    warning: {
+        width: '100%',
+        '& > * + *': {
+            marginTop: theme.spacing(2),
+        },
+    },
+    about: {
+        padding: theme.spacing(2, 2, 2, 2)
+    }
 }))
 
 const Body = (props) => {
-    const [title, setTitle] = React.useState('Home');
-    const changeTitle = (title) => {
-        setTitle(title)
-    }
+    const { data, title, changeTitle } = props
+
     const [open, setOpen] = React.useState(false);
     const classes = useStyles();
     return (
@@ -64,30 +74,28 @@ const Body = (props) => {
             })}>
                 <div className={classes.drawerHeader}>
                     <Grid container spacing={2}>
-
                         <Grid item xs={12}>
                             <Typography variant="h5">
                                 {title}
                             </Typography>
                         </Grid>
-                        <Grid item xs={6} sm={3} xl={2}>
-                            <MovieCard />
-                        </Grid>
-                        <Grid item xs={6} sm={3} xl={2}>
-                            <MovieCard />
-                        </Grid>
-                        <Grid item xs={6} sm={3} xl={2}>
-                            <MovieCard />
-                        </Grid>
-                        <Grid item xs={6} sm={3} xl={2}>
-                            <MovieCard />
-                        </Grid>
-                        <Grid item xs={6} sm={3} xl={2}>
-                            <MovieCard />
-                        </Grid>
-                        <Grid item xs={6} sm={3} xl={2}>
-                            <MovieCard />
-                        </Grid>
+                        {title === 'About' ?
+                            <Paper elevation={0} className={classes.about}>
+                                <Typography variant="body">
+                                    A simple Nepali movie web app designed for Nepali movies and it's lovers.
+                            </Typography>
+                            </Paper>
+
+                            : title === 'Theater' ?
+                                <div className={classes.warning}>
+                                    <Alert severity="warning">Due to Covid-19.Theaters are temproraly closed until further notice!</Alert>
+                                </div> :
+                                data.map((movie, index) => (
+                                    <Grid item xs={6} sm={3} xl={2} key={index}>
+                                        <MovieCard image={movie.image} movie={movie.name} key={index} />
+                                    </Grid>
+                                ))}
+
                     </Grid>
                 </div>
             </main>

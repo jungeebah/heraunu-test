@@ -3,6 +3,7 @@ import Header from './components/Header/Header';
 import { makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { Grid, Paper } from '@material-ui/core';
 import Body from './components/Body/Body';
+import { movie } from './data';
 
 const useStyles = makeStyles(() => ({
   grid: {
@@ -13,6 +14,28 @@ const useStyles = makeStyles(() => ({
 }));
 
 const App = () => {
+  const [data, setData] = React.useState(movie)
+  const [title, setTitle] = React.useState('Home');
+  const searchFilter = (name, type) => {
+    if (type !== 'Movie') {
+      const searchFiltered = data.filter((movie) => (movie.actor.map((actor) => (actor.name.includes(name))).includes(true)))
+      setData(searchFiltered)
+    } else {
+      const searchFiltered = data.filter((item) => (item.name === name))
+      setData(searchFiltered)
+    }
+    setTitle('Result')
+  }
+  const changeTitle = (title) => {
+    if (title === 'Home') {
+      const movieFiltered = movie
+      setData(movieFiltered)
+    } else {
+      const movieFiltered = movie.filter((item) => (item.playing.includes(title.toLowerCase())))
+      setData(movieFiltered)
+    }
+    setTitle(title)
+  }
   const [mobileDrawer, setMobileDrawer] = React.useState(false);
   const toggleDrawer = (open) => (event) => {
     if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -64,7 +87,7 @@ const App = () => {
     }
   })
   const [darkTheme, setDarkTheme] = useState(false);
-  
+
 
   const classes = useStyles();
   const handleChangeTheme = () => {
@@ -77,11 +100,15 @@ const App = () => {
           <Header
             handleChangeTheme={handleChangeTheme}
             theme={darkTheme}
-            toggleDrawer={toggleDrawer} />
+            toggleDrawer={toggleDrawer}
+            searchFilter={searchFilter} />
         </Grid>
         <Grid item xs={12} >
           <Paper variant="outlined" square>
             <Body
+              data={data}
+              title={title}
+              changeTitle={changeTitle}
               mobileDrawer={mobileDrawer}
               toggleDrawer={toggleDrawer} />
           </Paper>

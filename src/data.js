@@ -10,7 +10,7 @@ export const autoComplete = [{
 { title: 'Dui Rupaiyaa', item: 'Song' },
 { title: 'Kutu Ma Kutu', item: 'Song' },
 { title: 'Talkyo Jawani', item: 'Song' },
-{ title: 'Pashupati Prasad', item: 'Actor' },
+{ title: 'Pashupati Prasad', item: 'Movie' },
 { title: 'Khagendra Lamichhane', item: 'Actor' },
 { title: 'Rabindra Singh Baniya', item: 'Actor' },
 { title: 'Bipin Karki', item: 'Actor' },
@@ -57,10 +57,20 @@ export const autoComplete = [{
 { title: 'Vinay Shrestha', item: 'Actor' },
 { title: 'Sushila Raimajhi', item: 'Actor' },
 { title: 'Basudev', item: 'Movie' },
+{ title: 'Prasad', item: 'Movie' },
+{ title: 'A Mero Hajur 3', item: 'Movie' },
 { title: 'Harihar Sharma', item: 'Actor' },
 { title: 'Sharmila Malla', item: 'Actor' },
 { title: 'Hari Bansha Acharya', item: 'Actor' },
-{ title: 'Madan Krishna Shrestha', item: 'Actor' }];
+{ title: 'Madan Krishna Shrestha', item: 'Actor' },
+{ title: 'Salon Basnet', item: 'Actor' },
+{ title: 'Suhana Thapa', item: 'Actor' },
+{ title: 'Anmol K.C.', item: 'Actor' },
+{ title: 'Nischal Basnet', item: 'Actor' },
+{ title: 'Basundhara Bhusal', item: 'Actor' },
+{ title: 'Anjali Adhikari', item: 'Actor' },
+
+];
 
 
 export const movie = [
@@ -69,7 +79,9 @@ export const movie = [
         "image": "https://image.tmdb.org/t/p/w600_and_h900_bestv2/7w1QEDSLMmAgxQNQ1WlvLZADp3N.jpg",
         "year": "2017",
         "length": "2h 18m",
-        "youtube": "https://www.youtube.com/watch?v=I_N5CKgs6_k",
+        "playing": ["youtube"],
+        "streaming": [""],
+        "location": ["https://www.youtube.com/watch?v=I_N5CKgs6_k"],
         "genre": [
             "drama"
         ],
@@ -96,11 +108,6 @@ export const movie = [
                 "image": ""
             }
         ],
-        "streaming": [
-            {
-                "youtube": "https://cdn2.iconfinder.com/data/icons/social-icons-color/512/youtube-512.png"
-            }
-        ],
         "songs": [
             "Dui Rupaiyaa",
             "Kutu Ma Kutu",
@@ -112,7 +119,9 @@ export const movie = [
         "image": "https://image.tmdb.org/t/p/w600_and_h900_bestv2/9jNJm1zEWXMpdhMTOwbGgiQnOpO.jpg",
         "year": "2016",
         "length": "2h 18m",
-        "youtube": "https://www.youtube.com/watch?v=Hpgp6I-4WJc",
+        "playing": ["youtube"],
+        "streaming": [""],
+        "location": ["https://www.youtube.com/watch?v=Hpgp6I-4WJc"],
         "genre": [
             "drama"
         ],
@@ -139,11 +148,6 @@ export const movie = [
                 "image": ""
             }
         ],
-        "streaming": [
-            {
-                "youtube": "https://cdn2.iconfinder.com/data/icons/social-icons-color/512/youtube-512.png"
-            }
-        ],
         "songs": [
             "Dui Rupaiyaa",
             "Kutu Ma Kutu",
@@ -155,7 +159,9 @@ export const movie = [
         "image": "https://image.tmdb.org/t/p/w600_and_h900_bestv2/1SFTXzxtNskQphXebQJQeeswLeg.jpg",
         "year": "2014",
         "length": "1h 30m",
-        "youtube": "https://www.youtube.com/watch?v=Zl-JXV0JTzw&t=23s",
+        "playing": ["youtube"],
+        "streaming": [""],
+        "location": ["https://www.youtube.com/watch?v=Zl-JXV0JTzw&t=23s"],
         "genre": [
             "drama"
         ],
@@ -186,11 +192,6 @@ export const movie = [
                 "image": "https://image.tmdb.org/t/p/original/ySK3NIzPYA4aYsGhPd17me29TsJ.jpg"
             }
         ],
-        "streaming": [
-            {
-                "youtube": "https://cdn2.iconfinder.com/data/icons/social-icons-color/512/youtube-512.png"
-            }
-        ],
         "songs": [
             "Dui Rupaiyaa",
             "Kutu Ma Kutu",
@@ -202,7 +203,9 @@ export const movie = [
         "image": "https://image.tmdb.org/t/p/w600_and_h900_bestv2/roOpVRDNorjxJTdBTuDBMtI6WVk.jpg",
         "year": "2012",
         "length": "2h 1m",
-        "youtube": "https://www.youtube.com/watch?v=Cz29r8qm07k",
+        "playing": ["youtube"],
+        "streaming": [""],
+        "location": ["https://www.youtube.com/watch?v=Cz29r8qm07k"],
         "genre": [
             "Horror"
         ],
@@ -241,11 +244,7 @@ export const movie = [
                 "image": ""
             }
         ],
-        "streaming": [
-            {
-                "youtube": "https://cdn2.iconfinder.com/data/icons/social-icons-color/512/youtube-512.png"
-            }
-        ],
+
         "songs": [
             "Dui Rupaiyaa",
             "Kutu Ma Kutu",
@@ -257,7 +256,9 @@ export const movie = [
         "image": "https://image.tmdb.org/t/p/w220_and_h330_face/d9pQHVVf2FbfY6ayPM7qseVLc5K.jpg",
         "year": "2012",
         "length": "2h 1m",
-        "youtube": "",
+        "playing": ["youtube"],
+        "streaming": [""],
+        "location": ["https://www.youtube.com/watch?v=oRjjJ5LkGPY"],
         "genre": [
             "action",
             "comedy",
@@ -298,14 +299,6 @@ export const movie = [
                 "image": "https://image.tmdb.org/t/p/w600_and_h900_bestv2/1C2Aba7PQA6Y2N7GXL032vooyvN.jpg"
             }
         ],
-        "streaming": [
-            {
-                "prime": "https://is3-ssl.mzstatic.com/image/thumb/Purple114/v4/48/27/ad/4827ad2f-084b-2760-3d6d-5b26238decc0/AppIcon-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/1200x630wa.png"
-            },
-            {
-                "netflix": "https://is4-ssl.mzstatic.com/image/thumb/Purple114/v4/76/db/17/76db17fa-9ec6-86c4-4fc6-ec87bd7b01f0/AppIcon-0-0-1x_U007emarketing-0-0-0-10-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/1200x630wa.png"
-            }
-        ],
         "songs": [
             "Dui Rupaiyaa",
             "Kutu Ma Kutu",
@@ -317,7 +310,8 @@ export const movie = [
         "image": "https://image.tmdb.org/t/p/w220_and_h330_face/5XUuWAWwjb4OUgB3r8holAZzc7r.jpg",
         "year": "2016",
         "length": "1h 27m",
-        "youtube": "",
+        "playing": ["Prime"],
+        "location": ["https://www.amazon.com/gp/video/detail/amzn1.dv.gti.bcb13786-f1f2-b3b9-d022-f8107dec938d?autoplay=1&ref_=atv_cf_strg_wb"],
         "genre": [
             "Drama,",
             "Adventure"
@@ -372,7 +366,9 @@ export const movie = [
         "image": "https://image.tmdb.org/t/p/w220_and_h330_face/hLgEKQu34McwUvYIPCZNXQ3cyvm.jpg",
         "year": "2013",
         "length": "2h 18m",
-        "youtube": "",
+        "playing": ["youtube"],
+        "streaming": [""],
+        "location": ["https://www.youtube.com/watch?v=0_rjF6Q2ICA"],
         "genre": [
             "action",
             "Thriller",
@@ -405,14 +401,7 @@ export const movie = [
                 "image": "https://image.tmdb.org/t/p/w600_and_h900_bestv2/qNjk2V0QYjMyapZ5CINBF23a6qK.jpg"
             }
         ],
-        "streaming": [
-            {
-                "prime": "https://is3-ssl.mzstatic.com/image/thumb/Purple114/v4/48/27/ad/4827ad2f-084b-2760-3d6d-5b26238decc0/AppIcon-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/1200x630wa.png"
-            },
-            {
-                "netflix": "https://is4-ssl.mzstatic.com/image/thumb/Purple114/v4/76/db/17/76db17fa-9ec6-86c4-4fc6-ec87bd7b01f0/AppIcon-0-0-1x_U007emarketing-0-0-0-10-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/1200x630wa.png"
-            }
-        ],
+
         "songs": [
             "Dui Rupaiyaa",
             "Kutu Ma Kutu",
@@ -424,7 +413,9 @@ export const movie = [
         "image": "https://image.tmdb.org/t/p/w220_and_h330_face/5g3vy1WRKQ1VuMgWO3qZEpjJXyM.jpg",
         "year": "2015",
         "length": "2h 18m",
-        "youtube": "",
+        "playing": ["youtube"],
+        "streaming": [""],
+        "location": ["https://www.youtube.com/watch?v=cLacOTDJt9s"],
         "genre": [
             "action",
             "drama"
@@ -456,14 +447,7 @@ export const movie = [
                 "image": ""
             }
         ],
-        "streaming": [
-            {
-                "prime": "https://is3-ssl.mzstatic.com/image/thumb/Purple114/v4/48/27/ad/4827ad2f-084b-2760-3d6d-5b26238decc0/AppIcon-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/1200x630wa.png"
-            },
-            {
-                "netflix": "https://is4-ssl.mzstatic.com/image/thumb/Purple114/v4/76/db/17/76db17fa-9ec6-86c4-4fc6-ec87bd7b01f0/AppIcon-0-0-1x_U007emarketing-0-0-0-10-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/1200x630wa.png"
-            }
-        ],
+
         "songs": [
             "Dui Rupaiyaa",
             "Kutu Ma Kutu",
@@ -475,7 +459,9 @@ export const movie = [
         "image": "https://image.tmdb.org/t/p/w220_and_h330_face/OaqRENMQ7pz8wmqcm5YJ6aThg9.jpg",
         "year": "1984",
         "length": "2h 18m",
-        "youtube": "",
+        "playing": ["youtube"],
+        "streaming": [""],
+        "location": ["https://www.youtube.com/watch?v=P4vc2o-3f9I"],
         "genre": [
             "Drama",
             "comedy",
@@ -508,14 +494,7 @@ export const movie = [
                 "image": ""
             }
         ],
-        "streaming": [
-            {
-                "prime": "https://is3-ssl.mzstatic.com/image/thumb/Purple114/v4/48/27/ad/4827ad2f-084b-2760-3d6d-5b26238decc0/AppIcon-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/1200x630wa.png"
-            },
-            {
-                "netflix": "https://is4-ssl.mzstatic.com/image/thumb/Purple114/v4/76/db/17/76db17fa-9ec6-86c4-4fc6-ec87bd7b01f0/AppIcon-0-0-1x_U007emarketing-0-0-0-10-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/1200x630wa.png"
-            }
-        ],
+
         "songs": [
             "Dui Rupaiyaa",
             "Kutu Ma Kutu",
@@ -527,7 +506,9 @@ export const movie = [
         "image": "https://image.tmdb.org/t/p/w220_and_h330_face/1ENzbTXcJddkjaZ0untVuj7DLta.jpg",
         "year": "2012",
         "length": "2h 1m",
-        "youtube": "",
+        "playing": ["youtube"],
+        "streaming": [""],
+        "location": ["https://www.youtube.com/watch?v=ZWVz2ZgdqSQ"],
         "genre": [
             "action",
             "comedy"
@@ -555,14 +536,91 @@ export const movie = [
                 "image": "https://image.tmdb.org/t/p/w600_and_h900_bestv2/hmyB1WOH9wdxLIJIZexxVFv5hHx.jpg"
             }
         ],
-        "streaming": [
+
+        "songs": [
+            "Dui Rupaiyaa",
+            "Kutu Ma Kutu",
+            "Talkyo Jawani"
+        ]
+    },
+    {
+        "name": "A Mero Hajur 3",
+        "image": "https://image.tmdb.org/t/p/w600_and_h900_bestv2/aSTmvfXbjTLJO8Gevbk0KR0pkHu.jpg",
+        "year": "2019",
+        "length": "2h 1m",
+        "playing": ["streaming"],
+        "streaming": ["videoPasal"],
+        "location": ["https://videopasal.com/details/5f243e26fa6b680023f4b748"],
+        "genre": [
+            "Romance",
+            "Drama"
+        ],
+        "rating": "U",
+        "actor": [
             {
-                "prime": "https://is3-ssl.mzstatic.com/image/thumb/Purple114/v4/48/27/ad/4827ad2f-084b-2760-3d6d-5b26238decc0/AppIcon-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/1200x630wa.png"
+                "name": "Anmol K.C.",
+                "image": "https://image.tmdb.org/t/p/w600_and_h900_bestv2/kofIQ6KFS3ic17tLF3En9ln4TNB.jpg"
             },
             {
-                "netflix": "https://is4-ssl.mzstatic.com/image/thumb/Purple114/v4/76/db/17/76db17fa-9ec6-86c4-4fc6-ec87bd7b01f0/AppIcon-0-0-1x_U007emarketing-0-0-0-10-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/1200x630wa.png"
+                "name": "Suhana Thapa",
+                "image": ""
+            },
+            {
+                "name": "Salon Basnet",
+                "image": "https://image.tmdb.org/t/p/w600_and_h900_bestv2/tJXgTRtBI3We8VUOiswsnOBYMY.jpg"
+            },
+            {
+                "name": "Rabindra Jha",
+                "image": ""
+            },
+            {
+                "name": "Arpan Thapa",
+                "image": "https://image.tmdb.org/t/p/w600_and_h900_bestv2/amuiBubj1X6xfkDquQFEeNwlP50.jpg"
             }
         ],
+
+        "songs": [
+            "Dui Rupaiyaa",
+            "Kutu Ma Kutu",
+            "Talkyo Jawani"
+        ]
+    },
+    {
+        "name": "Prasad",
+        "image": "https://image.tmdb.org/t/p/w600_and_h900_bestv2/p7kBIUfrYJDK4HJqvfrzagualHx.jpg",
+        "year": "2018",
+        "length": "2h 1m",
+        "playing": ["streaming"],
+        "streaming": ["videoPasal"],
+        "location": ["https://videopasal.com/details/5d5478c516d5e34d3873a727"],
+        "genre": [
+            "Romance",
+            "Drama"
+        ],
+        "rating": "U",
+        "actor": [
+            {
+                "name": "Bipin Karki",
+                "image": "https://image.tmdb.org/t/p/w600_and_h900_bestv2/kD6FEERakHmYVWhiRmwjKIp7wDJ.jpg"
+            },
+            {
+                "name": "Namrata Shrestha",
+                "image": ""
+            },
+            {
+                "name": "Nischal Basnet",
+                "image": "https://image.tmdb.org/t/p/w600_and_h900_bestv2/tJXgTRtBI3We8VUOiswsnOBYMY.jpg"
+            },
+            {
+                "name": "Basundhara Bhusal",
+                "image": "https://image.tmdb.org/t/p/w600_and_h900_bestv2/pzA2yGtsmZ421KS29abqHRkL0Ro.jpg"
+            },
+            {
+                "name": "Anjali Adhikari",
+                "image": ""
+            }
+        ],
+
         "songs": [
             "Dui Rupaiyaa",
             "Kutu Ma Kutu",
