@@ -4,7 +4,6 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { autoComplete } from '../../data';
 import { makeStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
-import ListItem from '@material-ui/core/ListItem';
 import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper';
@@ -42,12 +41,18 @@ const useStyles = makeStyles((theme) => ({
 
 
 const MobileAutocomplete = (props) => {
+    const { searchFilter } = props
     const classes = useStyles()
     const defaultProps = {
         options: autoComplete,
         getOptionLabel: (option) => option.title,
     };
-
+    const selected = (e, v) => {
+        setOpenLabel(false)
+        if (v) {
+            searchFilter(v.title, v.item)
+        }
+    }
     const [openLabel, setOpenLabel] = React.useState(false);
     return (
         <Paper className={classes.paper} >
@@ -63,7 +68,7 @@ const MobileAutocomplete = (props) => {
                         {...defaultProps}
                         open={openLabel}
                         id="search-box"
-                        onChange={(e, v) => { setOpenLabel(false) }}
+                        onChange={selected}
                         options={autoComplete.sort((a, b) => -b.item.localeCompare(a.item))}
                         groupBy={(option) => option.item}
                         getOptionLabel={(option) => option.title}
