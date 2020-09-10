@@ -6,7 +6,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -119,9 +118,7 @@ const MenuDrawer = (props) => {
             ))}
         </List>
         <Divider />
-        <List subheader={<ListSubheader>Filter</ListSubheader>}>
 
-        </List>
     </div>
     return (
         <div>
