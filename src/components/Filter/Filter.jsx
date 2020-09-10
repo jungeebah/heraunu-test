@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -8,50 +9,52 @@ import Divider from '@material-ui/core/Divider';
 import Grow from '@material-ui/core/Grow';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField'
-import { Genre } from '../../data'
+import { Genre } from '../../data';
+import Chip from '@material-ui/core/Chip';
+import Avatar from '@material-ui/core/Avatar';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
     filterText: {
         paddingLeft: theme.spacing(1)
     },
-    container: {
-        display: 'flex',
+    shiftPaper: {
+        flexGrow: 1,
+        transition: theme.transitions.create(['margin', 'padding'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+        margin: theme.spacing(1),
+        padding: theme.spacing(6)
     },
     paper: {
-        margin: theme.spacing(1),
-        padding: theme.spacing(2, 2, 2, 2)
+        transition: theme.transitions.create(['margin'], {
+            easing: theme.transitions.easing.easeInOut,
+            duration: theme.transitions.duration.complex,
+        }),
+        margin: theme.spacing(-5),
     },
-    svg: {
-        width: 100,
-        height: 100,
+    chipPaper: {
+        display: 'flex',
+        justifyContent: 'center',
+        flexWrap: 'wrap',
+        listStyle: 'none',
+        padding: theme.spacing(1),
+        margin: 0,
     },
-    polygon: {
-        fill: theme.palette.common.white,
-        stroke: theme.palette.divider,
-        strokeWidth: 1,
-    },
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 90,
-    },
-    selectEmpty: {
-        marginTop: theme.spacing(2),
+    chip: {
+        margin: theme.spacing(0.5),
     },
 }))
 
 const currentYear = (new Date()).getFullYear();
 const range = (start, stop, step) => Array.from({ length: (stop - start) / step + 1 }, (_, i) => start + (i * step));
 const rangeYear = range(currentYear, currentYear - 50, -1);
+const yearList = ['All', ...rangeYear];
 
-const Filter = () => {
-    const [genre, setGenre] = React.useState('');
-    const [year, setYear] = React.useState(2020);
-    const handleChangeGenre = (event) => {
-        setGenre(event.target.value);
-    };
-    const handleChangeYear = (event) => {
-        setYear(event.target.value);
-    };
+
+const Filter = (props) => {
+    const { genre, year, handleChangeYear, handleChangeGenre, handleDelete, filterChip } = props
     const [checked, setChecked] = React.useState(false);
     const handleChange = () => {
         setChecked((prev) => !prev);
@@ -69,18 +72,37 @@ const Filter = () => {
                     </Typography>
                     </IconButton>
                 </Grid>
+                <Grid item className={classes.filterText}>
+                    <div className={classes.chipPaper}>
+                        {filterChip ?
+                            filterChip.map((item) => <li key={item.key}>
+                                <Chip
+                                    color="primary"
+                                    size="small"
+                                    avatar={<Avatar>{item.key}</Avatar>}
+                                    label={item.value}
+                                    onDelete={handleDelete(item)}
+                                    className={classes.chip} />
+                            </li>)
+                            :
+                            <div></div>}
+                    </div>
+                </Grid>
+
             </Grid>
-            <Divider />
+
             <Grow
                 in={checked}
                 style={{ transformOrigin: '0 0 0' }}
-                {...(checked ? { timeout: 1000 } : {})}
+                {...(checked ? { timeout: 1000 } : { timeout: 10 })}
             >
-                <Paper elevation={0} className={classes.paper}>
+                <Paper elevation={0} className={clsx(classes.paper, {
+                    [classes.shiftPaper]: checked,
+                })}>
                     <Grid container spacing={2}>
-                        <Grid item xs={6}>
+                        <Grid item xs={6} sm={4} lg={1}>
                             <TextField
-                                id="outlined-select-currency-native"
+                                id="genre"
                                 select
                                 label="Genre"
                                 size="small"
@@ -100,9 +122,10 @@ const Filter = () => {
                             </TextField>
 
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={6} sm={4} lg={1}>
                             <TextField
-                                id="outlined-select-currency-native"
+                                id="year"
+
                                 select
                                 label="Year"
                                 size="small"
@@ -114,7 +137,7 @@ const Filter = () => {
                                 helperText="Movie Year"
                                 variant="outlined"
                             >
-                                {rangeYear.map((option, index) => (
+                                {yearList.map((option, index) => (
                                     <option key={index} value={option}>
                                         {option}
                                     </option>
@@ -124,8 +147,26 @@ const Filter = () => {
                     </Grid>
                 </Paper>
             </Grow>
+            <Divider />
         </div>
     )
+}
+
+Filter.propsType = {
+    genre: PropTypes.string,
+    year: PropTypes.string,
+    handleChangeYear: PropTypes.func,
+    handleChangeGenre: PropTypes.func,
+    handleDelete: PropTypes.func,
+    filterChip: PropTypes.array
+}
+Filter.defaultProps = {
+    genre: 'All',
+    year: 'All',
+    filterChip: [],
+    handleChangeYear: () => { },
+    handleChangeGenre: () => { },
+    handleDelete: () => { }
 }
 
 export default Filter;

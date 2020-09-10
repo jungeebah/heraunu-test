@@ -72,7 +72,7 @@ export const autoComplete = [{
 
 ];
 
-export const Genre = ['Drama', 'Horror', 'Action', 'Comedy', 'Romance', 'Thriller', 'Adventure', 'Fantasy', 'Family']
+export const Genre = ['All', 'Drama', 'Horror', 'Action', 'Comedy', 'Romance', 'Thriller', 'Adventure', 'Fantasy', 'Family']
 
 
 export const movie = [

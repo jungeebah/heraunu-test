@@ -8,7 +8,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { movie } from '../../data';
 import Alert from '@material-ui/lab/Alert';
-import Paper from '@material-ui/core/Paper'
+import Paper from '@material-ui/core/Paper';
+import Filter from '../Filter/Filter';
 
 const drawerWidth = 180;
 const useStyles = makeStyles((theme) => ({
@@ -56,6 +57,33 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Body = (props) => {
+    const [genre, setGenre] = React.useState('All');
+    const [year, setYear] = React.useState('All');
+    const [filterChip, setChip] = React.useState([]);
+    const handleDelete = (chipToDelete) => () => {
+        setChip((chips) => chips.filter((chip) => chip.value !== chipToDelete.value));
+        chipToDelete.key === 'G' ? setGenre('All') : setYear('All')
+    };
+    const handleChangeGenre = (event) => {
+        event.persist();
+        if ((filterChip.filter(x => x.key === 'G')).length > 0) {
+            filterChip.find(x => x.key === 'G' && (x.value = event.target.value, true))
+            setChip(filterChip)
+        } else {
+            setChip((chips) => chips.concat({ key: 'G', value: event.target.value }))
+        }
+        setGenre(event.target.value);
+    };
+    const handleChangeYear = (event) => {
+        event.persist();
+        if ((filterChip.filter(x => x.key === 'Y')).length > 0) {
+            filterChip.find(x => x.key === 'Y' && (x.value = event.target.value, true))
+            setChip(filterChip)
+        } else {
+            setChip((chips) => chips.concat({ key: 'Y', value: event.target.value }))
+        }
+        setYear(event.target.value);
+    };
     const { data, title, changeTitle } = props
 
     const [open, setOpen] = React.useState(false);
@@ -65,13 +93,21 @@ const Body = (props) => {
             <MenuDrawer
                 changeTitle={changeTitle}
                 open={open}
-                setOpen={setOpen}
+                setOpen={setOpen} es
                 drawerwidth={drawerWidth}
                 mobileDrawer={props.mobileDrawer}
                 toggleDrawer={props.toggleDrawer} />
             <main className={clsx(classes.content, {
                 [classes.contentShift]: open,
             })}>
+                <Filter
+                    filterChip={filterChip}
+                    genre={genre}
+                    year={year}
+                    handleChangeGenre={handleChangeGenre}
+                    handleChangeYear={handleChangeYear}
+                    handleDelete={handleDelete}
+                />
                 <div className={classes.drawerHeader}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
