@@ -209,7 +209,7 @@ export const movie = [
         "streaming": [""],
         "location": ["https://www.youtube.com/watch?v=Cz29r8qm07k"],
         "genre": [
-            "Horror"
+            "horror"
         ],
         "rating": "PG-13",
         "actor": [

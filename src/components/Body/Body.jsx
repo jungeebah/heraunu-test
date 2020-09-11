@@ -10,6 +10,7 @@ import { movie } from '../../data';
 import Alert from '@material-ui/lab/Alert';
 import Paper from '@material-ui/core/Paper';
 import Filter from '../Filter/Filter';
+import _ from 'lodash';
 
 const drawerWidth = 180;
 const useStyles = makeStyles((theme) => ({
@@ -57,12 +58,21 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Body = (props) => {
+    const { data, title, changeTitle } = props
+    const [movie, setMovie] = React.useState(data)
     const [genre, setGenre] = React.useState('All');
     const [year, setYear] = React.useState('All');
     const [filterChip, setChip] = React.useState([]);
     const handleDelete = (chipToDelete) => () => {
         setChip((chips) => chips.filter((chip) => chip.value !== chipToDelete.value));
-        chipToDelete.key === 'G' ? setGenre('All') : setYear('All')
+        if (chipToDelete.key === 'G') {
+            setGenre('All')
+            setMovie(data)
+        } else {
+            setYear('All');
+            setMovie(data)
+        }
+
     };
     const handleChangeGenre = (event) => {
         event.persist();
@@ -73,6 +83,8 @@ const Body = (props) => {
             setChip((chips) => chips.concat({ key: 'G', value: event.target.value }))
         }
         setGenre(event.target.value);
+        const filterGenre = data.filter((item) => item.genre.includes(event.target.value.toLowerCase()))
+        event.target.value === 'All' ? setMovie(data) : setMovie(filterGenre)
     };
     const handleChangeYear = (event) => {
         event.persist();
@@ -83,8 +95,10 @@ const Body = (props) => {
             setChip((chips) => chips.concat({ key: 'Y', value: event.target.value }))
         }
         setYear(event.target.value);
+        const filterYear = data.filter((item) => item.year === event.target.value)
+        event.target.value === 'All' ? setMovie(data) : setMovie(filterYear)
     };
-    const { data, title, changeTitle } = props
+
 
     const [open, setOpen] = React.useState(false);
     const classes = useStyles();
@@ -93,7 +107,7 @@ const Body = (props) => {
             <MenuDrawer
                 changeTitle={changeTitle}
                 open={open}
-                setOpen={setOpen} es
+                setOpen={setOpen}
                 drawerwidth={drawerWidth}
                 mobileDrawer={props.mobileDrawer}
                 toggleDrawer={props.toggleDrawer} />
@@ -126,9 +140,9 @@ const Body = (props) => {
                                 <div className={classes.warning}>
                                     <Alert severity="warning">Due to Covid-19.Theaters are temproraly closed until further notice!</Alert>
                                 </div> :
-                                data.map((movie, index) => (
+                                movie.map((item, index) => (
                                     <Grid item xs={6} sm={3} xl={2} key={index}>
-                                        <MovieCard image={movie.image} movie={movie.name} key={index} />
+                                        <MovieCard image={item.image} movie={item.name} key={index} />
                                     </Grid>
                                 ))}
 
@@ -142,13 +156,13 @@ const Body = (props) => {
 Body.propsType = {
     title: PropTypes.string,
     data: PropTypes.array,
-    changeTitle: PropTypes.func
+    changeTitle: PropTypes.func,
 }
 
 Body.defaultProps = {
     title: 'Home',
     data: movie,
-    changeTitle: () => { }
+    changeTitle: () => { },
 }
 
 
