@@ -16,9 +16,10 @@ const useStyles = makeStyles(() => ({
 const App = () => {
   const [data, setData] = React.useState(movie)
   const [title, setTitle] = React.useState('Home');
+
   const searchFilter = (name, type) => {
     if (type !== 'Movie') {
-      const searchFiltered = data.filter((movie) => (movie.actor.map((actor) => (actor.name.includes(name))).includes(true)))
+      const searchFiltered = data.filter((item) => (item.actor.map((actor) => (actor.name.includes(name))).includes(true)))
       setData(searchFiltered)
     } else {
       const searchFiltered = data.filter((item) => (item.name === name))
@@ -31,7 +32,7 @@ const App = () => {
       const movieFiltered = movie
       setData(movieFiltered)
     } else {
-      const movieFiltered = movie.filter((item) => (item.playing.includes(title.toLowerCase())))
+      const movieFiltered = data.filter((item) => (item.playing.includes(title.toLowerCase())))
       setData(movieFiltered)
     }
     setTitle(title)

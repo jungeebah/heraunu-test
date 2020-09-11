@@ -57,11 +57,19 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Body = (props) => {
+    const [open, setOpen] = React.useState(false);
     const { data, title, changeTitle } = props
     const [movie, setMovie] = React.useState(data)
     const [genre, setGenre] = React.useState('All');
     const [year, setYear] = React.useState('All');
     const [filterChip, setChip] = React.useState([]);
+    React.useEffect(() => {
+        setMovie(data)
+        setYear('All')
+        setGenre('All')
+        setChip([])
+        setOpen(false)
+    }, [data]);
     const handleDelete = (chipToDelete) => () => {
         setChip((chips) => chips.filter((chip) => chip.value !== chipToDelete.value));
         if (chipToDelete.key === 'G') {
@@ -97,9 +105,6 @@ const Body = (props) => {
         const filterYear = data.filter((item) => item.year === event.target.value)
         event.target.value === 'All' ? setMovie(data) : setMovie(filterYear)
     };
-
-
-    const [open, setOpen] = React.useState(false);
     const classes = useStyles();
     return (
         <div className={classes.root}>
@@ -113,18 +118,20 @@ const Body = (props) => {
             <main className={clsx(classes.content, {
                 [classes.contentShift]: open,
             })}>
-                <Filter
-                    filterChip={filterChip}
-                    genre={genre}
-                    year={year}
-                    handleChangeGenre={handleChangeGenre}
-                    handleChangeYear={handleChangeYear}
-                    handleDelete={handleDelete}
-                />
+                {title === 'About' ? <div></div> :
+                    <Filter
+                        filterChip={filterChip}
+                        genre={genre}
+                        year={year}
+                        handleChangeGenre={handleChangeGenre}
+                        handleChangeYear={handleChangeYear}
+                        handleDelete={handleDelete}
+                    />
+                }
                 <div className={classes.drawerHeader}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <Typography variant="h5">
+                    <Grid container spacing={2} >
+                        <Grid item xs={12} >
+                            <Typography variant="h5" >
                                 {title}
                             </Typography>
                         </Grid>
