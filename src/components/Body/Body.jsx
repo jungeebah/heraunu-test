@@ -10,7 +10,6 @@ import { movie } from '../../data';
 import Alert from '@material-ui/lab/Alert';
 import Paper from '@material-ui/core/Paper';
 import Filter from '../Filter/Filter';
-import _ from 'lodash';
 
 const drawerWidth = 180;
 const useStyles = makeStyles((theme) => ({
