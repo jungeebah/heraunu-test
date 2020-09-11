@@ -72,6 +72,8 @@ export const autoComplete = [{
 
 ];
 
+export const Genre = ['All', 'Drama', 'Horror', 'Action', 'Comedy', 'Romance', 'Thriller', 'Adventure', 'Fantasy', 'Family']
+
 
 export const movie = [
     {
@@ -207,7 +209,7 @@ export const movie = [
         "streaming": [""],
         "location": ["https://www.youtube.com/watch?v=Cz29r8qm07k"],
         "genre": [
-            "Horror"
+            "horror"
         ],
         "rating": "PG-13",
         "actor": [
@@ -347,14 +349,6 @@ export const movie = [
                 "image": ""
             }
         ],
-        "streaming": [
-            {
-                "prime": "https://is3-ssl.mzstatic.com/image/thumb/Purple114/v4/48/27/ad/4827ad2f-084b-2760-3d6d-5b26238decc0/AppIcon-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/1200x630wa.png"
-            },
-            {
-                "netflix": "https://is4-ssl.mzstatic.com/image/thumb/Purple114/v4/76/db/17/76db17fa-9ec6-86c4-4fc6-ec87bd7b01f0/AppIcon-0-0-1x_U007emarketing-0-0-0-10-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/1200x630wa.png"
-            }
-        ],
         "songs": [
             "Dui Rupaiyaa",
             "Kutu Ma Kutu",
@@ -371,8 +365,8 @@ export const movie = [
         "location": ["https://www.youtube.com/watch?v=0_rjF6Q2ICA"],
         "genre": [
             "action",
-            "Thriller",
-            "Drama"
+            "thriller",
+            "drama"
         ],
         "rating": "PG-13",
         "actor": [
