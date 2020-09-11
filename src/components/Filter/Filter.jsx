@@ -4,7 +4,7 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Grow from '@material-ui/core/Grow';
 import Paper from '@material-ui/core/Paper';
@@ -13,8 +13,12 @@ import { Genre } from '../../data';
 import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
 import clsx from 'clsx';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+        paddingBottom: theme.spacing(1)
+    },
     filterText: {
         paddingLeft: theme.spacing(1)
     },
@@ -54,6 +58,8 @@ const yearList = ['All', ...rangeYear];
 
 
 const Filter = (props) => {
+    const theme = useTheme();
+    const mobile = useMediaQuery(theme.breakpoints.down('xs'));
     const { genre, year, handleChangeYear, handleChangeGenre, handleDelete, filterChip } = props
     const [checked, setChecked] = React.useState(false);
     const handleChange = () => {
@@ -61,13 +67,17 @@ const Filter = (props) => {
     };
     const classes = useStyles()
     return (
-        <div>
+        <div className={classes.root}>
             <Grid container spacing={1}>
                 <Grid item >
                     <IconButton
+                        size={mobile ? 'small' : 'medium'}
                         onClick={handleChange}>
-                        <FilterListIcon />
-                        <Typography className={classes.filterText}>
+                        <FilterListIcon
+                            fontSize='small' />
+                        <Typography
+                            className={classes.filterText}
+                            varaint={mobile ? 'subtitle1' : 'body1'}>
                             Filter
                     </Typography>
                     </IconButton>
