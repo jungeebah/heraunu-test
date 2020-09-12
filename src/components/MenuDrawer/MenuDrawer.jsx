@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MenuDrawer = (props) => {
-    const { mobileDrawer, toggleDrawer } = props
+    const { mobileDrawer, toggleDrawer, searchFilter } = props
     const { open, setOpen } = props
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -79,7 +79,7 @@ const MenuDrawer = (props) => {
     const classes = useStyles();
     const theme = useTheme();
     const mobile = useMediaQuery(theme.breakpoints.down('xs'));
-    const searchBox = <div><AutoComplete width={170} /></div>
+    const searchBox = <div><AutoComplete searchFilter={searchFilter} width={170} /></div>
     const drawerList = <div
         role="presentation"
     >
