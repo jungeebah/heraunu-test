@@ -19,10 +19,10 @@ const App = () => {
 
   const searchFilter = (name, type) => {
     if (type !== 'Movie') {
-      const searchFiltered = data.filter((item) => (item.actor.map((actor) => (actor.name.includes(name))).includes(true)))
+      const searchFiltered = movie.filter((item) => (item.actor.map((actor) => (actor.name.includes(name))).includes(true)))
       setData(searchFiltered)
     } else {
-      const searchFiltered = data.filter((item) => (item.name === name))
+      const searchFiltered = movie.filter((item) => (item.name === name))
       setData(searchFiltered)
     }
     setTitle('Result')
@@ -32,7 +32,7 @@ const App = () => {
       const movieFiltered = movie
       setData(movieFiltered)
     } else {
-      const movieFiltered = data.filter((item) => (item.playing.includes(title.toLowerCase())))
+      const movieFiltered = movie.filter((item) => (item.playing.includes(title.toLowerCase())))
       setData(movieFiltered)
     }
     setTitle(title)
@@ -111,7 +111,8 @@ const App = () => {
               title={title}
               changeTitle={changeTitle}
               mobileDrawer={mobileDrawer}
-              toggleDrawer={toggleDrawer} />
+              toggleDrawer={toggleDrawer}
+              searchFilter={searchFilter} />
           </Paper>
         </Grid>
       </Grid>

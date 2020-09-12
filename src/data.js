@@ -14,10 +14,8 @@ export const autoComplete = [{
 { title: 'Khagendra Lamichhane', item: 'Actor' },
 { title: 'Rabindra Singh Baniya', item: 'Actor' },
 { title: 'Bipin Karki', item: 'Actor' },
-{ title: 'Barsha Siwakoti', item: 'Actor' },
 { title: 'Prakash Ghimire', item: 'Actor' },
 { title: 'Talakjung vs Tulke', item: 'Movie' },
-{ title: 'Prakash Ghimire', item: 'Actor' },
 { title: 'Reecha Sharma', item: 'Actor' },
 { title: 'Shushank Mainali', item: 'Actor' },
 { title: 'Buddhi Tamang', item: 'Actor' },
@@ -170,6 +168,10 @@ export const movie = [
         "rating": "PG-13",
         "actor": [
             {
+                "name": "Khagendra Lamichhane",
+                "image": "https://image.tmdb.org/t/p/w600_and_h900_bestv2/n7F46qQ3MB8WoUFajUSrRyIhNlU.jpg"
+            },
+            {
                 "name": "Prakash Ghimire",
                 "image": ""
             },
@@ -312,11 +314,12 @@ export const movie = [
         "image": "https://image.tmdb.org/t/p/w220_and_h330_face/5XUuWAWwjb4OUgB3r8holAZzc7r.jpg",
         "year": "2016",
         "length": "1h 27m",
-        "playing": ["Prime"],
+        "playing": ["streaming"],
+        "streaming": ["prime"],
         "location": ["https://www.amazon.com/gp/video/detail/amzn1.dv.gti.bcb13786-f1f2-b3b9-d022-f8107dec938d?autoplay=1&ref_=atv_cf_strg_wb"],
         "genre": [
-            "Drama,",
-            "Adventure"
+            "drama",
+            "adventure"
         ],
         "rating": "PG-13",
         "actor": [
@@ -457,9 +460,9 @@ export const movie = [
         "streaming": [""],
         "location": ["https://www.youtube.com/watch?v=P4vc2o-3f9I"],
         "genre": [
-            "Drama",
+            "drama",
             "comedy",
-            "Family"
+            "family"
         ],
         "rating": "PG-13",
         "actor": [
@@ -546,8 +549,8 @@ export const movie = [
         "streaming": ["videoPasal"],
         "location": ["https://videopasal.com/details/5f243e26fa6b680023f4b748"],
         "genre": [
-            "Romance",
-            "Drama"
+            "romance",
+            "drama"
         ],
         "rating": "U",
         "actor": [
@@ -588,8 +591,8 @@ export const movie = [
         "streaming": ["videoPasal"],
         "location": ["https://videopasal.com/details/5d5478c516d5e34d3873a727"],
         "genre": [
-            "Romance",
-            "Drama"
+            "romance",
+            "drama"
         ],
         "rating": "U",
         "actor": [

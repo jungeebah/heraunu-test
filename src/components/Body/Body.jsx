@@ -56,28 +56,47 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
+
 const Body = (props) => {
     const [open, setOpen] = React.useState(false);
-    const { data, title, changeTitle } = props
+    const { data, title, changeTitle, searchFilter } = props
+    const [filters, setFilters] = React.useState([])
     const [movie, setMovie] = React.useState(data)
     const [genre, setGenre] = React.useState('All');
     const [year, setYear] = React.useState('All');
     const [filterChip, setChip] = React.useState([]);
+    const [checked, setChecked] = React.useState(false);
     React.useEffect(() => {
         setMovie(data)
         setYear('All')
         setGenre('All')
         setChip([])
-        setOpen(false)
+        setChecked(false)
     }, [data]);
+
+    React.useEffect(() => {
+        filterUpdate()
+    }, [filters])
+
+    const filterUpdate = () => {
+        var filtering = data
+        if (filters.length > 0) {
+            filters.forEach((item1) => {
+                if (filtering.length > 0) {
+                    filtering = filtering.filter(item1.value)
+                }
+            })
+        }
+        setMovie(filtering)
+    };
     const handleDelete = (chipToDelete) => () => {
         setChip((chips) => chips.filter((chip) => chip.value !== chipToDelete.value));
         if (chipToDelete.key === 'G') {
             setGenre('All')
-            setMovie(data)
+            setFilters((items) => items.filter((x) => x.key !== 'G'))
         } else {
             setYear('All');
-            setMovie(data)
+            setFilters((items) => items.filter((x) => x.key !== 'Y'))
         }
 
     };
@@ -86,29 +105,30 @@ const Body = (props) => {
         if ((filterChip.filter(x => x.key === 'G')).length > 0) {
             filterChip.find(x => x.key === 'G' && (x.value = event.target.value, true))
             setChip(filterChip)
+            filters.find((x) => x.key === 'G' && (x.value = (a) => a.genre.includes(event.target.value.toLowerCase()), true))
         } else {
             setChip((chips) => chips.concat({ key: 'G', value: event.target.value }))
+            setFilters((item) => item.concat({ key: 'G', value: (x) => x.genre.includes(event.target.value.toLowerCase()) }))
         }
         setGenre(event.target.value);
-        const filterGenre = data.filter((item) => item.genre.includes(event.target.value.toLowerCase()))
-        event.target.value === 'All' ? setMovie(data) : setMovie(filterGenre)
     };
     const handleChangeYear = (event) => {
         event.persist();
         if ((filterChip.filter(x => x.key === 'Y')).length > 0) {
             filterChip.find(x => x.key === 'Y' && (x.value = event.target.value, true))
             setChip(filterChip)
+            filters.find((x) => x.key === 'Y' && (x.value = (a) => a.year === event.target.value, true))
         } else {
             setChip((chips) => chips.concat({ key: 'Y', value: event.target.value }))
+            setFilters((item) => item.concat({ key: 'Y', value: (x) => x.year === event.target.value }))
         }
         setYear(event.target.value);
-        const filterYear = data.filter((item) => item.year === event.target.value)
-        event.target.value === 'All' ? setMovie(data) : setMovie(filterYear)
     };
     const classes = useStyles();
     return (
         <div className={classes.root}>
             <MenuDrawer
+                searchFilter={searchFilter}
                 changeTitle={changeTitle}
                 open={open}
                 setOpen={setOpen}
@@ -120,6 +140,8 @@ const Body = (props) => {
             })}>
                 {title === 'About' ? <div></div> :
                     <Filter
+                        checked={checked}
+                        setChecked={setChecked}
                         filterChip={filterChip}
                         genre={genre}
                         year={year}

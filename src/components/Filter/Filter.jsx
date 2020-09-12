@@ -60,8 +60,8 @@ const yearList = ['All', ...rangeYear];
 const Filter = (props) => {
     const theme = useTheme();
     const mobile = useMediaQuery(theme.breakpoints.down('xs'));
-    const { genre, year, handleChangeYear, handleChangeGenre, handleDelete, filterChip } = props
-    const [checked, setChecked] = React.useState(false);
+    const { genre, year, handleChangeYear, handleChangeGenre, handleDelete, filterChip, checked, setChecked } = props
+
     const handleChange = () => {
         setChecked((prev) => !prev);
     };
@@ -168,7 +168,9 @@ Filter.propsType = {
     handleChangeYear: PropTypes.func,
     handleChangeGenre: PropTypes.func,
     handleDelete: PropTypes.func,
-    filterChip: PropTypes.array
+    filterChip: PropTypes.array,
+    checked: PropTypes.bool,
+    setChecked: PropTypes.func
 }
 Filter.defaultProps = {
     genre: 'All',
@@ -176,7 +178,9 @@ Filter.defaultProps = {
     filterChip: [],
     handleChangeYear: () => { },
     handleChangeGenre: () => { },
-    handleDelete: () => { }
+    handleDelete: () => { },
+    checked: false,
+    setChecked: () => { }
 }
 
 export default Filter;
