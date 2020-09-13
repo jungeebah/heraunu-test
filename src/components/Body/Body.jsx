@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import MenuDrawer from '../MenuDrawer/MenuDrawer';
 import MovieCard from '../MovieCard/MovieCard';
 import clsx from 'clsx';
@@ -10,6 +10,11 @@ import { movie } from '../../data';
 import Alert from '@material-ui/lab/Alert';
 import Paper from '@material-ui/core/Paper';
 import Filter from '../Filter/Filter';
+import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const drawerWidth = 180;
 const useStyles = makeStyles((theme) => ({
@@ -58,6 +63,8 @@ const useStyles = makeStyles((theme) => ({
 
 
 const Body = (props) => {
+    const theme = useTheme();
+    const mobile = useMediaQuery(theme.breakpoints.down('xs'));
     const [open, setOpen] = React.useState(false);
     const { data, title, changeTitle, searchFilter } = props
     const [filters, setFilters] = React.useState([])
@@ -66,6 +73,27 @@ const Body = (props) => {
     const [year, setYear] = React.useState('All');
     const [filterChip, setChip] = React.useState([]);
     const [checked, setChecked] = React.useState(false);
+    const [opens, setOpens] = React.useState(true);
+
+    const handleClick = () => {
+        setOpens(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setFilters((items) => {
+            if (items.key === 'G') {
+                setGenre('All')
+                setChip((chips) => chips.filter((chip) => chip.key !== 'G'));
+            } else {
+                setChip((chips) => chips.filter((chip) => chip.key !== 'Y'));
+                setYear('All')
+            }
+            return items.splice(0, 1)
+        })
+    };
     React.useEffect(() => {
         setMovie(data)
         setYear('All')
@@ -168,11 +196,31 @@ const Body = (props) => {
                                 <div className={classes.warning}>
                                     <Alert severity="warning">Due to Covid-19.Theaters are temproraly closed until further notice!</Alert>
                                 </div> :
-                                movie.map((item, index) => (
-                                    <Grid item xs={6} sm={3} xl={2} key={index}>
-                                        <MovieCard image={item.image} movie={item.name} key={index} />
-                                    </Grid>
-                                ))}
+                                movie.length > 0 ?
+                                    movie.map((item, index) => (
+                                        <Grid item xs={6} sm={3} xl={2} key={index}>
+                                            <MovieCard image={item.image} movie={item.name} key={index} />
+                                        </Grid>
+                                    )) : <Snackbar
+                                        anchorOrigin={{
+                                            vertical: mobile ? 'top' : 'bottom',
+                                            horizontal: mobile ? 'right' : 'left',
+                                        }}
+                                        open={opens}
+                                        autoHideDuration={6000}
+                                        onClose={handleClose}
+                                        message="No movies to Display"
+                                        action={
+                                            <React.Fragment>
+                                                <Button color="secondary" size="small" onClick={handleClose}>
+                                                    UNDO
+                                    </Button>
+                                                <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+                                                    <CloseIcon fontSize="small" />
+                                                </IconButton>
+                                            </React.Fragment>
+                                        }
+                                    />}
 
                     </Grid>
                 </div>
