@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
         minHeight: '100vh',
 
     },
+    snackBar: {
+        zIndex: '10000'
+    },
     drawerHeader: {
         display: 'flex',
         alignItems: 'center',
@@ -65,45 +68,50 @@ const useStyles = makeStyles((theme) => ({
 const Body = (props) => {
     const theme = useTheme();
     const mobile = useMediaQuery(theme.breakpoints.down('xs'));
-    const [open, setOpen] = React.useState(false);
+    const [menuDrawerOpen, setMenuDrawerOpen] = React.useState(false);
     const { data, title, changeTitle, searchFilter } = props
     const [filters, setFilters] = React.useState([])
     const [movie, setMovie] = React.useState(data)
     const [genre, setGenre] = React.useState('All');
     const [year, setYear] = React.useState('All');
     const [filterChip, setChip] = React.useState([]);
-    const [checked, setChecked] = React.useState(false);
-    const [opens, setOpens] = React.useState(true);
+    const [filterOpenChecked, setfilterOpenChecked] = React.useState(false);
+    const [undoOpen, setUndoOpen] = React.useState(true)
 
-    const handleClick = () => {
-        setOpens(true);
-    };
+    const currentYear = (new Date()).getFullYear();
+    const range = (start, stop, step) => Array.from({ length: (stop - start) / step + 1 }, (_, i) => start + (i * step));
+    const rangeYear = range(currentYear, currentYear - 50, -1);
+    const yearList = ['All', ...rangeYear];
 
-    const handleClose = (event, reason) => {
+    const handleUndoClose = (event) => {
+        setUndoOpen(false)
+    }
+    const handleFilterUndo = (event, reason) => {
         if (reason === 'clickaway') {
             return;
         }
-        setFilters((items) => {
-            if (items.key === 'G') {
-                setGenre('All')
-                setChip((chips) => chips.filter((chip) => chip.key !== 'G'));
-            } else {
-                setChip((chips) => chips.filter((chip) => chip.key !== 'Y'));
-                setYear('All')
-            }
-            return items.splice(0, 1)
-        })
+        if (filters[filters.length - 1].key === 'G') {
+            setGenre('All')
+            setChip((chips) => chips.filter((chip) => chip.key !== 'G'));
+        } else {
+            setChip((chips) => chips.filter((chip) => chip.key !== 'Y'));
+            setYear('All')
+        }
+        const filtered = filters.filter((x, i) => i !== filters.length - 1)
+        setFilters(filtered)
     };
     React.useEffect(() => {
         setMovie(data)
         setYear('All')
         setGenre('All')
         setChip([])
-        setChecked(false)
+        setfilterOpenChecked(false)
+        setUndoOpen(true)
     }, [data]);
 
     React.useEffect(() => {
         filterUpdate()
+        setUndoOpen(true)
     }, [filters])
 
     const filterUpdate = () => {
@@ -114,9 +122,12 @@ const Body = (props) => {
                     filtering = filtering.filter(item1.value)
                 }
             })
+            setMovie(filtering)
+        } else {
+            setMovie(data)
         }
-        setMovie(filtering)
     };
+
     const handleDelete = (chipToDelete) => () => {
         setChip((chips) => chips.filter((chip) => chip.value !== chipToDelete.value));
         if (chipToDelete.key === 'G') {
@@ -128,53 +139,60 @@ const Body = (props) => {
         }
 
     };
-    const handleChangeGenre = (event) => {
+
+    const handleChangeFilter = (event) => {
         event.persist();
-        if ((filterChip.filter(x => x.key === 'G')).length > 0) {
-            filterChip.find(x => x.key === 'G' && (x.value = event.target.value, true))
-            setChip(filterChip)
-            filters.find((x) => x.key === 'G' && (x.value = (a) => a.genre.includes(event.target.value.toLowerCase()), true))
-        } else {
-            setChip((chips) => chips.concat({ key: 'G', value: event.target.value }))
-            setFilters((item) => item.concat({ key: 'G', value: (x) => x.genre.includes(event.target.value.toLowerCase()) }))
+        switch (event.target.id) {
+            case "genre":
+                if ((filterChip.filter(x => x.key === 'G')).length > 0) {
+                    filterChip.find(x => x.key === 'G' && (x.value = event.target.value, true))
+                    setChip(filterChip)
+                    filters.find((x) => x.key === 'G' && (x.value = (a) => a.genre.includes(event.target.value.toLowerCase()), true))
+                } else {
+                    setChip((chips) => chips.concat({ key: 'G', value: event.target.value }))
+                    setFilters((item) => item.concat({ key: 'G', value: (x) => x.genre.includes(event.target.value.toLowerCase()) }))
+                }
+                setGenre(event.target.value);
+                break;
+            case "year":
+                if ((filterChip.filter(x => x.key === 'Y')).length > 0) {
+                    filterChip.find(x => x.key === 'Y' && (x.value = event.target.value, true))
+                    setChip(filterChip)
+                    filters.find((x) => x.key === 'Y' && (x.value = (a) => a.year === event.target.value, true))
+                } else {
+                    setChip((chips) => chips.concat({ key: 'Y', value: event.target.value }))
+                    setFilters((item) => item.concat({ key: 'Y', value: (x) => x.year === event.target.value }))
+                }
+                setYear(event.target.value);
+                break;
+            default:
+                break;
         }
-        setGenre(event.target.value);
-    };
-    const handleChangeYear = (event) => {
-        event.persist();
-        if ((filterChip.filter(x => x.key === 'Y')).length > 0) {
-            filterChip.find(x => x.key === 'Y' && (x.value = event.target.value, true))
-            setChip(filterChip)
-            filters.find((x) => x.key === 'Y' && (x.value = (a) => a.year === event.target.value, true))
-        } else {
-            setChip((chips) => chips.concat({ key: 'Y', value: event.target.value }))
-            setFilters((item) => item.concat({ key: 'Y', value: (x) => x.year === event.target.value }))
-        }
-        setYear(event.target.value);
-    };
+    }
     const classes = useStyles();
     return (
         <div className={classes.root}>
             <MenuDrawer
                 searchFilter={searchFilter}
                 changeTitle={changeTitle}
-                open={open}
-                setOpen={setOpen}
+                open={menuDrawerOpen}
+                setOpen={setMenuDrawerOpen}
                 drawerwidth={drawerWidth}
                 mobileDrawer={props.mobileDrawer}
                 toggleDrawer={props.toggleDrawer} />
             <main className={clsx(classes.content, {
-                [classes.contentShift]: open,
+                [classes.contentShift]: menuDrawerOpen,
             })}>
                 {title === 'About' ? <div></div> :
                     <Filter
-                        checked={checked}
-                        setChecked={setChecked}
+                        yearList={yearList}
+                        filterOpenChecked={filterOpenChecked}
+                        setfilterOpenChecked={setfilterOpenChecked}
                         filterChip={filterChip}
                         genre={genre}
                         year={year}
-                        handleChangeGenre={handleChangeGenre}
-                        handleChangeYear={handleChangeYear}
+                        handleChangeGenre={handleChangeFilter}
+                        handleChangeYear={handleChangeFilter}
                         handleDelete={handleDelete}
                     />
                 }
@@ -201,27 +219,28 @@ const Body = (props) => {
                                         <Grid item xs={6} sm={3} xl={2} key={index}>
                                             <MovieCard image={item.image} movie={item.name} key={index} />
                                         </Grid>
-                                    )) : <Snackbar
+                                    )) :
+                                    <Snackbar
+                                        className={classes.snackBar}
                                         anchorOrigin={{
                                             vertical: mobile ? 'top' : 'bottom',
                                             horizontal: mobile ? 'right' : 'left',
                                         }}
-                                        open={opens}
+                                        open={undoOpen}
                                         autoHideDuration={6000}
-                                        onClose={handleClose}
+                                        onClose={handleFilterUndo}
                                         message="No movies to Display"
                                         action={
                                             <React.Fragment>
-                                                <Button color="secondary" size="small" onClick={handleClose}>
+                                                <Button color="secondary" size="small" onClick={handleFilterUndo}>
                                                     UNDO
                                     </Button>
-                                                <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+                                                <IconButton size="small" aria-label="close" color="inherit" onClick={handleUndoClose}>
                                                     <CloseIcon fontSize="small" />
                                                 </IconButton>
                                             </React.Fragment>
                                         }
                                     />}
-
                     </Grid>
                 </div>
             </main>

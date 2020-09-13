@@ -51,19 +51,13 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const currentYear = (new Date()).getFullYear();
-const range = (start, stop, step) => Array.from({ length: (stop - start) / step + 1 }, (_, i) => start + (i * step));
-const rangeYear = range(currentYear, currentYear - 50, -1);
-const yearList = ['All', ...rangeYear];
-
-
 const Filter = (props) => {
     const theme = useTheme();
     const mobile = useMediaQuery(theme.breakpoints.down('xs'));
-    const { genre, year, handleChangeYear, handleChangeGenre, handleDelete, filterChip, checked, setChecked } = props
+    const { genre, year, handleChangeYear, handleChangeGenre, handleDelete, filterChip, filterOpenChecked, setfilterOpenChecked, yearList } = props
 
     const handleChange = () => {
-        setChecked((prev) => !prev);
+        setfilterOpenChecked((prev) => !prev);
     };
     const classes = useStyles()
     return (
@@ -102,12 +96,12 @@ const Filter = (props) => {
             </Grid>
 
             <Grow
-                in={checked}
+                in={filterOpenChecked}
                 style={{ transformOrigin: '0 0 0' }}
-                {...(checked ? { timeout: 1000 } : { timeout: 10 })}
+                {...(filterOpenChecked ? { timeout: 1000 } : { timeout: 10 })}
             >
                 <Paper elevation={0} className={clsx(classes.paper, {
-                    [classes.shiftPaper]: checked,
+                    [classes.shiftPaper]: filterOpenChecked,
                 })}>
                     <Grid container spacing={2}>
                         <Grid item xs={6} sm={4} lg={1}>
@@ -169,8 +163,9 @@ Filter.propsType = {
     handleChangeGenre: PropTypes.func,
     handleDelete: PropTypes.func,
     filterChip: PropTypes.array,
-    checked: PropTypes.bool,
-    setChecked: PropTypes.func
+    yearList: PropTypes.array,
+    filterOpenChecked: PropTypes.bool,
+    setfilterOpenChecked: PropTypes.func
 }
 Filter.defaultProps = {
     genre: 'All',
@@ -179,8 +174,9 @@ Filter.defaultProps = {
     handleChangeYear: () => { },
     handleChangeGenre: () => { },
     handleDelete: () => { },
-    checked: false,
-    setChecked: () => { }
+    filterOpenChecked: false,
+    yearList: [],
+    setfilterOpenChecked: () => { }
 }
 
 export default Filter;
