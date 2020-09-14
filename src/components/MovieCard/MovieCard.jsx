@@ -69,9 +69,7 @@ const MovieCard = (props) => {
             <Card
                 className={classes.paper}
                 onMouseOver={onMouseOver}
-                onMouseOut={onMouseOut}
-                onTouchStart={onMouseOver}
-                onTouchEnd={onMouseOver}>
+                onMouseOut={onMouseOut} >
 
                 <CardActionArea
                     onClick={props.cardClick}>
@@ -105,7 +103,7 @@ const MovieCard = (props) => {
                         <PlayArrowIcon />
                     </Fab>
                 </Zoom>
-            </Card>
+            </Card >
 
         </div >
     )
