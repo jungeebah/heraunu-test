@@ -11,15 +11,20 @@ import Button from "@material-ui/core/Button";
 import MovieCastnCrew from "../MovieCastnCrew/MovieCastnCrew";
 import Songs from "../Songs/Songs";
 import Hidden from "@material-ui/core/Hidden";
+import IconButton from '@material-ui/core/IconButton';
 import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles((theme) => ({
   root: {
+
     padding: theme.spacing(1),
   },
   movieInfo: {
+    [theme.breakpoints.down('xs')]: {
+      padding: theme.spacing(2, 1, 2, 0),
+    },
     padding: theme.spacing(2),
-    marginTop: theme.spacing(1),
+
   },
   button: {
     "&:not(:first-child)": {
@@ -51,7 +56,12 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.main,
   },
   year: {
-    paddingBottom: "2px",
+    marginTop: theme.spacing(-1),
+    paddingBottom: theme.spacing(1) - 2,
+
+  },
+  yearText: {
+    fontWeight: '700'
   },
   box: {
     borderWidth: "1px",
@@ -64,7 +74,7 @@ const MoviePage = (props) => {
   const mobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { movie } = props;
   return (
-    <Paper elevation={0} className={classes.root}>
+    <Paper elevation={0} className={classes.root} >
       <Grid container>
         <Grid item xs={12} sm={5} md={6}>
           <Card className={classes.card}>
@@ -90,24 +100,22 @@ const MoviePage = (props) => {
               </Hidden>
             ))}
             <Grid item xs={12}>
-              <Paper className={classes.movieInfo}>
+              <Paper className={classes.movieInfo} elevation={0}>
                 <Typography variant={mobile ? "h6" : "h3"}>
                   {movie.name}
                 </Typography>
 
                 <Grid container className={classes.year}>
                   <Grid item xs={4} sm={4} md={4}>
-                    <Button
-                      size="small"
-                      variant="outlined"
+                    <IconButton
                       className={classes.buttonYear}
                     >
-                      <Typography variant={mobile ? "caption" : "subtitle1"}>
+                      <Typography variant={mobile ? "caption" : "subtitle1"} className={classes.yearText}>
                         {movie.year}
                       </Typography>
-                    </Button>
+                    </IconButton>
                   </Grid>
-                  <Grid item xs={3} sm={3} md={3}>
+                  <Grid item xs={6} sm={4} md={3}>
                     <Box className={classes.box}>
                       <Typography variant={mobile ? "caption" : "subtitle1"}>
                         {movie.length}
@@ -142,11 +150,11 @@ const MoviePage = (props) => {
           </Grid>
         </Grid>
       </Grid>
-      <Paper className={classes.castCrew}>
+      <div >
         <MovieCastnCrew actor={movie.actor} />
-      </Paper>
+      </div>
 
-      <Paper className={classes.castCrew}>
+      <Paper elevation={0}>
         <Songs songs={movie.songs} />
       </Paper>
     </Paper>

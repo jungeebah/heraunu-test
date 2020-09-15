@@ -18,6 +18,11 @@ import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    [theme.breakpoints.down('xs')]: {
+      paddingLeft: theme.spacing(0),
+      paddingTop: theme.spacing(1),
+      marginTop: theme.spacing(-1),
+    },
     paddingLeft: theme.spacing(2),
     paddingTop: theme.spacing(3),
   },
@@ -59,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
   },
   noImage: {
     [theme.breakpoints.down("xs")]: {
-      height: theme.spacing(16) + 4,
+      height: theme.spacing(14) + 4,
     },
     [theme.breakpoints.between("sm", "md")]: {
       height: theme.spacing(18) + 2,
@@ -165,8 +170,8 @@ const MovieCastnCrew = (props) => {
                 {arrowBack}
               </Paper>
             ) : (
-              <div />
-            )}
+                  <div />
+                )}
           </Grid>
           <Grid item xs={11}>
             <GridList
@@ -178,16 +183,16 @@ const MovieCastnCrew = (props) => {
             >
               {actor
                 ? actor.map((item, index) => (
-                    <GridListTile key={index}>
-                      <Card
-                        elevation={6}
-                        className={classes.card}
-                        key={`card${index}`}
-                      >
-                        <CardActionArea key={index}>
-                          {item.image === "" ? (
-                            noImage
-                          ) : (
+                  <GridListTile key={index}>
+                    <Card
+                      elevation={6}
+                      className={classes.card}
+                      key={`card${index}`}
+                    >
+                      <CardActionArea key={index}>
+                        {item.image === "" ? (
+                          noImage
+                        ) : (
                             <CardMedia
                               key={item}
                               classes={{
@@ -198,17 +203,17 @@ const MovieCastnCrew = (props) => {
                               title={item.name}
                             ></CardMedia>
                           )}
-                        </CardActionArea>
-                      </Card>
-                      <Typography
-                        variant={mobile ? "body2" : "h6"}
-                        key={item.name}
-                        className={classes.title}
-                      >
-                        {item.name}
-                      </Typography>
-                    </GridListTile>
-                  ))
+                      </CardActionArea>
+                    </Card>
+                    <Typography
+                      variant={mobile ? "body2" : "h6"}
+                      key={item.name}
+                      className={classes.title}
+                    >
+                      {item.name}
+                    </Typography>
+                  </GridListTile>
+                ))
                 : skeleton}
             </GridList>
           </Grid>
@@ -218,8 +223,8 @@ const MovieCastnCrew = (props) => {
             ) : rightArrow ? (
               <Paper className={classes.arrow}>{arrowForward}</Paper>
             ) : (
-              <div />
-            )}
+                  <div />
+                )}
           </Grid>
         </Grid>
       </div>
