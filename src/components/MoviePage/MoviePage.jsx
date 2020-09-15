@@ -14,6 +14,7 @@ import Hidden from "@material-ui/core/Hidden";
 import IconButton from '@material-ui/core/IconButton';
 import Box from "@material-ui/core/Box";
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
 
@@ -105,25 +106,25 @@ const MoviePage = (props) => {
                 </Typography>
 
                 <Grid container className={classes.year}>
-                  <Grid item xs={2} md={4}>
+                  <Grid item xs={2} md={1}>
                     <IconButton
                       className={classes.buttonYear}
                     >
-                      <Typography variant={mobile ? "caption" : "subtitle1"} className={classes.yearText}>
+                      <Typography variant={mobile ? "caption" : "subtitle2"} className={classes.yearText}>
                         {movie.year}
                       </Typography>
                     </IconButton>
                   </Grid>
-                  <Grid item xs={3} md={3}>
+                  <Grid item xs={3} md={1}>
                     <Box className={classes.box}>
-                      <Typography variant={mobile ? "caption" : "subtitle1"}>
+                      <Typography variant={mobile ? "caption" : "subtitle2"}>
                         {movie.length}
                       </Typography>
                     </Box>
                   </Grid>
-                  <Grid item xs={2} md={3}>
+                  <Grid item xs={2} md={1}>
                     <Box>
-                      <Typography variant={mobile ? "caption" : "subtitle1"}>
+                      <Typography variant={mobile ? "caption" : "subtitle2"}>
                         {movie.rating}
                       </Typography>
                     </Box>
@@ -150,7 +151,7 @@ const MoviePage = (props) => {
         </Grid>
       </Grid>
       <div >
-        <MovieCastnCrew actor={movie.actor} />
+        <MovieCastnCrew menuDrawerOpen={props.menuDrawerOpen} actor={movie.actor} />
       </div>
 
       <Paper elevation={0}>
@@ -162,6 +163,7 @@ const MoviePage = (props) => {
 
 MoviePage.propsType = {
   movie: PropTypes.object,
+  menuDrawerOpen: PropTypes.bool
 };
 MoviePage.defaultProps = {
   movie: {

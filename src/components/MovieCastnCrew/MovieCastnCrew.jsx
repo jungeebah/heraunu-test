@@ -15,6 +15,7 @@ import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import IconButton from "@material-ui/core/IconButton";
 import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
+import clsx from "clsx";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,13 +66,29 @@ const useStyles = makeStyles((theme) => ({
   scrollGrid: {
     overflow: "hidden",
   },
-  noImage: {
+  menuDrawerNoImage: {
     [theme.breakpoints.down("xs")]: {
-      height: theme.spacing(14) + 4,
+      maxHeight: theme.spacing(13) + 4,
     },
-    [theme.breakpoints.between("sm", "md")]: {
-      height: theme.spacing(22) + 2,
+    [theme.breakpoints.only("sm")]: {
+      maxHeight: theme.spacing(16) + 4,
     },
+    [theme.breakpoints.up("md")]: {
+      maxHeight: theme.spacing(29),
+    },
+  },
+  menuNotDrawnNoImage: {
+    [theme.breakpoints.down("xs")]: {
+      maxHeight: theme.spacing(13) + 4,
+    },
+    [theme.breakpoints.only("sm")]: {
+      maxHeight: theme.spacing(21),
+    },
+    [theme.breakpoints.up("md")]: {
+      maxHeight: theme.spacing(32) + 6,
+    },
+  },
+  noImage: {
     display: "flex",
     alignItems: "center",
     height: theme.spacing(34),
@@ -119,7 +136,7 @@ const MovieCastnCrew = (props) => {
   const [rightArrow, setRightArrow] = React.useState(true);
   const mobile = useMediaQuery(theme.breakpoints.down("xs"));
   const ipad = useMediaQuery(theme.breakpoints.between("xs", "sm"));
-  const smallScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const xlarge = useMediaQuery(theme.breakpoints.up("xl"));
   const skeleton = (
     <div>
@@ -129,7 +146,11 @@ const MovieCastnCrew = (props) => {
   const { actor } = props;
   const classes = useStyles();
   const noImage = (
-    <Paper className={classes.noImage}>
+    <Paper className={clsx(classes.noImage, {
+      [classes.menuDrawerNoImage]: props.menuDrawerOpen,
+      [classes.menuNotDrawnNoImage]: !props.menuDrawerOpen
+    })}
+    >
       <PersonIcon className={classes.icon} />
     </Paper>
   );
@@ -179,10 +200,10 @@ const MovieCastnCrew = (props) => {
           <Grid item xs={11}>
             <GridList
               ref={movieScrollBox}
-              spacing={mobile ? 8 : 20}
+              spacing={mobile ? 8 : xlarge ? 20 : 15}
               className={classes.gridList}
-              cellHeight={mobile ? 170 : ipad ? 200 : xlarge ? 350 : 340}
-              cols={mobile ? 3.5 : ipad ? 4.5 : xlarge ? 8.5 : 7.5}
+              cellHeight={mobile ? 170 : ipad ? 200 : xlarge ? 350 : 320}
+              cols={mobile ? 3.5 : ipad ? 4.5 : xlarge ? 8.5 : 5.5}
             >
               {actor
                 ? actor.map((item, index) => (

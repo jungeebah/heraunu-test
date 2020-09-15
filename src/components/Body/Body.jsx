@@ -149,7 +149,7 @@ const Body = (props) => {
               x.key === "G" &&
               ((x.value = (a) =>
                 a.genre.includes(event.target.value.toLowerCase())),
-              true)
+                true)
           );
         } else {
           setChip((chips) =>
@@ -226,8 +226,10 @@ const Body = (props) => {
             changeBody={props.changeBody}
           />
         ) : (
-          <MoviePage movie={props.individualMovie[0]} />
-        )}
+            <MoviePage
+              movie={props.individualMovie[0]}
+              menuDrawerOpen={menuDrawerOpen} />
+          )}
       </main>
     </div>
   );
@@ -244,8 +246,8 @@ Body.defaultProps = {
   title: "Home",
   data: movie,
   displayBody: true,
-  changeTitle: () => {},
-  changeBody: () => {},
+  changeTitle: () => { },
+  changeBody: () => { },
 };
 
 export default Body;
@@ -281,18 +283,18 @@ const Main = (props) => {
       {title === "About" ? (
         <div></div>
       ) : (
-        <Filter
-          yearList={yearList}
-          filterOpenChecked={filterOpenChecked}
-          setfilterOpenChecked={setfilterOpenChecked}
-          filterChip={filterChip}
-          genre={genre}
-          year={year}
-          handleChangeGenre={handleChangeFilter}
-          handleChangeYear={handleChangeFilter}
-          handleDelete={handleDelete}
-        />
-      )}
+          <Filter
+            yearList={yearList}
+            filterOpenChecked={filterOpenChecked}
+            setfilterOpenChecked={setfilterOpenChecked}
+            filterChip={filterChip}
+            genre={genre}
+            year={year}
+            handleChangeGenre={handleChangeFilter}
+            handleChangeYear={handleChangeFilter}
+            handleDelete={handleDelete}
+          />
+        )}
       <div className={classes.drawerHeader}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -324,37 +326,37 @@ const Main = (props) => {
               </Grid>
             ))
           ) : (
-            <Snackbar
-              className={classes.snackBar}
-              anchorOrigin={{
-                vertical: mobile ? "top" : "bottom",
-                horizontal: mobile ? "right" : "left",
-              }}
-              open={undoOpen}
-              autoHideDuration={6000}
-              onClose={handleFilterUndo}
-              message="No movies to Display"
-              action={
-                <React.Fragment>
-                  <Button
-                    color="secondary"
-                    size="small"
-                    onClick={handleFilterUndo}
-                  >
-                    UNDO
+                  <Snackbar
+                    className={classes.snackBar}
+                    anchorOrigin={{
+                      vertical: mobile ? "top" : "bottom",
+                      horizontal: mobile ? "right" : "left",
+                    }}
+                    open={undoOpen}
+                    autoHideDuration={6000}
+                    onClose={handleFilterUndo}
+                    message="No movies to Display"
+                    action={
+                      <React.Fragment>
+                        <Button
+                          color="secondary"
+                          size="small"
+                          onClick={handleFilterUndo}
+                        >
+                          UNDO
                   </Button>
-                  <IconButton
-                    size="small"
-                    aria-label="close"
-                    color="inherit"
-                    onClick={handleUndoClose}
-                  >
-                    <CloseIcon fontSize="small" />
-                  </IconButton>
-                </React.Fragment>
-              }
-            />
-          )}
+                        <IconButton
+                          size="small"
+                          aria-label="close"
+                          color="inherit"
+                          onClick={handleUndoClose}
+                        >
+                          <CloseIcon fontSize="small" />
+                        </IconButton>
+                      </React.Fragment>
+                    }
+                  />
+                )}
         </Grid>
       </div>
     </div>

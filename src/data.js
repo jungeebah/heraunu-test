@@ -356,6 +356,14 @@ export const movie = [
         name: "Sarada Adhikari",
         image: "",
       },
+      {
+        name: "Sarada Adhikari",
+        image: "",
+      },
+      {
+        name: "Sarada Adhikari",
+        image: "",
+      },
     ],
     songs: ["Dui Rupaiyaa", "Kutu Ma Kutu", "Talkyo Jawani"],
   },
