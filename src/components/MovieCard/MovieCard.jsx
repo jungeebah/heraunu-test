@@ -72,7 +72,7 @@ const MovieCard = (props) => {
                 onMouseOut={onMouseOut} >
 
                 <CardActionArea
-                    onClick={props.cardClick}>
+                    onClick={(e) => props.changeBody(e, props.movie)}>
                     <CardMedia
                         component="img"
                         className={classes.card}

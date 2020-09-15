@@ -20,13 +20,17 @@ const useStyles = makeStyles((theme) => ({
     root: {
         paddingLeft: theme.spacing(2),
         paddingTop: theme.spacing(3)
+
+    },
+    image: {
+        boxShadow: theme.shadows[10]
     },
     card: {
         borderRadius: 12,
         [theme.breakpoints.down('xs')]: {
             maxWidth: '100px'
         },
-        maxWidth: '400px'
+        maxWidth: '400px',
     },
     gridRoot: {
         marginTop: theme.spacing(1),
@@ -35,12 +39,14 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'space-around',
         overflow: 'hidden',
         backgroundColor: theme.palette.background.paper,
-
+        overflowX: 'hidden',
     },
     gridList: {
         flexWrap: 'nowrap',
         // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
         transform: 'translateZ(0)',
+        overflowX: 'hidden',
+
     },
     title: {
         [theme.breakpoints.down('sm')]: {
@@ -50,19 +56,21 @@ const useStyles = makeStyles((theme) => ({
         // marginLeft: theme.spacing(-2),
         overflow: 'hidden',
     },
+    scrollGrid: {
+        overflow: 'hidden',
+    },
     noImage: {
         [theme.breakpoints.down('xs')]: {
-            height: theme.spacing(14) + 4,
+            height: theme.spacing(16) + 4,
         },
         [theme.breakpoints.between('sm', 'md')]: {
-            height: theme.spacing(17) + 4,
+            height: theme.spacing(18) + 2,
         },
         display: 'flex',
         alignItems: 'center',
         height: theme.spacing(34),
         maxWidth: '900px',
         justifyContent: 'center',
-        fontSize: '130px',
         backgroundColor: theme.palette.background.default,
     },
     icon: {
@@ -76,7 +84,6 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.primary.main
     },
     arrowLeft: {
-        marginLeft: -theme.spacing(1),
         position: 'absolute',
         zIndex: '1000',
         alignItems: 'center',
@@ -89,6 +96,7 @@ const useStyles = makeStyles((theme) => ({
         height: theme.spacing(34) + 5,
         position: 'relative',
         alignItems: 'center',
+        marginLeft: -theme.spacing(6),
         display: "flex",
         marginBottom: theme.spacing(13) + 3,
         opacity: '0.9'
@@ -138,17 +146,21 @@ const MovieCastnCrew = (props) => {
     </IconButton>
     return (
         <Paper elevation={0} className={classes.root}>
-            <Typography variant="h6">
+            <Typography variant={mobile ? 'h6' : 'h3'}>
                 Cast n Crew
             </Typography>
             <div className={classes.gridRoot}>
                 <Grid container spacing={0}>
                     <Grid item xs={1} classes={{ 'grid-xs-1': classes.flexXs }}>
-                        <Paper className={classes.arrowLeft}>
-                            {smallScreen ? <div></div> : leftArrow ? arrowBack : <div />}
-                        </Paper>
+                        {smallScreen ? <div></div> :
+                            leftArrow ?
+                                <Paper className={classes.arrowLeft} elevaion={0}>
+                                    {arrowBack}
+                                </Paper>
+                                : <div />
+                        }
                     </Grid>
-                    <Grid item xs={11}>
+                    <Grid item xs={11} >
                         <GridList
                             ref={movieScrollBox}
                             spacing={mobile ? 8 : 20}
@@ -159,11 +171,14 @@ const MovieCastnCrew = (props) => {
                             {actor ?
                                 actor.map((item, index) => (
                                     <GridListTile key={index} >
-                                        <Card elevation={3} className={classes.card} key={`card${index}`}>
+                                        <Card elevation={6} className={classes.card} key={`card${index}`}>
                                             <CardActionArea key={index}>
                                                 {item.image === "" ?
                                                     noImage :
                                                     <CardMedia key={item}
+                                                        classes={{
+                                                            img: classes.image
+                                                        }}
                                                         component="img"
                                                         image={item.image}
                                                         title={item.name}
@@ -183,9 +198,13 @@ const MovieCastnCrew = (props) => {
                         </GridList>
                     </Grid>
                     <Grid item xs={1} classes={{ 'grid-xs-1': classes.flexXs }}>
-                        <Paper className={classes.arrow}>
-                            {smallScreen ? <div></div> : rightArrow ? arrowForward : <div />}
-                        </Paper>
+                        {smallScreen ? <div></div> :
+                            rightArrow ?
+                                <Paper className={classes.arrow}>
+                                    {arrowForward}
+                                </Paper>
+                                : <div />
+                        }
                     </Grid>
                 </Grid>
             </div>

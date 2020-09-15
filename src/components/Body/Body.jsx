@@ -15,6 +15,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import MoviePage from '../MoviePage/MoviePage'
 
 const drawerWidth = 180;
 const useStyles = makeStyles((theme) => ({
@@ -66,8 +67,6 @@ const useStyles = makeStyles((theme) => ({
 
 
 const Body = (props) => {
-    const theme = useTheme();
-    const mobile = useMediaQuery(theme.breakpoints.down('xs'));
     const [menuDrawerOpen, setMenuDrawerOpen] = React.useState(false);
     const { data, title, changeTitle, searchFilter } = props
     const [filters, setFilters] = React.useState([])
@@ -78,10 +77,11 @@ const Body = (props) => {
     const [filterOpenChecked, setfilterOpenChecked] = React.useState(false);
     const [undoOpen, setUndoOpen] = React.useState(true)
 
-    const currentYear = (new Date()).getFullYear();
-    const range = (start, stop, step) => Array.from({ length: (stop - start) / step + 1 }, (_, i) => start + (i * step));
-    const rangeYear = range(currentYear, currentYear - 50, -1);
-    const yearList = ['All', ...rangeYear];
+    const cardClick = (event) => {
+        console.log('presed')
+        props.changeBody(true)
+        console.log(props.displayBody)
+    }
 
     const handleUndoClose = (event) => {
         setUndoOpen(false)
@@ -183,66 +183,24 @@ const Body = (props) => {
             <main className={clsx(classes.content, {
                 [classes.contentShift]: menuDrawerOpen,
             })}>
-                {title === 'About' ? <div></div> :
-                    <Filter
-                        yearList={yearList}
+                {props.displayBody ?
+                    <Main
+                        title={title}
                         filterOpenChecked={filterOpenChecked}
                         setfilterOpenChecked={setfilterOpenChecked}
                         filterChip={filterChip}
                         genre={genre}
                         year={year}
-                        handleChangeGenre={handleChangeFilter}
-                        handleChangeYear={handleChangeFilter}
+                        handleChangeFilter={handleChangeFilter}
                         handleDelete={handleDelete}
+                        movie={movie}
+                        undoOpen={undoOpen}
+                        handleFilterUndo={handleFilterUndo}
+                        handleUndoClose={handleUndoClose}
+                        changeBody={props.changeBody}
                     />
-                }
-                <div className={classes.drawerHeader}>
-                    <Grid container spacing={2} >
-                        <Grid item xs={12} >
-                            <Typography variant="h5" >
-                                {title}
-                            </Typography>
-                        </Grid>
-                        {title === 'About' ?
-                            <Paper elevation={0} className={classes.about}>
-                                <Typography variant="body">
-                                    A simple Nepali movie web app designed for Nepali movies and it's lovers.
-                            </Typography>
-                            </Paper>
+                    : <MoviePage movie={props.individualMovie[0]} />}
 
-                            : title === 'Theater' ?
-                                <div className={classes.warning}>
-                                    <Alert severity="warning">Due to Covid-19.Theaters are temproraly closed until further notice!</Alert>
-                                </div> :
-                                movie.length > 0 ?
-                                    movie.map((item, index) => (
-                                        <Grid item xs={6} sm={3} xl={2} key={index}>
-                                            <MovieCard image={item.image} movie={item.name} key={index} />
-                                        </Grid>
-                                    )) :
-                                    <Snackbar
-                                        className={classes.snackBar}
-                                        anchorOrigin={{
-                                            vertical: mobile ? 'top' : 'bottom',
-                                            horizontal: mobile ? 'right' : 'left',
-                                        }}
-                                        open={undoOpen}
-                                        autoHideDuration={6000}
-                                        onClose={handleFilterUndo}
-                                        message="No movies to Display"
-                                        action={
-                                            <React.Fragment>
-                                                <Button color="secondary" size="small" onClick={handleFilterUndo}>
-                                                    UNDO
-                                    </Button>
-                                                <IconButton size="small" aria-label="close" color="inherit" onClick={handleUndoClose}>
-                                                    <CloseIcon fontSize="small" />
-                                                </IconButton>
-                                            </React.Fragment>
-                                        }
-                                    />}
-                    </Grid>
-                </div>
             </main>
         </div>
     )
@@ -252,13 +210,94 @@ Body.propsType = {
     title: PropTypes.string,
     data: PropTypes.array,
     changeTitle: PropTypes.func,
+    changeBody: PropTypes.func
 }
 
 Body.defaultProps = {
     title: 'Home',
     data: movie,
+    displayBody: true,
     changeTitle: () => { },
+    changeBody: () => { },
 }
 
 
 export default Body;
+
+const currentYear = (new Date()).getFullYear();
+const range = (start, stop, step) => Array.from({ length: (stop - start) / step + 1 }, (_, i) => start + (i * step));
+const rangeYear = range(currentYear, currentYear - 50, -1);
+const yearList = ['All', ...rangeYear];
+
+const Main = (props) => {
+    const theme = useTheme();
+    const mobile = useMediaQuery(theme.breakpoints.down('xs'));
+    const classes = useStyles();
+
+
+    const { changeBody, title, filterOpenChecked, setfilterOpenChecked, filterChip, genre, year, handleChangeFilter, handleDelete, movie, undoOpen, handleFilterUndo, handleUndoClose } = props
+    return (
+        <div>
+            {title === 'About' ? <div></div> :
+                <Filter
+                    yearList={yearList}
+                    filterOpenChecked={filterOpenChecked}
+                    setfilterOpenChecked={setfilterOpenChecked}
+                    filterChip={filterChip}
+                    genre={genre}
+                    year={year}
+                    handleChangeGenre={handleChangeFilter}
+                    handleChangeYear={handleChangeFilter}
+                    handleDelete={handleDelete}
+                />
+            }
+            <div className={classes.drawerHeader}>
+                <Grid container spacing={2} >
+                    <Grid item xs={12} >
+                        <Typography variant="h5" >
+                            {title}
+                        </Typography>
+                    </Grid>
+                    {title === 'About' ?
+                        <Paper elevation={0} className={classes.about}>
+                            <Typography variant="body">
+                                A simple Nepali movie web app designed for Nepali movies and it's lovers.
+                            </Typography>
+                        </Paper>
+
+                        : title === 'Theater' ?
+                            <div className={classes.warning}>
+                                <Alert severity="warning">Due to Covid-19.Theaters are temproraly closed until further notice!</Alert>
+                            </div> :
+                            movie.length > 0 ?
+                                movie.map((item, index) => (
+                                    <Grid item xs={6} sm={3} xl={2} key={index}>
+                                        <MovieCard changeBody={changeBody} image={item.image} movie={item.name} key={index} />
+                                    </Grid>
+                                )) :
+                                <Snackbar
+                                    className={classes.snackBar}
+                                    anchorOrigin={{
+                                        vertical: mobile ? 'top' : 'bottom',
+                                        horizontal: mobile ? 'right' : 'left',
+                                    }}
+                                    open={undoOpen}
+                                    autoHideDuration={6000}
+                                    onClose={handleFilterUndo}
+                                    message="No movies to Display"
+                                    action={
+                                        <React.Fragment>
+                                            <Button color="secondary" size="small" onClick={handleFilterUndo}>
+                                                UNDO
+                                    </Button>
+                                            <IconButton size="small" aria-label="close" color="inherit" onClick={handleUndoClose}>
+                                                <CloseIcon fontSize="small" />
+                                            </IconButton>
+                                        </React.Fragment>
+                                    }
+                                />}
+                </Grid>
+            </div>
+        </div>
+    )
+}

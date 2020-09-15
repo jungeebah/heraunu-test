@@ -9,6 +9,9 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import MovieCastnCrew from '../MovieCastnCrew/MovieCastnCrew';
+import Songs from '../Songs/Songs';
+import Hidden from '@material-ui/core/Hidden';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,7 +19,8 @@ const useStyles = makeStyles((theme) => ({
     },
     movieInfo: {
         padding: theme.spacing(2),
-        marginTop: theme.spacing(1)
+        marginTop: theme.spacing(1),
+
     },
     button: {
         "&:not(:first-child)": {
@@ -27,59 +31,128 @@ const useStyles = makeStyles((theme) => ({
     castCrew: {
         marginTop: theme.spacing(2)
     },
+    card: {
+        marginTop: theme.spacing(2),
+        marginLeft: theme.spacing(2),
+        borderRadius: 12,
+        [theme.breakpoints.down('sm')]: {
+            maxWidth: '200px',
+            marginLeft: theme.spacing(0),
+        },
+        maxWidth: '400px'
+
+    },
+    spacing: {
+        [theme.breakpoints.up('sm')]: {
+            padding: theme.spacing(5) + 7,
+        },
+        padding: '20px'
+    },
+    buttonYear: {
+        borderRadius: theme.spacing(1),
+        padding: '0px',
+        color: theme.palette.primary.main
+    },
+    year: {
+        paddingBottom: '2px'
+    },
+    box: {
+        borderWidth: '1px'
+    }
 }))
 
 const MoviePage = (props) => {
     const classes = useStyles();
     const theme = useTheme();
-    const mobile = useMediaQuery(theme.breakpoints.down('xs'));
+    const mobile = useMediaQuery(theme.breakpoints.down('sm'));
     const { movie } = props
     return (
         <Paper elevation={0} className={classes.root}>
-            <Card>
-                <CardMedia
-                    component="img"
-                    image={movie.image}
-                    title={movie.name}
-                ></CardMedia>
-            </Card>
-            <Paper className={classes.movieInfo}>
-                <Typography variant={mobile ? 'h6' : 'h3'}>
-                    {movie.name}
-                </Typography>
-                <Grid container>
-                    <Grid item xs={3} sm={2} md={1}>
-                        <Typography>
-                            {movie.year}
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={3} sm={2} md={1}>
-                        <Typography>
-                            {movie.length}
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={3} sm={2} md={1}>
-                        <Typography>
-                            {movie.rating}
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                        {movie.genre.map((item) => (
-                            <Button
-                                size={mobile ? 'small' : 'medium'}
-                                className={classes.button}
-                                variant="contained"
-                                color="primary"
-                                key={item}>
-                                {item}
-                            </Button>
+            <Grid container >
+                <Grid item xs={12} sm={5} md={6}>
+                    <Card
+                        className={classes.card}>
+                        <CardMedia
+                            component="img"
+                            image={movie.image}
+                            title={movie.name}
+                        ></CardMedia>
+                    </Card>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                    <Grid
+                        container
+                        direction="column"
+                        justify="space-between"
+                        alignItems="flex-start">
+                        {[1, 2].map((item) => (
+                            <Hidden only="xs" key={item}>
+                                <Grid item sm={2} key={item}>
+                                    <div className={classes.spacing}>
+
+                                    </div>
+                                </Grid>
+                            </Hidden>
                         ))}
+                        <Grid item xs={12}>
+                            <Paper className={classes.movieInfo}>
+
+                                <Typography variant={mobile ? 'h6' : 'h3'}>
+                                    {movie.name}
+                                </Typography>
+
+                                <Grid container className={classes.year}>
+                                    <Grid item xs={4} sm={4} md={4}>
+                                        <Button size="small" variant='outlined'
+                                            className={classes.buttonYear}>
+                                            <Typography variant={mobile ? 'caption' : 'subtitle1'}>
+                                                {movie.year}
+                                            </Typography>
+                                        </Button>
+                                    </Grid>
+                                    <Grid item xs={3} sm={3} md={3}>
+                                        <Box className={classes.box}>
+                                            <Typography variant={mobile ? 'caption' : 'subtitle1'}>
+                                                {movie.length}
+                                            </Typography>
+                                        </Box>
+                                    </Grid>
+                                    <Grid item xs={2} sm={2} md={3}>
+                                        <Box>
+                                            <Typography variant={mobile ? 'caption' : 'subtitle1'}>
+                                                {movie.rating}
+                                            </Typography>
+                                        </Box>
+                                    </Grid>
+                                </Grid>
+                                <Grid container >
+                                    <Grid item xs={12}>
+                                        {movie.genre.map((item) => (
+                                            <Button
+                                                size={mobile ? 'small' : 'medium'}
+                                                className={classes.button}
+                                                variant="contained"
+                                                color="primary"
+                                                key={item}>
+                                                {item}
+                                            </Button>
+                                        ))}
+                                    </Grid>
+                                </Grid>
+                            </Paper>
+                        </Grid>
                     </Grid>
                 </Grid>
+            </Grid>
+            <Paper className={classes.castCrew}>
+                <MovieCastnCrew
+                    actor={movie.actor}
+                />
             </Paper>
-            <MovieCastnCrew
-                actor={movie.actor}
-                className={classes.castCrew} />
+
+            <Paper className={classes.castCrew}>
+                <Songs songs={movie.songs} />
+            </Paper>
         </Paper >
     )
 }

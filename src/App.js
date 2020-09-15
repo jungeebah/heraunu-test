@@ -14,9 +14,17 @@ const useStyles = makeStyles(() => ({
 }));
 
 const App = () => {
-  const [data, setData] = React.useState(movie)
+  const [data, setData] = React.useState(movie);
+  const [individualMovie, setIndividual] = React.useState([])
   const [title, setTitle] = React.useState('Home');
+  const [displayBody, setDisplayBody] = React.useState(true)
 
+  const changeBody = (event, data) => {
+    console.log(event.target, data)
+    const individual = movie.filter((x) => x.name === data)
+    setIndividual(individual)
+    setDisplayBody(false)
+  }
   const searchFilter = (name, type) => {
     if (type !== 'Movie') {
       const searchFiltered = movie.filter((item) => (item.actor.map((actor) => (actor.name.includes(name))).includes(true)))
@@ -25,6 +33,7 @@ const App = () => {
       const searchFiltered = movie.filter((item) => (item.name === name))
       setData(searchFiltered)
     }
+    setDisplayBody(true)
     setTitle('Result')
   }
   const changeTitle = (title) => {
@@ -35,6 +44,7 @@ const App = () => {
       const movieFiltered = movie.filter((item) => (item.playing.includes(title.toLowerCase())))
       setData(movieFiltered)
     }
+    setDisplayBody(true)
     setTitle(title)
   }
   const [mobileDrawer, setMobileDrawer] = React.useState(false);
@@ -107,6 +117,9 @@ const App = () => {
         <Grid item xs={12} >
           <Paper variant="outlined" square>
             <Body
+              changeBody={changeBody}
+              individualMovie={individualMovie}
+              displayBody={displayBody}
               data={data}
               title={title}
               changeTitle={changeTitle}
