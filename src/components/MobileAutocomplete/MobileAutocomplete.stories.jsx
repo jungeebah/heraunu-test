@@ -1,17 +1,24 @@
-import React from 'react';
-import MobileAutocomplete from './MobileAutocomplete';
-import darkTheme from '../Styling/Theme/blackTheme';
-import lightTheme from '../Styling/Theme/lightTheme';
-import { ThemeProvider } from '@material-ui/core/styles';
-
+import React from "react";
+import MobileAutocomplete from "./MobileAutocomplete";
+import darkTheme from "../Styling/Theme/blackTheme";
+import lightTheme from "../Styling/Theme/lightTheme";
+import { ThemeProvider } from "@material-ui/core/styles";
 
 export default {
-    title: 'Section/MobileAutocomplete',
-    component: 'MobileAutocomplete',
-}
+  title: "Section/MobileAutocomplete",
+  component: "MobileAutocomplete",
+};
 const theme = { dark: darkTheme, light: lightTheme };
-const DarkThemeTemplate = (...args) => <ThemeProvider theme={theme['dark']}><MobileAutocomplete {...args} /></ThemeProvider>
-const Template = (...args) => <ThemeProvider theme={theme['light']}><MobileAutocomplete {...args} /></ThemeProvider>;
+const DarkThemeTemplate = (...args) => (
+  <ThemeProvider theme={theme["dark"]}>
+    <MobileAutocomplete {...args} />
+  </ThemeProvider>
+);
+const Template = (...args) => (
+  <ThemeProvider theme={theme["light"]}>
+    <MobileAutocomplete {...args} />
+  </ThemeProvider>
+);
 
 export const Default = Template.bind({});
 export const DarkTheme = DarkThemeTemplate.bind({});
@@ -20,19 +27,19 @@ export const IpadView = Template.bind({});
 export const largeScreen = Template.bind({});
 
 MobileView.parameters = {
-    viewport: {
-        defaultViewport: 'xs'
-    },
-}
+  viewport: {
+    defaultViewport: "xs",
+  },
+};
 
 IpadView.parameters = {
-    viewport: {
-        defaultViewport: 'sm'
-    },
-}
+  viewport: {
+    defaultViewport: "sm",
+  },
+};
 
 largeScreen.parameters = {
-    viewport: {
-        defaultViewport: 'xl'
-    },
-}
+  viewport: {
+    defaultViewport: "xl",
+  },
+};

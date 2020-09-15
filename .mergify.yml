@@ -1,33 +1,33 @@
 pull_request_rules:
-    - name: Automatic merge on approval
-      conditions:
-        - "status-success=build"
-        - base=master
-      actions:
-        merge:
-          method: merge
-    - name: delete head branch after merge
-      conditions:
-        - merged
-      actions:
-        delete_head_branch: {}
-    - name: ask to resolve conflict
-      conditions:
-        - conflict
-      actions:
-          comment:
-            message: This pull request is now in conflicts. Could you fix it? 🙏
-    - name: automatic merge for ImgBot pull requests
-      conditions:
-        - author=imgbot[bot]
-        - status-success=build
-      actions:
-        merge:
-          method: merge
-    - name: disable development branch merge
-      conditions:
-        - head=development
-        - base=master
-      actions:
-        close:
-          message: This pull request cannot be merged as Development cannot be merged to master 🙏
+  - name: Automatic merge on approval
+    conditions:
+      - "status-success=build"
+      - base=master
+    actions:
+      merge:
+        method: merge
+  - name: delete head branch after merge
+    conditions:
+      - merged
+    actions:
+      delete_head_branch: {}
+  - name: ask to resolve conflict
+    conditions:
+      - conflict
+    actions:
+      comment:
+        message: This pull request is now in conflicts. Could you fix it? 🙏
+  - name: automatic merge for ImgBot pull requests
+    conditions:
+      - author=imgbot[bot]
+      - status-success=build
+    actions:
+      merge:
+        method: merge
+  - name: disable development branch merge
+    conditions:
+      - head=development
+      - base=master
+    actions:
+      close:
+        message: This pull request cannot be merged as Development cannot be merged to master 🙏
