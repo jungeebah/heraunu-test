@@ -49,6 +49,9 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: "nowrap",
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: "translateZ(0)",
+    [theme.breakpoints.down('sm')]: {
+      overflow: 'auto',
+    },
     overflowX: "hidden",
   },
   title: {
