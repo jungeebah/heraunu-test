@@ -90,7 +90,6 @@ const MoviePage = (props) => {
             container
             direction="column"
             justify="space-between"
-            alignItems="flex-start"
           >
             {[1, 2].map((item) => (
               <Hidden only="xs" key={item}>
@@ -106,7 +105,7 @@ const MoviePage = (props) => {
                 </Typography>
 
                 <Grid container className={classes.year}>
-                  <Grid item xs={4} sm={4} md={4}>
+                  <Grid item xs={2} md={4}>
                     <IconButton
                       className={classes.buttonYear}
                     >
@@ -115,14 +114,14 @@ const MoviePage = (props) => {
                       </Typography>
                     </IconButton>
                   </Grid>
-                  <Grid item xs={6} sm={4} md={3}>
+                  <Grid item xs={3} md={3}>
                     <Box className={classes.box}>
                       <Typography variant={mobile ? "caption" : "subtitle1"}>
                         {movie.length}
                       </Typography>
                     </Box>
                   </Grid>
-                  <Grid item xs={2} sm={2} md={3}>
+                  <Grid item xs={2} md={3}>
                     <Box>
                       <Typography variant={mobile ? "caption" : "subtitle1"}>
                         {movie.rating}

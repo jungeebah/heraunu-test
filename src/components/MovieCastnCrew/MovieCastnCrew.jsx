@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: "nowrap",
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: "translateZ(0)",
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       overflow: 'auto',
     },
     overflowX: "hidden",
@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
       height: theme.spacing(14) + 4,
     },
     [theme.breakpoints.between("sm", "md")]: {
-      height: theme.spacing(18) + 2,
+      height: theme.spacing(22) + 2,
     },
     display: "flex",
     alignItems: "center",
@@ -162,7 +162,7 @@ const MovieCastnCrew = (props) => {
   );
   return (
     <Paper elevation={0} className={classes.root}>
-      <Typography variant={mobile ? "h6" : "h3"}>Cast n Crew</Typography>
+      <Typography variant={smallScreen ? "h6" : "h3"}>Cast n Crew</Typography>
       <div className={classes.gridRoot}>
         <Grid container spacing={0}>
           <Grid item xs={1} classes={{ "grid-xs-1": classes.flexXs }}>
@@ -181,7 +181,7 @@ const MovieCastnCrew = (props) => {
               ref={movieScrollBox}
               spacing={mobile ? 8 : 20}
               className={classes.gridList}
-              cellHeight={mobile ? 170 : ipad ? 180 : xlarge ? 350 : 340}
+              cellHeight={mobile ? 170 : ipad ? 200 : xlarge ? 350 : 340}
               cols={mobile ? 3.5 : ipad ? 4.5 : xlarge ? 8.5 : 7.5}
             >
               {actor
