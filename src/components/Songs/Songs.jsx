@@ -46,7 +46,7 @@ const Songs = (props) => {
       <Typography variant="h6">Songs</Typography>
       <List className={classes.list}>
         {props.songs.map((item, index) => (
-          <div className={classes.paper}>
+          <div className={classes.paper} key={index}>
             <ListItem
               key={item}
               classes={{ root: classes.music, selected: classes.selected }}
