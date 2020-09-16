@@ -1,42 +1,41 @@
-import { MINIMAL_VIEWPORTS } from '@storybook/addon-viewport';
-
+import { MINIMAL_VIEWPORTS } from "@storybook/addon-viewport";
 
 const customViewports = {
   xs: {
-    name: 'xs',
+    name: "xs",
     styles: {
-      width: '400px',
-      height: '812px',
+      width: "400px",
+      height: "812px",
     },
   },
   sm: {
-    name: 'Ipad',
+    name: "Ipad",
     styles: {
-      width: '600px',
-      height: '1024px',
+      width: "600px",
+      height: "1024px",
     },
   },
   md: {
-    name: 'md',
+    name: "md",
     styles: {
-      width: '960px',
-      height: '1024px',
+      width: "960px",
+      height: "1024px",
     },
   },
   lg: {
-    name: 'lg',
+    name: "lg",
     styles: {
-      width: '1280px',
-      height: '1024px',
+      width: "1280px",
+      height: "1024px",
     },
   },
   xl: {
-    name: 'xl',
+    name: "xl",
     styles: {
-      width: '1920px',
-      height: '1024px',
+      width: "1920px",
+      height: "1024px",
     },
-  }
+  },
 };
 
 export const parameters = {
@@ -47,5 +46,4 @@ export const parameters = {
       ...customViewports,
     },
   },
-}
-
+};
