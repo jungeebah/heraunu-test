@@ -137,7 +137,9 @@ const MovieCastnCrew = (props) => {
   const mobile = useMediaQuery(theme.breakpoints.down("xs"));
   const ipad = useMediaQuery(theme.breakpoints.between("xs", "sm"));
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const md = useMediaQuery(theme.breakpoints.down("md"));
   const xlarge = useMediaQuery(theme.breakpoints.up("xl"));
+  const column = mobile ? 3.5 : md ? 4.5 : xlarge ? 8.5 : 5.5;
   const skeleton = (
     <div>
       <Skeleton variant="rect" width={210} height={118} />
@@ -203,7 +205,7 @@ const MovieCastnCrew = (props) => {
               spacing={mobile ? 8 : xlarge ? 20 : 15}
               className={classes.gridList}
               cellHeight={mobile ? 170 : ipad ? 200 : xlarge ? 350 : 320}
-              cols={mobile ? 3.5 : ipad ? 4.5 : xlarge ? 8.5 : 5.5}
+              cols={column}
             >
               {actor
                 ? actor.map((item, index) => (
@@ -244,11 +246,11 @@ const MovieCastnCrew = (props) => {
           <Grid item xs={1} classes={{ "grid-xs-1": classes.flexXs }}>
             {smallScreen ? (
               <div></div>
-            ) : rightArrow ? (
+            ) : column > actor.length ? <div></div> : rightArrow ? (
               <Paper className={classes.arrow}>{arrowForward}</Paper>
             ) : (
-                  <div />
-                )}
+                <div />
+              )}
           </Grid>
         </Grid>
       </div>

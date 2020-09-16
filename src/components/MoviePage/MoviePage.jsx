@@ -13,6 +13,7 @@ import Songs from "../Songs/Songs";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from '@material-ui/core/IconButton';
 import Box from "@material-ui/core/Box";
+import clsx from "clsx";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -67,6 +68,17 @@ const useStyles = makeStyles((theme) => ({
   box: {
     borderWidth: "1px",
   },
+  menuDrawnLength: {
+    [theme.breakpoints.down('sm')]: {
+      maxWidth: '23%'
+    },
+  },
+  length: {
+    [theme.breakpoints.down('sm')]: {
+      maxWidth: '19%'
+    },
+    maxWidth: '10.4%'
+  }
 }));
 
 const MoviePage = (props) => {
@@ -106,7 +118,7 @@ const MoviePage = (props) => {
                 </Typography>
 
                 <Grid container className={classes.year}>
-                  <Grid item xs={2} md={1}>
+                  <Grid item xs={2} md={2}>
                     <IconButton
                       className={classes.buttonYear}
                     >
@@ -115,16 +127,18 @@ const MoviePage = (props) => {
                       </Typography>
                     </IconButton>
                   </Grid>
-                  <Grid item xs={3} md={1}>
+                  <Grid item xs={3} md={2} className={props.menuDrawnLength ? classes.length : classes.menuDrawnLength}>
                     <Box className={classes.box}>
-                      <Typography variant={mobile ? "caption" : "subtitle2"}>
+                      <Typography variant={mobile ? "caption" : "subtitle2"}
+                      >
                         {movie.length}
                       </Typography>
                     </Box>
                   </Grid>
                   <Grid item xs={2} md={1}>
                     <Box>
-                      <Typography variant={mobile ? "caption" : "subtitle2"}>
+                      <Typography variant={mobile ? "caption" : "subtitle2"}
+                      >
                         {movie.rating}
                       </Typography>
                     </Box>
