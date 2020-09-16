@@ -14,6 +14,8 @@ import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
 import Box from "@material-ui/core/Box";
 import Actor from "../Actor/Actor";
+import Year from "../Year/Year";
+import Genre from "../Genre/Genre";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -78,11 +80,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MoviePage = (props) => {
-  const classes = useStyles();
-  const theme = useTheme();
-  const mobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [displayPage, setDisplayPage] = React.useState("movie");
   const [actorInfo, setActorInfo] = React.useState([]);
+  const [yearInfo, setYearInfo] = React.useState([]);
+  const [genreList, setgenreList] = React.useState([]);
 
   const overRideChangeBody = (e, movieName) => {
     setDisplayPage("movie");
@@ -101,112 +102,49 @@ const MoviePage = (props) => {
     setDisplayPage("actor");
   };
 
+  const yearClick = (e, year) => {
+    const movieList = props.data.filter((item) => item.year === year);
+    const yearObject = {
+      name: year,
+      movies: movieList.map((x) => ({ name: x.name, image: x.image })),
+    };
+
+    setYearInfo(yearObject);
+    setDisplayPage("year");
+  };
+
+  const genreClick = (e, genre) => {
+    const movieList = props.data.filter((item) => item.genre.includes(genre));
+    const genreList = {
+      name: genre,
+      movies: movieList.map((x) => ({ name: x.name, image: x.image })),
+    };
+
+    setgenreList(genreList);
+    setDisplayPage("genre");
+  };
+
   const { movie } = props;
   return (
     <div>
-      {displayPage === "movie" ? (
-        <Paper elevation={0} className={classes.root}>
-          <Grid container>
-            <Grid item xs={12} sm={5} md={6}>
-              <Card className={classes.card}>
-                <CardMedia
-                  component="img"
-                  image={movie.image}
-                  title={movie.name}
-                ></CardMedia>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Grid container direction="column" justify="space-between">
-                {[1, 2].map((item) => (
-                  <Hidden only="xs" key={item}>
-                    <Grid item sm={2} key={item}>
-                      <div className={classes.spacing}></div>
-                    </Grid>
-                  </Hidden>
-                ))}
-                <Grid item xs={12}>
-                  <Paper className={classes.movieInfo} elevation={0}>
-                    <Typography variant={mobile ? "h6" : "h3"}>
-                      {movie.name}
-                    </Typography>
-
-                    <Grid container className={classes.year}>
-                      <Grid item xs={2} md={2}>
-                        <IconButton className={classes.buttonYear}>
-                          <Typography
-                            variant={mobile ? "caption" : "subtitle2"}
-                            className={classes.yearText}
-                          >
-                            {movie.year}
-                          </Typography>
-                        </IconButton>
-                      </Grid>
-                      <Grid
-                        item
-                        xs={3}
-                        md={2}
-                        className={
-                          props.menuDrawnLength
-                            ? classes.length
-                            : classes.menuDrawnLength
-                        }
-                      >
-                        <Box className={classes.box}>
-                          <Typography
-                            variant={mobile ? "caption" : "subtitle2"}
-                          >
-                            {movie.length}
-                          </Typography>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={2} md={1}>
-                        <Box>
-                          <Typography
-                            variant={mobile ? "caption" : "subtitle2"}
-                          >
-                            {movie.rating}
-                          </Typography>
-                        </Box>
-                      </Grid>
-                    </Grid>
-                    <Grid container>
-                      <Grid item xs={12}>
-                        {movie.genre.map((item) => (
-                          <Button
-                            size={mobile ? "small" : "medium"}
-                            className={classes.button}
-                            variant="contained"
-                            color="primary"
-                            key={item}
-                          >
-                            {item}
-                          </Button>
-                        ))}
-                      </Grid>
-                    </Grid>
-                  </Paper>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-          <div>
-            <MovieCastnCrew
-              actorClick={actorClick}
-              menuDrawerOpen={props.menuDrawerOpen}
-              actor={movie.actor}
-            />
-          </div>
-
-          <Paper elevation={0}>
-            <Songs songs={movie.songs} />
-          </Paper>
-        </Paper>
-      ) : displayPage === "actor" ? (
-        <Actor actor={actorInfo} changeBody={overRideChangeBody} />
-      ) : (
-        <div></div>
-      )}
+      {(displayPage === "movie" && (
+        <Movie
+          movie={movie}
+          menuDrawnLength={props.menuDrawnLength}
+          actorClick={actorClick}
+          yearClick={yearClick}
+          genreClick={genreClick}
+        />
+      )) ||
+        (displayPage === "actor" && (
+          <Actor actor={actorInfo} changeBody={overRideChangeBody} />
+        )) ||
+        (displayPage === "genre" && (
+          <Genre genre={genreList} changeBody={overRideChangeBody} />
+        )) ||
+        (displayPage === "year" && (
+          <Year year={yearInfo} changeBody={overRideChangeBody} />
+        )) || <div></div>}
     </div>
   );
 };
@@ -271,3 +209,106 @@ MoviePage.defaultProps = {
 };
 
 export default MoviePage;
+
+const Movie = (props) => {
+  const classes = useStyles();
+  const theme = useTheme();
+  const mobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const { movie, actorClick } = props;
+  return (
+    <Paper elevation={0} className={classes.root}>
+      <Grid container>
+        <Grid item xs={12} sm={5} md={6}>
+          <Card className={classes.card}>
+            <CardMedia
+              component="img"
+              image={movie.image}
+              title={movie.name}
+            ></CardMedia>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Grid container direction="column" justify="space-between">
+            {[1, 2].map((item) => (
+              <Hidden only="xs" key={item}>
+                <Grid item sm={2} key={item}>
+                  <div className={classes.spacing}></div>
+                </Grid>
+              </Hidden>
+            ))}
+            <Grid item xs={12}>
+              <Paper className={classes.movieInfo} elevation={0}>
+                <Typography variant={mobile ? "h6" : "h3"}>
+                  {movie.name}
+                </Typography>
+
+                <Grid container className={classes.year}>
+                  <Grid item xs={2} md={2}>
+                    <IconButton className={classes.buttonYear} onClick={(e) => props.yearClick(e, movie.year)}>
+                      <Typography
+                        variant={mobile ? "caption" : "subtitle2"}
+                        className={classes.yearText}
+                      >
+                        {movie.year}
+                      </Typography>
+                    </IconButton>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={3}
+                    md={2}
+                    className={
+                      props.menuDrawnLength
+                        ? classes.length
+                        : classes.menuDrawnLength
+                    }
+                  >
+                    <Box className={classes.box}>
+                      <Typography variant={mobile ? "caption" : "subtitle2"}>
+                        {movie.length}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={2} md={1}>
+                    <Box>
+                      <Typography variant={mobile ? "caption" : "subtitle2"}>
+                        {movie.rating}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
+                <Grid container>
+                  <Grid item xs={12}>
+                    {movie.genre.map((item) => (
+                      <Button
+                        size={mobile ? "small" : "medium"}
+                        className={classes.button}
+                        variant="contained"
+                        color="primary"
+                        key={item}
+                        onClick={(e) => props.genreClick(e, item)}
+                      >
+                        {item}
+                      </Button>
+                    ))}
+                  </Grid>
+                </Grid>
+              </Paper>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+      <div>
+        <MovieCastnCrew
+          actorClick={actorClick}
+          menuDrawerOpen={props.menuDrawerOpen}
+          actor={movie.actor}
+        />
+      </div>
+
+      <Paper elevation={0}>
+        <Songs songs={movie.songs} />
+      </Paper>
+    </Paper>
+  );
+};
