@@ -17,16 +17,16 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const Genre = (props) => {
+const Year = (props) => {
   const classes = useStyles();
-  const { genre } = props;
+  const { year } = props;
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down("sm"));
   return (
     <Paper elevation={0}>
       <Grid container>
         <Grid item xs={12}>
-          <Typography variant={mobile ? "h4" : "h1"}>{genre.name}</Typography>
+          <Typography variant={mobile ? "h4" : "h1"}>{year.name}</Typography>
         </Grid>
       </Grid>
       <Paper className={classes.actorMovie} elevation={0}>
@@ -36,7 +36,7 @@ const Genre = (props) => {
               Movies
             </Typography>
           </Grid>
-          {genre.movies.map((item, index) => (
+          {year.movies.map((item, index) => (
             <Grid item xs={6} sm={3} xl={2} key={index}>
               <MovieCard
                 changeBody={props.changeBody}
@@ -52,14 +52,14 @@ const Genre = (props) => {
   );
 };
 
-Genre.propsType = {
-  genre: PropTypes.object,
+Year.propsType = {
+  year: PropTypes.object,
   changeBody: PropTypes.func,
 };
 
-Genre.defaultProps = {
-  genre: {
-    name: "Drama",
+Year.defaultProps = {
+  year: {
+    name: 2016,
     movies: [
       {
         name: "Pashupati Prasad",
@@ -86,4 +86,4 @@ Genre.defaultProps = {
   changeBody: () => {},
 };
 
-export default Genre;
+export default Year;
