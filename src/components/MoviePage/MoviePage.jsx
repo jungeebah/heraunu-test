@@ -244,7 +244,10 @@ const Movie = (props) => {
 
                 <Grid container className={classes.year}>
                   <Grid item xs={2} md={2}>
-                    <IconButton className={classes.buttonYear} onClick={(e) => props.yearClick(e, movie.year)}>
+                    <IconButton
+                      className={classes.buttonYear}
+                      onClick={(e) => props.yearClick(e, movie.year)}
+                    >
                       <Typography
                         variant={mobile ? "caption" : "subtitle2"}
                         className={classes.yearText}
