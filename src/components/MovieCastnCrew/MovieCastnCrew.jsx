@@ -19,7 +19,7 @@ import clsx from "clsx";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down("xs")]: {
       paddingLeft: theme.spacing(0),
       paddingTop: theme.spacing(1),
       marginTop: theme.spacing(-1),
@@ -50,8 +50,8 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: "nowrap",
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: "translateZ(0)",
-    [theme.breakpoints.down('md')]: {
-      overflow: 'auto',
+    [theme.breakpoints.down("md")]: {
+      overflow: "auto",
     },
     overflowX: "hidden",
   },
@@ -104,7 +104,6 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "70px",
     },
     fontSize: "100px",
-    color: theme.palette.primary.main,
   },
   arrowLeft: {
     position: "absolute",
@@ -148,10 +147,11 @@ const MovieCastnCrew = (props) => {
   const { actor } = props;
   const classes = useStyles();
   const noImage = (
-    <Paper className={clsx(classes.noImage, {
-      [classes.menuDrawerNoImage]: props.menuDrawerOpen,
-      [classes.menuNotDrawnNoImage]: !props.menuDrawerOpen
-    })}
+    <Paper
+      className={clsx(classes.noImage, {
+        [classes.menuDrawerNoImage]: props.menuDrawerOpen,
+        [classes.menuNotDrawnNoImage]: !props.menuDrawerOpen,
+      })}
     >
       <PersonIcon className={classes.icon} />
     </Paper>
@@ -196,8 +196,8 @@ const MovieCastnCrew = (props) => {
                 {arrowBack}
               </Paper>
             ) : (
-                  <div />
-                )}
+              <div />
+            )}
           </Grid>
           <Grid item xs={11}>
             <GridList
@@ -209,16 +209,21 @@ const MovieCastnCrew = (props) => {
             >
               {actor
                 ? actor.map((item, index) => (
-                  <GridListTile key={index}>
-                    <Card
-                      elevation={6}
-                      className={classes.card}
-                      key={`card${index}`}
-                    >
-                      <CardActionArea key={index}>
-                        {item.image === "" ? (
-                          noImage
-                        ) : (
+                    <GridListTile key={index}>
+                      <Card
+                        elevation={6}
+                        className={classes.card}
+                        key={`card${index}`}
+                      >
+                        <CardActionArea
+                          key={index}
+                          onClick={(e) => {
+                            props.actorClick(item.name, item.image);
+                          }}
+                        >
+                          {item.image === "" ? (
+                            noImage
+                          ) : (
                             <CardMedia
                               key={item}
                               classes={{
@@ -229,28 +234,30 @@ const MovieCastnCrew = (props) => {
                               title={item.name}
                             ></CardMedia>
                           )}
-                      </CardActionArea>
-                    </Card>
-                    <Typography
-                      variant={mobile ? "body2" : "h6"}
-                      key={item.name}
-                      className={classes.title}
-                    >
-                      {item.name}
-                    </Typography>
-                  </GridListTile>
-                ))
+                        </CardActionArea>
+                      </Card>
+                      <Typography
+                        variant={mobile ? "body2" : "h6"}
+                        key={item.name}
+                        className={classes.title}
+                      >
+                        {item.name}
+                      </Typography>
+                    </GridListTile>
+                  ))
                 : skeleton}
             </GridList>
           </Grid>
           <Grid item xs={1} classes={{ "grid-xs-1": classes.flexXs }}>
             {smallScreen ? (
               <div></div>
-            ) : column > actor.length ? <div></div> : rightArrow ? (
+            ) : column > actor.length ? (
+              <div></div>
+            ) : rightArrow ? (
               <Paper className={classes.arrow}>{arrowForward}</Paper>
             ) : (
-                <div />
-              )}
+              <div />
+            )}
           </Grid>
         </Grid>
       </div>
@@ -259,6 +266,7 @@ const MovieCastnCrew = (props) => {
 };
 MovieCastnCrew.propsType = {
   actor: PropTypes.array,
+  actorClick: PropTypes.array,
 };
 
 MovieCastnCrew.defaultProps = {
@@ -328,5 +336,6 @@ MovieCastnCrew.defaultProps = {
         "https://image.tmdb.org/t/p/original/pbIOAtHytaDkd0nQGG9OPb5jUHN.jpg",
     },
   ],
+  actorClick: () => {},
 };
 export default MovieCastnCrew;

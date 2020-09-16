@@ -10,7 +10,7 @@ import List from "@material-ui/core/List";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down("xs")]: {
       paddingLeft: theme.spacing(0),
       paddingTop: theme.spacing(1),
     },
