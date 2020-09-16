@@ -5,7 +5,7 @@ import Adapter from "enzyme-adapter-react-16";
 
 Enzyme.configure({ adapter: new Adapter() });
 describe("Year", () => {
-    it("should render Year", () => {
-        const wrapper = shallow(<Year />);
-    });
+  it("should render Year", () => {
+    const wrapper = shallow(<Year />);
+  });
 });

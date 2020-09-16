@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
       padding: theme.spacing(4, 2, 2, 2),
     },
   },
-}))
+}));
 const Genre = (props) => {
   const classes = useStyles();
   const { genre } = props;
@@ -26,9 +26,7 @@ const Genre = (props) => {
     <Paper elevation={0}>
       <Grid container>
         <Grid item xs={12}>
-          <Typography variant={mobile ? "h4" : "h1"}>
-            {genre.name}
-          </Typography>
+          <Typography variant={mobile ? "h4" : "h1"}>{genre.name}</Typography>
         </Grid>
       </Grid>
       <Paper className={classes.actorMovie} elevation={0}>
@@ -51,17 +49,17 @@ const Genre = (props) => {
         </Grid>
       </Paper>
     </Paper>
-  )
+  );
 };
 
 Genre.propsType = {
   genre: PropTypes.object,
-  changeBody: PropTypes.func
+  changeBody: PropTypes.func,
 };
 
 Genre.defaultProps = {
   genre: {
-    name: 'Drama',
+    name: "Drama",
     movies: [
       {
         name: "Pashupati Prasad",
@@ -85,7 +83,7 @@ Genre.defaultProps = {
       },
     ],
   },
-  changeBody: () => { },
-}
+  changeBody: () => {},
+};
 
 export default Genre;
