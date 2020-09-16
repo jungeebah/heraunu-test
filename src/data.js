@@ -337,7 +337,7 @@ export const movie = [
       {
         name: "Bipin Karki",
         image:
-          "https://image.tmdb.org/t/p/original/f0ZvIc6njIgBAqlfinM9obQCYow.jpg",
+          "https://image.tmdb.org/t/p/w600_and_h900_bestv2/kD6FEERakHmYVWhiRmwjKIp7wDJ.jpg",
       },
       {
         name: "Rabindra Singh Baniya",
@@ -601,7 +601,7 @@ export const movie = [
       {
         name: "Nischal Basnet",
         image:
-          "https://image.tmdb.org/t/p/w600_and_h900_bestv2/tJXgTRtBI3We8VUOiswsnOBYMY.jpg",
+          "https://image.tmdb.org/t/p/w600_and_h900_bestv2/sNhoJARy4iOB9cCpsqahugWGvxv.jpg",
       },
       {
         name: "Basundhara Bhusal",

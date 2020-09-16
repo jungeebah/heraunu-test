@@ -23,7 +23,6 @@ const App = () => {
   const [displayBody, setDisplayBody] = React.useState(true);
 
   const changeBody = (event, data) => {
-    console.log(event.target, data);
     const individual = movie.filter((x) => x.name === data);
     setIndividual(individual);
     setDisplayBody(false);
