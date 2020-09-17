@@ -13,8 +13,8 @@ import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 const useStyles = makeStyles((theme) => ({
   paper: {
     [theme.breakpoints.down("sm")]: {
-      width: theme.spacing(14),
-      height: theme.spacing(22) + 2,
+      width: theme.spacing(18),
+      height: theme.spacing(25) + 2,
     },
     width: theme.spacing(22),
     height: theme.spacing(34),
@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     [theme.breakpoints.down("sm")]: {
-      width: theme.spacing(10),
-      height: theme.spacing(15),
+      width: theme.spacing(14),
+      height: theme.spacing(19),
     },
     width: theme.spacing(18),
     height: theme.spacing(26),
