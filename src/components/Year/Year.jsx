@@ -55,6 +55,7 @@ const Year = (props) => {
 Year.propsType = {
   year: PropTypes.object,
   changeBody: PropTypes.func,
+  menuDrawerOpen: PropTypes.bool,
 };
 
 Year.defaultProps = {
@@ -83,7 +84,8 @@ Year.defaultProps = {
       },
     ],
   },
-  changeBody: () => {},
+  changeBody: () => { },
+  menuDrawerOpen: true
 };
 
 export default Year;

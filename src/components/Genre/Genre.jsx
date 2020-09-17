@@ -61,6 +61,7 @@ const Genre = (props) => {
 Genre.propsType = {
   genre: PropTypes.object,
   changeBody: PropTypes.func,
+  menuDrawerOpen: PropTypes.bool,
 };
 
 Genre.defaultProps = {

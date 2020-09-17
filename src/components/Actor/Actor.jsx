@@ -83,12 +83,12 @@ const Actor = (props) => {
             {actor.image === "" ? (
               noImage
             ) : (
-              <CardMedia
-                component="img"
-                image={actor.image}
-                title={actor.name}
-              ></CardMedia>
-            )}
+                <CardMedia
+                  component="img"
+                  image={actor.image}
+                  title={actor.name}
+                ></CardMedia>
+              )}
           </Card>
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -135,6 +135,7 @@ const Actor = (props) => {
 
 Actor.propsType = {
   actor: PropTypes.object,
+  menuDrawerOpen: PropTypes.bool,
 };
 
 Actor.defaultProps = {
