@@ -137,13 +137,13 @@ const MoviePage = (props) => {
         />
       )) ||
         (displayPage === "actor" && (
-          <Actor actor={actorInfo} changeBody={overRideChangeBody} />
+          <Actor actor={actorInfo} changeBody={overRideChangeBody} menuDrawerOpen={menuDrawerOpen} />
         )) ||
         (displayPage === "genre" && (
-          <Genre genre={genreList} changeBody={overRideChangeBody} />
+          <Genre genre={genreList} changeBody={overRideChangeBody} menuDrawerOpen={menuDrawerOpen} />
         )) ||
         (displayPage === "year" && (
-          <Year year={yearInfo} changeBody={overRideChangeBody} />
+          <Year year={yearInfo} changeBody={overRideChangeBody} menuDrawerOpen={menuDrawerOpen} />
         )) || <div></div>}
     </div>
   );
