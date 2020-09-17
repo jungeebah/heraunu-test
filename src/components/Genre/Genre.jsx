@@ -17,6 +17,12 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+
+
+function capitalize(word) {
+  return word[0].toUpperCase() + word.slice(1).toLowerCase();
+}
+
 const Genre = (props) => {
   const classes = useStyles();
   const { genre } = props;
@@ -26,7 +32,7 @@ const Genre = (props) => {
     <Paper elevation={0}>
       <Grid container>
         <Grid item xs={12}>
-          <Typography variant={mobile ? "h4" : "h1"}>{genre.name}</Typography>
+          <Typography variant={mobile ? "h4" : "h1"}>{capitalize(genre.name)}</Typography>
         </Grid>
       </Grid>
       <Paper className={classes.actorMovie} elevation={0}>
@@ -83,7 +89,7 @@ Genre.defaultProps = {
       },
     ],
   },
-  changeBody: () => {},
+  changeBody: () => { },
 };
 
 export default Genre;
