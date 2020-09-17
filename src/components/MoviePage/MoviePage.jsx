@@ -134,6 +134,7 @@ const MoviePage = (props) => {
           actorClick={actorClick}
           yearClick={yearClick}
           genreClick={genreClick}
+          menuDrawerOpen={props.menuDrawerOpen}
         />
       )) ||
         (displayPage === "actor" && (
