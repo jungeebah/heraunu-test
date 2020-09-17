@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
   },
   menuDrawerNoImage: {
     [theme.breakpoints.down("xs")]: {
-      maxHeight: theme.spacing(17),
+      height: theme.spacing(17),
     },
     [theme.breakpoints.only("sm")]: {
       maxHeight: theme.spacing(16) + 4,
