@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
       maxHeight: theme.spacing(17),
     },
     [theme.breakpoints.only("sm")]: {
-      maxHeight: theme.spacing(16) + 4,
+      maxHeight: theme.spacing(18) + 7,
     },
     [theme.breakpoints.up("md")]: {
       maxHeight: theme.spacing(29),
