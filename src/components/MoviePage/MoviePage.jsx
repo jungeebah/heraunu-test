@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.main,
   },
   year: {
-    marginTop: theme.spacing(-1),
+    marginTop: theme.spacing(-1) + 5,
     paddingBottom: theme.spacing(1) - 2,
   },
   yearText: {
@@ -138,13 +138,25 @@ const MoviePage = (props) => {
         />
       )) ||
         (displayPage === "actor" && (
-          <Actor actor={actorInfo} changeBody={overRideChangeBody} menuDrawerOpen={props.menuDrawerOpen} />
+          <Actor
+            actor={actorInfo}
+            changeBody={overRideChangeBody}
+            menuDrawerOpen={props.menuDrawerOpen}
+          />
         )) ||
         (displayPage === "genre" && (
-          <Genre genre={genreList} changeBody={overRideChangeBody} menuDrawerOpen={props.menuDrawerOpen} />
+          <Genre
+            genre={genreList}
+            changeBody={overRideChangeBody}
+            menuDrawerOpen={props.menuDrawerOpen}
+          />
         )) ||
         (displayPage === "year" && (
-          <Year year={yearInfo} changeBody={overRideChangeBody} menuDrawerOpen={props.menuDrawerOpen} />
+          <Year
+            year={yearInfo}
+            changeBody={overRideChangeBody}
+            menuDrawerOpen={props.menuDrawerOpen}
+          />
         )) || <div></div>}
     </div>
   );
@@ -219,7 +231,7 @@ const Movie = (props) => {
   return (
     <Paper elevation={0} className={classes.root}>
       <Grid container>
-        <Grid item xs={12} sm={5} md={6}>
+        <Grid item xs={12} sm={5} md={4} xl={3}>
           <Card className={classes.card}>
             <CardMedia
               component="img"
@@ -228,7 +240,7 @@ const Movie = (props) => {
             ></CardMedia>
           </Card>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={6} lg={5} xl={3}>
           <Grid container direction="column" justify="space-between">
             {[1, 2].map((item) => (
               <Hidden only="xs" key={item}>
@@ -273,7 +285,7 @@ const Movie = (props) => {
                       </Typography>
                     </Box>
                   </Grid>
-                  <Grid item xs={2} md={1}>
+                  <Grid item xs={2} md={2}>
                     <Box>
                       <Typography variant={mobile ? "caption" : "subtitle2"}>
                         {movie.rating}

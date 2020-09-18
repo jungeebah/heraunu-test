@@ -83,12 +83,12 @@ const Actor = (props) => {
             {actor.image === "" ? (
               noImage
             ) : (
-                <CardMedia
-                  component="img"
-                  image={actor.image}
-                  title={actor.name}
-                ></CardMedia>
-              )}
+              <CardMedia
+                component="img"
+                image={actor.image}
+                title={actor.name}
+              ></CardMedia>
+            )}
           </Card>
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -118,7 +118,7 @@ const Actor = (props) => {
             </Typography>
           </Grid>
           {actor.movies.map((item, index) => (
-            <Grid item xs={6} sm={3} xl={2} key={index}>
+            <Grid item xs={6} sm={4} lg={3} xl={2} key={index}>
               <MovieCard
                 changeBody={props.changeBody}
                 image={item.image}

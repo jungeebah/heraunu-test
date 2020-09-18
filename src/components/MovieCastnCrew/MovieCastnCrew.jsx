@@ -112,10 +112,29 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     marginBottom: theme.spacing(13) + 3,
     opacity: "0.9",
-    height: theme.spacing(34) + 5,
+    height: theme.spacing(32) + 8,
   },
+  arrowLeftMenuDrawn: {
+    position: "absolute",
+    zIndex: "1000",
+    alignItems: "center",
+    display: "flex",
+    marginBottom: theme.spacing(13) + 3,
+    opacity: "0.9",
+    height: theme.spacing(29) + 1,
+  },
+
   arrow: {
-    height: theme.spacing(34) + 5,
+    height: theme.spacing(32) + 8,
+    position: "relative",
+    alignItems: "center",
+    marginLeft: -theme.spacing(6),
+    display: "flex",
+    marginBottom: theme.spacing(13) + 3,
+    opacity: "0.9",
+  },
+  arrowRightMenuDrawn: {
+    height: theme.spacing(29) + 1,
     position: "relative",
     alignItems: "center",
     marginLeft: -theme.spacing(6),
@@ -159,8 +178,12 @@ const MovieCastnCrew = (props) => {
   const scrollRight = () => {
     movieScrollBox.current.scrollLeft += 200;
     setleftArrow(true);
+    const chromeMaxScrollLeft =
+      movieScrollBox.current.scrollWidth - movieScrollBox.current.clientWidth;
     if (
-      movieScrollBox.current.scrollLeft === movieScrollBox.current.scrollLeftMax
+      movieScrollBox.current.scrollLeft ===
+        movieScrollBox.current.scrollLeftMax ||
+      movieScrollBox.current.scrollLeft === chromeMaxScrollLeft
     ) {
       movieScrollBox.current.scrollLeft += 200;
       setRightArrow(false);
@@ -192,12 +215,19 @@ const MovieCastnCrew = (props) => {
             {smallScreen ? (
               <div></div>
             ) : leftArrow ? (
-              <Paper className={classes.arrowLeft} elevaion={0}>
+              <Paper
+                className={
+                  props.menuDrawerOpen
+                    ? classes.arrowLeftMenuDrawn
+                    : classes.arrowLeft
+                }
+                elevaion={0}
+              >
                 {arrowBack}
               </Paper>
             ) : (
-                  <div />
-                )}
+              <div />
+            )}
           </Grid>
           <Grid item xs={11}>
             <GridList
@@ -209,21 +239,21 @@ const MovieCastnCrew = (props) => {
             >
               {actor
                 ? actor.map((item, index) => (
-                  <GridListTile key={index}>
-                    <Card
-                      elevation={6}
-                      className={classes.card}
-                      key={`card${index}`}
-                    >
-                      <CardActionArea
-                        key={index}
-                        onClick={(e) => {
-                          props.actorClick(item.name, item.image);
-                        }}
+                    <GridListTile key={index}>
+                      <Card
+                        elevation={6}
+                        className={classes.card}
+                        key={`card${index}`}
                       >
-                        {item.image === "" ? (
-                          noImage
-                        ) : (
+                        <CardActionArea
+                          key={index}
+                          onClick={(e) => {
+                            props.actorClick(item.name, item.image);
+                          }}
+                        >
+                          {item.image === "" ? (
+                            noImage
+                          ) : (
                             <CardMedia
                               key={item}
                               classes={{
@@ -234,17 +264,17 @@ const MovieCastnCrew = (props) => {
                               title={item.name}
                             ></CardMedia>
                           )}
-                      </CardActionArea>
-                    </Card>
-                    <Typography
-                      variant={mobile ? "body2" : "h6"}
-                      key={item.name}
-                      className={classes.title}
-                    >
-                      {item.name}
-                    </Typography>
-                  </GridListTile>
-                ))
+                        </CardActionArea>
+                      </Card>
+                      <Typography
+                        variant={mobile ? "body2" : "h6"}
+                        key={item.name}
+                        className={classes.title}
+                      >
+                        {item.name}
+                      </Typography>
+                    </GridListTile>
+                  ))
                 : skeleton}
             </GridList>
           </Grid>
@@ -254,10 +284,18 @@ const MovieCastnCrew = (props) => {
             ) : column > actor.length ? (
               <div></div>
             ) : rightArrow ? (
-              <Paper className={classes.arrow}>{arrowForward}</Paper>
+              <Paper
+                className={
+                  props.menuDrawerOpen
+                    ? classes.arrowRightMenuDrawn
+                    : classes.arrow
+                }
+              >
+                {arrowForward}
+              </Paper>
             ) : (
-                    <div />
-                  )}
+              <div />
+            )}
           </Grid>
         </Grid>
       </div>
@@ -336,6 +374,6 @@ MovieCastnCrew.defaultProps = {
         "https://image.tmdb.org/t/p/original/pbIOAtHytaDkd0nQGG9OPb5jUHN.jpg",
     },
   ],
-  actorClick: () => { },
+  actorClick: () => {},
 };
 export default MovieCastnCrew;
