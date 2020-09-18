@@ -118,7 +118,7 @@ const Actor = (props) => {
             </Typography>
           </Grid>
           {actor.movies.map((item, index) => (
-            <Grid item xs={6} sm={3} xl={2} key={index}>
+            <Grid item xs={6} sm={4} lg={3} xl={2} key={index}>
               <MovieCard
                 changeBody={props.changeBody}
                 image={item.image}
@@ -135,6 +135,7 @@ const Actor = (props) => {
 
 Actor.propsType = {
   actor: PropTypes.object,
+  menuDrawerOpen: PropTypes.bool,
 };
 
 Actor.defaultProps = {

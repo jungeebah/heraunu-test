@@ -68,10 +68,10 @@ const useStyles = makeStyles((theme) => ({
   },
   menuDrawerNoImage: {
     [theme.breakpoints.down("xs")]: {
-      maxHeight: theme.spacing(13) + 4,
+      maxHeight: theme.spacing(17),
     },
     [theme.breakpoints.only("sm")]: {
-      maxHeight: theme.spacing(16) + 4,
+      maxHeight: theme.spacing(19) + 7,
     },
     [theme.breakpoints.up("md")]: {
       maxHeight: theme.spacing(29),
@@ -79,10 +79,10 @@ const useStyles = makeStyles((theme) => ({
   },
   menuNotDrawnNoImage: {
     [theme.breakpoints.down("xs")]: {
-      maxHeight: theme.spacing(13) + 4,
+      maxHeight: theme.spacing(17),
     },
     [theme.breakpoints.only("sm")]: {
-      maxHeight: theme.spacing(21),
+      maxHeight: theme.spacing(24) + 1,
     },
     [theme.breakpoints.up("md")]: {
       maxHeight: theme.spacing(32) + 6,
@@ -112,10 +112,29 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     marginBottom: theme.spacing(13) + 3,
     opacity: "0.9",
-    height: theme.spacing(34) + 5,
+    height: theme.spacing(32) + 8,
   },
+  arrowLeftMenuDrawn: {
+    position: "absolute",
+    zIndex: "1000",
+    alignItems: "center",
+    display: "flex",
+    marginBottom: theme.spacing(13) + 3,
+    opacity: "0.9",
+    height: theme.spacing(29) + 1,
+  },
+
   arrow: {
-    height: theme.spacing(34) + 5,
+    height: theme.spacing(32) + 8,
+    position: "relative",
+    alignItems: "center",
+    marginLeft: -theme.spacing(6),
+    display: "flex",
+    marginBottom: theme.spacing(13) + 3,
+    opacity: "0.9",
+  },
+  arrowRightMenuDrawn: {
+    height: theme.spacing(29) + 1,
     position: "relative",
     alignItems: "center",
     marginLeft: -theme.spacing(6),
@@ -159,8 +178,12 @@ const MovieCastnCrew = (props) => {
   const scrollRight = () => {
     movieScrollBox.current.scrollLeft += 200;
     setleftArrow(true);
+    const chromeMaxScrollLeft =
+      movieScrollBox.current.scrollWidth - movieScrollBox.current.clientWidth;
     if (
-      movieScrollBox.current.scrollLeft === movieScrollBox.current.scrollLeftMax
+      movieScrollBox.current.scrollLeft ===
+        movieScrollBox.current.scrollLeftMax ||
+      movieScrollBox.current.scrollLeft === chromeMaxScrollLeft
     ) {
       movieScrollBox.current.scrollLeft += 200;
       setRightArrow(false);
@@ -192,7 +215,14 @@ const MovieCastnCrew = (props) => {
             {smallScreen ? (
               <div></div>
             ) : leftArrow ? (
-              <Paper className={classes.arrowLeft} elevaion={0}>
+              <Paper
+                className={
+                  props.menuDrawerOpen
+                    ? classes.arrowLeftMenuDrawn
+                    : classes.arrowLeft
+                }
+                elevaion={0}
+              >
                 {arrowBack}
               </Paper>
             ) : (
@@ -204,7 +234,7 @@ const MovieCastnCrew = (props) => {
               ref={movieScrollBox}
               spacing={mobile ? 8 : xlarge ? 20 : 15}
               className={classes.gridList}
-              cellHeight={mobile ? 170 : ipad ? 200 : xlarge ? 350 : 320}
+              cellHeight={mobile ? 170 : ipad ? 220 : xlarge ? 350 : 320}
               cols={column}
             >
               {actor
@@ -254,7 +284,15 @@ const MovieCastnCrew = (props) => {
             ) : column > actor.length ? (
               <div></div>
             ) : rightArrow ? (
-              <Paper className={classes.arrow}>{arrowForward}</Paper>
+              <Paper
+                className={
+                  props.menuDrawerOpen
+                    ? classes.arrowRightMenuDrawn
+                    : classes.arrow
+                }
+              >
+                {arrowForward}
+              </Paper>
             ) : (
               <div />
             )}

@@ -37,7 +37,7 @@ const Year = (props) => {
             </Typography>
           </Grid>
           {year.movies.map((item, index) => (
-            <Grid item xs={6} sm={3} xl={2} key={index}>
+            <Grid item xs={6} sm={4} lg={3} xl={2} key={index}>
               <MovieCard
                 changeBody={props.changeBody}
                 image={item.image}
@@ -55,6 +55,7 @@ const Year = (props) => {
 Year.propsType = {
   year: PropTypes.object,
   changeBody: PropTypes.func,
+  menuDrawerOpen: PropTypes.bool,
 };
 
 Year.defaultProps = {
@@ -84,6 +85,7 @@ Year.defaultProps = {
     ],
   },
   changeBody: () => {},
+  menuDrawerOpen: true,
 };
 
 export default Year;

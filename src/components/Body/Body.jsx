@@ -319,7 +319,7 @@ const Main = (props) => {
             </div>
           ) : movie.length > 0 ? (
             movie.map((item, index) => (
-              <Grid item xs={6} sm={3} xl={2} key={index}>
+              <Grid item xs={6} sm={4} lg={3} xl={2} key={index}>
                 <MovieCard
                   changeBody={changeBody}
                   image={item.image}
