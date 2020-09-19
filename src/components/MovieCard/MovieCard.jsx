@@ -117,7 +117,7 @@ MovieCard.propsType = {
 
 MovieCard.defaultProps = {
   image:
-    "https://image.tmdb.org/t/p/w220_and_h330_face/d9pQHVVf2FbfY6ayPM7qseVLc5K.jpg",
+    "https://m.media-amazon.com/images/M/MV5BOTgwYjJjYWItNTY5Yi00YzVmLWJkM2MtNjVmNmYzZDQ0YTMyXkEyXkFqcGdeQXVyNTEwOTEzNDk@._V1_SY1000_SX750_AL_.jpg",
   movie: "Loot",
   cardClick: () => {
     console.log("pressed");

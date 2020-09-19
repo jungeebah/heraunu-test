@@ -262,7 +262,7 @@ export const movie = [
   {
     name: "Loot",
     image:
-      "https://image.tmdb.org/t/p/w220_and_h330_face/d9pQHVVf2FbfY6ayPM7qseVLc5K.jpg",
+      "https://m.media-amazon.com/images/M/MV5BOTgwYjJjYWItNTY5Yi00YzVmLWJkM2MtNjVmNmYzZDQ0YTMyXkEyXkFqcGdeQXVyNTEwOTEzNDk@._V1_SY1000_SX750_AL_.jpg",
     year: "2012",
     length: "2h 1m",
     playing: ["youtube"],
@@ -314,7 +314,7 @@ export const movie = [
   {
     name: "White Sun",
     image:
-      "https://image.tmdb.org/t/p/w220_and_h330_face/5XUuWAWwjb4OUgB3r8holAZzc7r.jpg",
+      "https://m.media-amazon.com/images/M/MV5BOWI4YjM5MGYtYTc5ZC00Y2E3LWIxYWMtZDRjNzQ4ZDdhNzBmXkEyXkFqcGdeQXVyMjE5MjUxMzE@._V1_SY1000_CR0,0,677,1000_AL_.jpg",
     year: "2016",
     length: "1h 27m",
     playing: ["streaming"],
