@@ -70,7 +70,7 @@ const Body = (props) => {
   const [menuDrawerOpen, setMenuDrawerOpen] = React.useState(false);
   const { data, title, changeTitle, searchFilter } = props;
   const [filters, setFilters] = React.useState([]);
-  const [movie, setMovie] = React.useState(data);
+  const [movie, setMovie] = React.useState(data.movies);
   const [genre, setGenre] = React.useState("All");
   const [year, setYear] = React.useState("All");
   const [filterChip, setChip] = React.useState([]);
@@ -84,7 +84,9 @@ const Body = (props) => {
     if (reason === "clickaway") {
       return;
     }
-    if (filters[filters.length - 1].key === "G") {
+    if (filters.length === 0) {
+      setGenre('All')
+    } else if (filters && filters[filters.length - 1].key === "G") {
       setGenre("All");
       setChip((chips) => chips.filter((chip) => chip.key !== "G"));
     } else {
@@ -95,33 +97,31 @@ const Body = (props) => {
     setFilters(filtered);
   };
   React.useEffect(() => {
-    setMovie(data);
+    setMovie(data.movies);
     setYear("All");
     setGenre("All");
     setChip([]);
     setfilterOpenChecked(false);
     setUndoOpen(true);
   }, [data]);
-
   React.useEffect(() => {
     filterUpdate();
     setUndoOpen(true);
   }, [filters]);
-
   const filterUpdate = () => {
-    var filtering = data;
+    var filtering = data.movies;
     if (filters.length > 0) {
       filters.forEach((item1) => {
-        if (filtering.length > 0) {
+        console.log(item1)
+        if (filtering && filtering.length > 0) {
           filtering = filtering.filter(item1.value);
         }
       });
       setMovie(filtering);
     } else {
-      setMovie(data);
+      setMovie(data.movies);
     }
   };
-
   const handleDelete = (chipToDelete) => () => {
     setChip((chips) =>
       chips.filter((chip) => chip.value !== chipToDelete.value)
@@ -136,6 +136,7 @@ const Body = (props) => {
   };
 
   const handleChangeFilter = (event) => {
+    console.log(event.target.value, filters)
     event.persist();
     switch (event.target.id) {
       case "genre":
@@ -144,13 +145,14 @@ const Body = (props) => {
             (x) => x.key === "G" && ((x.value = event.target.value), true)
           );
           setChip(filterChip);
-          filters.find(
+          const filterUpdated = filters.find(
             (x) =>
               x.key === "G" &&
               ((x.value = (a) =>
-                a.genre.includes(event.target.value.toLowerCase())),
-              true)
+                a.genre.map(g => g.name.toLowerCase()).includes(event.target.value.toLowerCase())),
+                true)
           );
+          setFilters((item) => item.concat(filterUpdated))
         } else {
           setChip((chips) =>
             chips.concat({ key: "G", value: event.target.value })
@@ -158,7 +160,7 @@ const Body = (props) => {
           setFilters((item) =>
             item.concat({
               key: "G",
-              value: (x) => x.genre.includes(event.target.value.toLowerCase()),
+              value: (x) => x.genre.map(g => g.name.toLowerCase()).includes(event.target.value.toLowerCase()),
             })
           );
         }
@@ -170,11 +172,12 @@ const Body = (props) => {
             (x) => x.key === "Y" && ((x.value = event.target.value), true)
           );
           setChip(filterChip);
-          filters.find(
+          const yearFilter = filters.find(
             (x) =>
               x.key === "Y" &&
-              ((x.value = (a) => a.year === event.target.value), true)
+              ((x.value = (a) => new Date(a.release_date).getFullYear() + 1 === parseInt(event.target.value)), true)
           );
+          setFilters(item => item.concat(yearFilter))
         } else {
           setChip((chips) =>
             chips.concat({ key: "Y", value: event.target.value })
@@ -182,7 +185,7 @@ const Body = (props) => {
           setFilters((item) =>
             item.concat({
               key: "Y",
-              value: (x) => x.year === event.target.value,
+              value: (a) => (new Date(a.release_date).getFullYear() + 1) === parseInt(event.target.value),
             })
           );
         }
@@ -192,6 +195,7 @@ const Body = (props) => {
         break;
     }
   };
+  // console.log(data, filters, movie)
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -226,13 +230,13 @@ const Body = (props) => {
             changeBody={props.changeBody}
           />
         ) : (
-          <MoviePage
-            changeBody={props.changeBody}
-            data={props.data}
-            movie={props.individualMovie[0]}
-            menuDrawerOpen={menuDrawerOpen}
-          />
-        )}
+            <MoviePage
+              changeBody={props.changeBody}
+              data={props.data}
+              movie={props.individualMovie[0]}
+              menuDrawerOpen={menuDrawerOpen}
+            />
+          )}
       </main>
     </div>
   );
@@ -249,8 +253,8 @@ Body.defaultProps = {
   title: "Home",
   data: movie,
   displayBody: true,
-  changeTitle: () => {},
-  changeBody: () => {},
+  changeTitle: () => { },
+  changeBody: () => { },
 };
 
 export default Body;
@@ -286,18 +290,18 @@ const Main = (props) => {
       {title === "About" ? (
         <div></div>
       ) : (
-        <Filter
-          yearList={yearList}
-          filterOpenChecked={filterOpenChecked}
-          setfilterOpenChecked={setfilterOpenChecked}
-          filterChip={filterChip}
-          genre={genre}
-          year={year}
-          handleChangeGenre={handleChangeFilter}
-          handleChangeYear={handleChangeFilter}
-          handleDelete={handleDelete}
-        />
-      )}
+          <Filter
+            yearList={yearList}
+            filterOpenChecked={filterOpenChecked}
+            setfilterOpenChecked={setfilterOpenChecked}
+            filterChip={filterChip}
+            genre={genre}
+            year={year}
+            handleChangeGenre={handleChangeFilter}
+            handleChangeYear={handleChangeFilter}
+            handleDelete={handleDelete}
+          />
+        )}
       <div className={classes.drawerHeader}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -317,7 +321,7 @@ const Main = (props) => {
                 notice!
               </Alert>
             </div>
-          ) : movie.length > 0 ? (
+          ) : movie && movie.length > 0 ? (
             movie.map((item, index) => (
               <Grid item xs={6} sm={4} lg={3} xl={2} key={index}>
                 <MovieCard
@@ -329,37 +333,37 @@ const Main = (props) => {
               </Grid>
             ))
           ) : (
-            <Snackbar
-              className={classes.snackBar}
-              anchorOrigin={{
-                vertical: mobile ? "top" : "bottom",
-                horizontal: mobile ? "right" : "left",
-              }}
-              open={undoOpen}
-              autoHideDuration={6000}
-              onClose={handleFilterUndo}
-              message="No movies to Display"
-              action={
-                <React.Fragment>
-                  <Button
-                    color="secondary"
-                    size="small"
-                    onClick={handleFilterUndo}
-                  >
-                    UNDO
+                  <Snackbar
+                    className={classes.snackBar}
+                    anchorOrigin={{
+                      vertical: mobile ? "top" : "bottom",
+                      horizontal: mobile ? "right" : "left",
+                    }}
+                    open={undoOpen}
+                    autoHideDuration={6000}
+                    onClose={handleFilterUndo}
+                    message="No movies to Display"
+                    action={
+                      <React.Fragment>
+                        <Button
+                          color="secondary"
+                          size="small"
+                          onClick={handleFilterUndo}
+                        >
+                          UNDO
                   </Button>
-                  <IconButton
-                    size="small"
-                    aria-label="close"
-                    color="inherit"
-                    onClick={handleUndoClose}
-                  >
-                    <CloseIcon fontSize="small" />
-                  </IconButton>
-                </React.Fragment>
-              }
-            />
-          )}
+                        <IconButton
+                          size="small"
+                          aria-label="close"
+                          color="inherit"
+                          onClick={handleUndoClose}
+                        >
+                          <CloseIcon fontSize="small" />
+                        </IconButton>
+                      </React.Fragment>
+                    }
+                  />
+                )}
         </Grid>
       </div>
     </div>

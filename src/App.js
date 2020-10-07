@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Header from "./components/Header/Header";
+import { useSelector, useDispatch } from 'react-redux';
 import {
   makeStyles,
   ThemeProvider,
@@ -7,6 +8,7 @@ import {
 } from "@material-ui/core/styles";
 import { Grid, Paper } from "@material-ui/core";
 import Body from "./components/Body/Body";
+import { movieSelector, getMovies } from './slice/movieSlice';
 import { movie } from "./data";
 
 const useStyles = makeStyles(() => ({
@@ -17,7 +19,17 @@ const useStyles = makeStyles(() => ({
 }));
 
 const App = () => {
-  const [data, setData] = React.useState(movie);
+  const movies = useSelector(movieSelector);
+  const dispatch = useDispatch();
+  const [data, setData] = React.useState(movies);
+
+  React.useEffect(() => {
+    dispatch(getMovies('http://localhost:8000/api/movies'));
+    setData(movies)
+  }, [dispatch]);
+  React.useEffect(() => {
+    setData(movies)
+  }, [movies]);
   const [individualMovie, setIndividual] = React.useState([]);
   const [title, setTitle] = React.useState("Home");
   const [displayBody, setDisplayBody] = React.useState(true);
