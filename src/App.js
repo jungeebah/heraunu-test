@@ -24,7 +24,7 @@ const App = () => {
   const [data, setData] = React.useState(movies);
 
   React.useEffect(() => {
-    dispatch(getMovies('http://localhost:8000/api/movies'));
+    dispatch(getMovies('https://healthy-system-267921.uc.r.appspot.com/api/movies'));
     setData(movies)
   }, [dispatch]);
   React.useEffect(() => {
