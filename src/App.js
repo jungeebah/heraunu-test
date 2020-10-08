@@ -22,14 +22,21 @@ const App = () => {
   const movies = useSelector(movieSelector);
   const dispatch = useDispatch();
   const [data, setData] = React.useState(movies);
+  const [page, setPage] = React.useState(1)
+
+  const nextPage = number => setPage(number)
 
   React.useEffect(() => {
-    dispatch(getMovies('https://healthy-system-267921.uc.r.appspot.com/api/movies'));
+    dispatch(getMovies(page));
     setData(movies)
   }, [dispatch]);
   React.useEffect(() => {
     setData(movies)
   }, [movies]);
+
+  React.useEffect(() => {
+    dispatch(getMovies(page))
+  }, [page])
   const [individualMovie, setIndividual] = React.useState([]);
   const [title, setTitle] = React.useState("Home");
   const [displayBody, setDisplayBody] = React.useState(true);
@@ -54,7 +61,8 @@ const App = () => {
   };
   const changeTitle = (title) => {
     if (title === "Home") {
-      const movieFiltered = movie;
+      console.log(movies.movies)
+      const movieFiltered = movies;
       setData(movieFiltered);
     } else {
       const movieFiltered = movie.filter((item) =>
@@ -137,6 +145,7 @@ const App = () => {
         <Grid item xs={12}>
           <Paper variant="outlined" square>
             <Body
+              nextPage={nextPage}
               changeBody={changeBody}
               individualMovie={individualMovie}
               displayBody={displayBody}

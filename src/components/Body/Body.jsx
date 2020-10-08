@@ -16,6 +16,7 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import MoviePage from "../MoviePage/MoviePage";
+import Pagination from '@material-ui/lab/Pagination';
 
 const drawerWidth = 180;
 const useStyles = makeStyles((theme) => ({
@@ -219,8 +220,11 @@ const Body = (props) => {
             filterOpenChecked={filterOpenChecked}
             setfilterOpenChecked={setfilterOpenChecked}
             filterChip={filterChip}
+            filters={filters}
             genre={genre}
             year={year}
+            nextPage={props.nextPage}
+            data={data.count}
             handleChangeFilter={handleChangeFilter}
             handleDelete={handleDelete}
             movie={movie}
@@ -268,14 +272,17 @@ const yearList = ["All", ...rangeYear];
 const Main = (props) => {
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down("xs"));
+  const large = useMediaQuery(theme.breakpoints.up("lg"));
   const classes = useStyles();
 
   const {
+    filters,
     changeBody,
     title,
     filterOpenChecked,
     setfilterOpenChecked,
     filterChip,
+    data,
     genre,
     year,
     handleChangeFilter,
@@ -304,8 +311,19 @@ const Main = (props) => {
         )}
       <div className={classes.drawerHeader}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid item xs={3} sm={7} lg={9}>
             <Typography variant="h5">{title}</Typography>
+          </Grid>
+          <Grid item xs={9} sm={5} lg={3} justify="flex-end">
+            <Pagination
+              count={data % 20 === 0 ? data / 20 : Math.floor(data / 20) + 1}
+              defaultPage={1}
+              siblingCount={0}
+              variant="outlined"
+              size={large ? "large" : "small"}
+              shape="rounded"
+              onChange={(e, v) => props.nextPage(v)}
+            />
           </Grid>
           {title === "About" ? (
             <Paper elevation={0} className={classes.about}>
@@ -332,38 +350,40 @@ const Main = (props) => {
                 />
               </Grid>
             ))
-          ) : (
-                  <Snackbar
-                    className={classes.snackBar}
-                    anchorOrigin={{
-                      vertical: mobile ? "top" : "bottom",
-                      horizontal: mobile ? "right" : "left",
-                    }}
-                    open={undoOpen}
-                    autoHideDuration={6000}
-                    onClose={handleFilterUndo}
-                    message="No movies to Display"
-                    action={
-                      <React.Fragment>
-                        <Button
-                          color="secondary"
-                          size="small"
-                          onClick={handleFilterUndo}
-                        >
-                          UNDO
+          ) : filters && filters.length > 0 ?
+                  (
+                    <Snackbar
+                      className={classes.snackBar}
+                      anchorOrigin={{
+                        vertical: mobile ? "top" : "bottom",
+                        horizontal: mobile ? "right" : "left",
+                      }}
+                      open={undoOpen}
+                      autoHideDuration={6000}
+                      onClose={handleFilterUndo}
+                      message="No movies to Display"
+                      action={
+                        <React.Fragment>
+                          <Button
+                            color="secondary"
+                            size="small"
+                            onClick={handleFilterUndo}
+                          >
+                            UNDO
                   </Button>
-                        <IconButton
-                          size="small"
-                          aria-label="close"
-                          color="inherit"
-                          onClick={handleUndoClose}
-                        >
-                          <CloseIcon fontSize="small" />
-                        </IconButton>
-                      </React.Fragment>
-                    }
-                  />
-                )}
+                          <IconButton
+                            size="small"
+                            aria-label="close"
+                            color="inherit"
+                            onClick={handleUndoClose}
+                          >
+                            <CloseIcon fontSize="small" />
+                          </IconButton>
+                        </React.Fragment>
+                      }
+                    />
+                  ) :
+                  <div></div>}
         </Grid>
       </div>
     </div>

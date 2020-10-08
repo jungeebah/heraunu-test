@@ -21,7 +21,7 @@ const initialState = {
 
 export const getMovies = createAsyncThunk('movie/getMovies',
     (endpoint) => {
-        return fetch(endpoint, requestOptions)
+        return fetch(`https://healthy-system-267921.uc.r.appspot.com/api/movies/?page=${endpoint}`, requestOptions)
             .then(response => {
                 if (!response.ok) throw Error(response.statusText);
                 return response.json()
@@ -45,7 +45,7 @@ export const movieSlice = createSlice({
             state.count = action.payload.count
             state.next = action.payload.next
             state.previous = action.payload.previous
-            state.movies = state.movies.concat(action.payload.results)
+            state.movies = action.payload.results
         },
         [getMovies.rejected]: (state, action) => {
             state.status = 'failed'

@@ -100,8 +100,8 @@ const Filter = (props) => {
                 </li>
               ))
             ) : (
-              <div></div>
-            )}
+                <div></div>
+              )}
           </div>
         </Grid>
       </Grid>
@@ -183,12 +183,12 @@ Filter.defaultProps = {
   genre: "All",
   year: "All",
   filterChip: [],
-  handleChangeYear: () => {},
-  handleChangeGenre: () => {},
-  handleDelete: () => {},
+  handleChangeYear: () => { },
+  handleChangeGenre: () => { },
+  handleDelete: () => { },
   filterOpenChecked: false,
   yearList: [],
-  setfilterOpenChecked: () => {},
+  setfilterOpenChecked: () => { },
 };
 
 export default Filter;
