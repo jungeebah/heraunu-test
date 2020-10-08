@@ -316,7 +316,7 @@ const Main = (props) => {
           </Grid>
           <Grid item xs={9} sm={5} lg={3} justify="flex-end">
             <Pagination
-              count={data % 20 === 0 ? data / 20 : Math.floor(data / 20) + 1}
+              count={data % 10 === 0 ? data / 10 : Math.floor(data / 10) + 1}
               defaultPage={1}
               siblingCount={0}
               variant="outlined"
