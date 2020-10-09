@@ -314,17 +314,21 @@ const Main = (props) => {
           <Grid item xs={3} sm={7} lg={9}>
             <Typography variant="h5">{title}</Typography>
           </Grid>
-          <Grid item xs={9} sm={5} lg={3} justify="flex-end">
-            <Pagination
-              count={data % 10 === 0 ? data / 10 : Math.floor(data / 10) + 1}
-              defaultPage={1}
-              siblingCount={0}
-              variant="outlined"
-              size={large ? "large" : "small"}
-              shape="rounded"
-              onChange={(e, v) => props.nextPage(v)}
-            />
-          </Grid>
+          {data > 10 ?
+            <Grid item xs={9} sm={5} lg={3} justify="flex-end">
+              <Pagination
+                count={data % 10 === 0 ? data / 10 : Math.floor(data / 10) + 1}
+                defaultPage={1}
+                siblingCount={0}
+                variant="outlined"
+                size={large ? "large" : "small"}
+                shape="rounded"
+                onChange={(e, v) => props.nextPage(v)}
+              />
+            </Grid>
+            : <Grid item xs={9} sm={5} lg={3} justify="flex-end">
+              <div></div>
+            </Grid>}
           {title === "About" ? (
             <Paper elevation={0} className={classes.about}>
               <Typography variant="body">
