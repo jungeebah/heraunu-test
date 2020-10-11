@@ -37,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
     ...theme.mixins.toolbar,
     justifyContent: "flex-start",
   },
+  pagination: {
+    paddingLeft: theme.spacing(2) - 1,
+  },
   content: {
     marginTop: theme.spacing(7) + 1,
     flexGrow: 1,
@@ -166,7 +169,6 @@ const Body = (props) => {
     var filtering = data.movies;
     if (filters.length > 0) {
       filters.forEach((item1) => {
-        console.log(item1)
         if (filtering && filtering.length > 0) {
           filtering = filtering.filter(item1.value);
         }
@@ -370,6 +372,7 @@ const Main = (props) => {
           {data > 10 ?
             <Grid item xs={9} sm={5} lg={3} justify="flex-end">
               <Pagination
+                className={classes.pagination}
                 count={data % 10 === 0 ? data / 10 : Math.floor(data / 10) + 1}
                 defaultPage={1}
                 siblingCount={0}
