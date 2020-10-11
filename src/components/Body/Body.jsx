@@ -93,7 +93,7 @@ const Body = (props) => {
   const nextPage = number => setPage(number)
 
   React.useEffect(() => {
-    changeTitle(title)
+    updateMovies(title)
   }, [page])
 
   React.useEffect(() => {
@@ -110,8 +110,7 @@ const Body = (props) => {
     setTotalPage(youtube.count)
   }, [youtube]);
 
-  const changeTitle = (title) => {
-    setTitle(title)
+  const updateMovies = (title) => {
     switch (title) {
       case ('Home'):
         setTotalPage(movies.count)
@@ -132,6 +131,12 @@ const Body = (props) => {
           dispatch(getYoutubeMovies(page))
         }
     }
+  }
+
+  const changeTitle = (title) => {
+    setTitle(title)
+    setPage(1)
+    updateMovies(title)
   };
 
   const handleUndoClose = (event) => {
@@ -280,6 +285,7 @@ const Body = (props) => {
             year={year}
             nextPage={nextPage}
             data={totalPage}
+            page={page}
             handleChangeFilter={handleChangeFilter}
             handleDelete={handleDelete}
             movie={movie}
