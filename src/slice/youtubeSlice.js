@@ -46,7 +46,7 @@ export const youtubeSlice = createSlice({
             state.count = action.payload.count
             state.next = action.payload.next
             state.previous = action.payload.previous
-            state.page = state.page.concat({ 'x': action.payload.page,y:action.payload.total})
+            state.page = state.page.concat({ 'x': action.payload.page, y: action.payload.results.length })
             state.movies = state.movies.concat(action.payload.results)
         },
         [getYoutubeMovies.rejected]: (state, action) => {
