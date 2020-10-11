@@ -130,6 +130,15 @@ const Body = (props) => {
         else {
           dispatch(getYoutubeMovies(page))
         }
+        break;
+      case ("Streaming"):
+        setTotalPage(0)
+        setMovie([])
+        break;
+      case ("Theater"):
+        setTotalPage(0)
+        setMovie([])
+        break;
     }
   }
 
