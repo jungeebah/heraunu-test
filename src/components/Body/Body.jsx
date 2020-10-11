@@ -17,6 +17,9 @@ import CloseIcon from "@material-ui/icons/Close";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import MoviePage from "../MoviePage/MoviePage";
 import Pagination from '@material-ui/lab/Pagination';
+import { movieSelector, getMovies } from '../../slice/movieSlice';
+import { youtubeSelector, getYoutubeMovies } from '../../slice/youtubeSlice';
+import { useSelector, useDispatch } from 'react-redux';
 
 const drawerWidth = 180;
 const useStyles = makeStyles((theme) => ({
@@ -68,15 +71,65 @@ const useStyles = makeStyles((theme) => ({
 const Body = (props) => {
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down("xs"));
+  const movies = useSelector(movieSelector);
+  const youtube = useSelector(youtubeSelector)
   const [menuDrawerOpen, setMenuDrawerOpen] = React.useState(false);
-  const { data, title, changeTitle, searchFilter } = props;
+  const { data, searchFilter } = props;
   const [filters, setFilters] = React.useState([]);
   const [movie, setMovie] = React.useState(data.movies);
   const [genre, setGenre] = React.useState("All");
+  const [title, setTitle] = React.useState("Home");
   const [year, setYear] = React.useState("All");
   const [filterChip, setChip] = React.useState([]);
   const [filterOpenChecked, setfilterOpenChecked] = React.useState(false);
   const [undoOpen, setUndoOpen] = React.useState(true);
+  const [page, setPage] = React.useState(1)
+  const [totalPage, setTotalPage] = React.useState(movies.count)
+  const dispatch = useDispatch();
+  // const [displayBody, setDisplayBody] = React.useState(true);
+  const nextPage = number => setPage(number)
+
+  React.useEffect(() => {
+    changeTitle(title)
+  }, [page])
+
+  React.useEffect(() => {
+    const page_item = movies.page.filter(a => a.x === page)
+    const page_index = movies.page.map(a => { return a.x }).indexOf(page)
+    setMovie(movies.movies.slice(page_index * 10, page_index * 10 + (page_item.length > 0 ? page_item[0].y : 0)))
+    setTotalPage(movies.count)
+  }, [movies]);
+
+  React.useEffect(() => {
+    const page_item = youtube.page.filter(a => a.x === page)
+    const page_index = youtube.page.map(a => { return a.x }).indexOf(page)
+    setMovie(youtube.movies.slice(page_index * 10, page_index * 10 + (page_item.length > 0 ? page_item[0].y : 0)))
+    setTotalPage(youtube.count)
+  }, [youtube]);
+
+  const changeTitle = (title) => {
+    setTitle(title)
+    switch (title) {
+      case ('Home'):
+        setTotalPage(movies.count)
+        const movie_page_item = movies.page.filter(a => a.x === page)
+        const movie_page_index = movies.page.map(a => { return a.x }).indexOf(page)
+        movie_page_item.length > 0 ? setMovie(movies.movies.slice(movie_page_index * 10, movie_page_index * 10 + movie_page_item[0].y))
+          :
+          dispatch(getMovies(page))
+        break;
+      case ('Youtube'):
+        setTotalPage(youtube.count)
+        const youtube_page_item = youtube.page.filter(a => a.x === page)
+        const youtube_page_index = youtube.page.map(a => { return a.x }).indexOf(page)
+        if (youtube_page_item.length > 0) {
+          setMovie(youtube.movies.slice(youtube_page_index * 10, youtube_page_index * 10 + youtube_page_item[0].y))
+        }
+        else {
+          dispatch(getYoutubeMovies(page))
+        }
+    }
+  };
 
   const handleUndoClose = (event) => {
     setUndoOpen(false);
@@ -223,8 +276,8 @@ const Body = (props) => {
             filters={filters}
             genre={genre}
             year={year}
-            nextPage={props.nextPage}
-            data={data.count}
+            nextPage={nextPage}
+            data={totalPage}
             handleChangeFilter={handleChangeFilter}
             handleDelete={handleDelete}
             movie={movie}

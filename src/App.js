@@ -8,8 +8,7 @@ import {
 } from "@material-ui/core/styles";
 import { Grid, Paper } from "@material-ui/core";
 import Body from "./components/Body/Body";
-import { movieSelector, getMovies } from './slice/movieSlice';
-import { youtubeSelector, getYoutubeMovies } from './slice/youtubeSlice';
+import { movieSelector } from './slice/movieSlice';
 import { movie } from "./data";
 
 const useStyles = makeStyles(() => ({
@@ -21,34 +20,9 @@ const useStyles = makeStyles(() => ({
 
 const App = () => {
   const movies = useSelector(movieSelector);
-  const youtube = useSelector(youtubeSelector)
-  const dispatch = useDispatch();
   const [data, setData] = React.useState(movies);
-  const [page, setPage] = React.useState(1)
   const [individualMovie, setIndividual] = React.useState([]);
-  const [title, setTitle] = React.useState("Home");
   const [displayBody, setDisplayBody] = React.useState(true);
-
-  const nextPage = number => setPage(number)
-
-  // React.useEffect(() => {
-  //   dispatch(getMovies(page));
-  //   setData(movies)
-  // }, [dispatch]);
-
-  React.useEffect(() => {
-    setData(movies)
-  }, [movies]);
-  React.useEffect(() => {
-    setData(youtube)
-  }, [youtube]);
-  React.useEffect(() => {
-    if (title === 'Home') {
-      dispatch(getMovies(page))
-    } else if (title === 'Youtube') {
-      changeTitle(title)
-    }
-  }, [page])
 
   const changeBody = (event, data) => {
     const individual = movie.filter((x) => x.name === data);
@@ -66,25 +40,9 @@ const App = () => {
       setData(searchFiltered);
     }
     setDisplayBody(true);
-    setTitle("Result");
+    // setTitle("Result");
   };
-  const changeTitle = (title) => {
-    setTitle(title)
-    if (title === "Home") {
-      const movieFiltered = movies;
-      setData(movieFiltered);
-    } else if (title === 'Youtube') {
-      dispatch(getYoutubeMovies(page))
-      setData(youtube)
-    } else {
-      const movieFiltered = movie.filter((item) =>
-        item.playing.includes(title.toLowerCase())
-      );
-      setData(movieFiltered);
-    }
-    setDisplayBody(true);
-    setTitle(title);
-  };
+
   const [mobileDrawer, setMobileDrawer] = React.useState(false);
   const toggleDrawer = (open) => (event) => {
     if (
@@ -157,13 +115,10 @@ const App = () => {
         <Grid item xs={12}>
           <Paper variant="outlined" square>
             <Body
-              nextPage={nextPage}
               changeBody={changeBody}
               individualMovie={individualMovie}
               displayBody={displayBody}
               data={data}
-              title={title}
-              changeTitle={changeTitle}
               mobileDrawer={mobileDrawer}
               toggleDrawer={toggleDrawer}
               searchFilter={searchFilter}

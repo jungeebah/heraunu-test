@@ -14,6 +14,7 @@ const initialState = {
     count: 0,
     next: null,
     previous: null,
+    page: [],
     movies: [],
     status: 'idle',
     error: null
@@ -21,7 +22,7 @@ const initialState = {
 
 export const getYoutubeMovies = createAsyncThunk('movie/getYoutubeMovies',
     (endpoint) => {
-        return fetch(`https://healthy-system-267921.uc.r.appspot.com/api/youtubes/?page=${endpoint}`, requestOptions)
+        return fetch(`https://healthy-system-267921.uc.r.appspot.com/api/youtubes/?page=${endpoint}&release_date=&genre=`, requestOptions)
             .then(response => {
                 if (!response.ok) throw Error(response.statusText);
                 return response.json()
@@ -45,7 +46,8 @@ export const youtubeSlice = createSlice({
             state.count = action.payload.count
             state.next = action.payload.next
             state.previous = action.payload.previous
-            state.movies = action.payload.results
+            state.page = state.page.concat({ 'x': action.payload.page,y:action.payload.total})
+            state.movies = state.movies.concat(action.payload.results)
         },
         [getYoutubeMovies.rejected]: (state, action) => {
             state.status = 'failed'
