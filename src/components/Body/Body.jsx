@@ -157,12 +157,12 @@ const Body = (props) => {
   const cleanState = () => {
     switch (title) {
       case ('Home'):
-        setPage(1)
         dispatch(invalidateMovie());
+        setPage(1)
         break;
       case ('Youtube'):
-        setPage(1)
         dispatch(invalidateYoutube());
+        setPage(1)
         break;
       default:
         break;
@@ -212,11 +212,11 @@ const Body = (props) => {
     if (chipToDelete.key === "G") {
       setGenre("All");
       cleanState()
-      setEndpoint(`?page=${page}&release_date=${year === 'All' ? '' : year}&genre=`)
+      setEndpoint(`?page=${1}&release_date=${year === 'All' ? '' : year}&genre=`)
     } else {
       setYear("All");
       cleanState()
-      setEndpoint(`?page=${page}&release_date=&genre=${genre === 'All' ? '' : genre}`);
+      setEndpoint(`?page=${1}&release_date=&genre=${genre === 'All' ? '' : genre}`);
     }
   };
 
@@ -237,7 +237,7 @@ const Body = (props) => {
         }
         setGenre(genre_list.filter(a => a.name === event.target.value)[0].key);
         cleanState()
-        setEndpoint(`?page=${page}&release_date=${year === 'All' ? '' : year}&genre=${event.target.value === 'All' ? '' : genre_list.filter(a => a.name === event.target.value)[0].key}`)
+        setEndpoint(`?page=${1}&release_date=${year === 'All' ? '' : year}&genre=${event.target.value === 'All' ? '' : genre_list.filter(a => a.name === event.target.value)[0].key}`)
         break;
       case "year":
         if (filterChip.filter((x) => x.key === "Y").length > 0) {
@@ -252,7 +252,7 @@ const Body = (props) => {
         }
         setYear(event.target.value);
         cleanState()
-        setEndpoint(`?page=${page}&release_date=${event.target.value === 'All' ? null : event.target.value}&genre=${genre === 'All' ? '' : genre}`)
+        setEndpoint(`?page=${1}&release_date=${event.target.value === 'All' ? null : event.target.value}&genre=${genre === 'All' ? '' : genre}`)
         break;
       default:
         break;
