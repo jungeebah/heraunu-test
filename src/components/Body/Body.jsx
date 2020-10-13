@@ -157,9 +157,11 @@ const Body = (props) => {
   const cleanState = () => {
     switch (title) {
       case ('Home'):
+        setPage(1)
         dispatch(invalidateMovie());
         break;
       case ('Youtube'):
+        setPage(1)
         dispatch(invalidateYoutube());
         break;
       default:
