@@ -22,7 +22,7 @@ const initialState = {
 
 export const getYoutubeMovies = createAsyncThunk('movie/getYoutubeMovies',
     (endpoint) => {
-        return fetch(`https://healthy-system-267921.uc.r.appspot.com/api/youtubes/?page=${endpoint}&release_date=&genre=`, requestOptions)
+        return fetch(`https://healthy-system-267921.uc.r.appspot.com/api/youtubes/${endpoint}`, requestOptions)
             .then(response => {
                 if (!response.ok) throw Error(response.statusText);
                 return response.json()
@@ -35,6 +35,9 @@ export const youtubeSlice = createSlice({
     name: 'youtube',
     initialState,
     reducers: {
+        invalidateYoutube: state => {
+            return initialState
+        }
     },
     extraReducers: {
         [getYoutubeMovies.pending]: state => {
@@ -57,6 +60,7 @@ export const youtubeSlice = createSlice({
 })
 
 export const youtubeSelector = state => state.youtubeMovies
+export const { invalidateYoutube } = youtubeSlice.actions
 
 export default youtubeSlice.reducer;
 

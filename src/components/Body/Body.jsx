@@ -17,8 +17,8 @@ import CloseIcon from "@material-ui/icons/Close";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import MoviePage from "../MoviePage/MoviePage";
 import Pagination from '@material-ui/lab/Pagination';
-import { movieSelector, getMovies } from '../../slice/movieSlice';
-import { youtubeSelector, getYoutubeMovies } from '../../slice/youtubeSlice';
+import { movieSelector, getMovies, invalidateMovie } from '../../slice/movieSlice';
+import { youtubeSelector, getYoutubeMovies, invalidateYoutube } from '../../slice/youtubeSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
 const drawerWidth = 180;
@@ -70,7 +70,11 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 2, 2, 2),
   },
 }));
-
+const genre_list = [{ 'name': 'Comedy', 'key': 232 }, { 'name': 'Biography', 'key': 235 }, { 'name': 'Adventure', 'key': 234 },
+{ 'name': 'Documentary', 'key': 220 }, { 'name': 'Drama', 'key': 219 }, { 'name': 'Family', 'key': 225 },
+{ 'name': 'Fantasy', 'key': 222 }, { 'name': 'History', 'key': 229 }, { 'name': 'Action', 'key': 233 }, { 'name': 'Horror', 'key': 238 },
+{ 'name': 'Music', 'key': 228 }, { 'name': 'Musical', 'key': 226 }, { 'name': 'Mystery', 'key': 223 }, { 'name': 'Romance', 'key': 230 }, { 'name': 'Thriller', 'key': 224 },
+{ 'name': 'Western', 'key': 237 }, { 'name': 'Sport', 'key': 227 }];
 const Body = (props) => {
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down("xs"));
@@ -83,18 +87,18 @@ const Body = (props) => {
   const [genre, setGenre] = React.useState("All");
   const [title, setTitle] = React.useState("Home");
   const [year, setYear] = React.useState("All");
+  const [endpoint, setEndpoint] = React.useState('?page=1&release_date=&genre=');
   const [filterChip, setChip] = React.useState([]);
   const [filterOpenChecked, setfilterOpenChecked] = React.useState(false);
   const [undoOpen, setUndoOpen] = React.useState(true);
-  const [page, setPage] = React.useState(1)
+  const [page, setPage] = React.useState(1);
   const [totalPage, setTotalPage] = React.useState(movies.count)
   const dispatch = useDispatch();
   // const [displayBody, setDisplayBody] = React.useState(true);
-  const nextPage = number => setPage(number)
-
-  React.useEffect(() => {
-    updateMovies(title)
-  }, [page])
+  const nextPage = number => {
+    setPage(number)
+    setEndpoint(`?page=${number}&release_date=${year === 'All' ? '' : year}&genre=${genre === 'All' ? '' : genre}`)
+  }
 
   React.useEffect(() => {
     const page_item = movies.page.filter(a => a.x === page)
@@ -111,6 +115,7 @@ const Body = (props) => {
   }, [youtube]);
 
   const updateMovies = (title) => {
+    console.log(endpoint)
     switch (title) {
       case ('Home'):
         setTotalPage(movies.count)
@@ -118,7 +123,7 @@ const Body = (props) => {
         const movie_page_index = movies.page.map(a => { return a.x }).indexOf(page)
         movie_page_item.length > 0 ? setMovie(movies.movies.slice(movie_page_index * 10, movie_page_index * 10 + movie_page_item[0].y))
           :
-          dispatch(getMovies(page))
+          dispatch(getMovies(endpoint))
         break;
       case ('Youtube'):
         setTotalPage(youtube.count)
@@ -128,7 +133,7 @@ const Body = (props) => {
           setMovie(youtube.movies.slice(youtube_page_index * 10, youtube_page_index * 10 + youtube_page_item[0].y))
         }
         else {
-          dispatch(getYoutubeMovies(page))
+          dispatch(getYoutubeMovies(endpoint))
         }
         break;
       case ("Streaming"):
@@ -139,6 +144,8 @@ const Body = (props) => {
         setTotalPage(0)
         setMovie([])
         break;
+      default:
+        break;
     }
   }
 
@@ -147,6 +154,18 @@ const Body = (props) => {
     setPage(1)
     updateMovies(title)
   };
+  const cleanState = () => {
+    switch (title) {
+      case ('Home'):
+        dispatch(invalidateMovie());
+        break;
+      case ('Youtube'):
+        dispatch(invalidateYoutube());
+        break;
+      default:
+        break;
+    }
+  }
 
   const handleUndoClose = (event) => {
     setUndoOpen(false);
@@ -157,57 +176,51 @@ const Body = (props) => {
     }
     if (filters.length === 0) {
       setGenre('All')
+      cleanState()
+      setEndpoint(`?page=${page}&release_date=${year === 'All' ? '' : year}&genre=`)
     } else if (filters && filters[filters.length - 1].key === "G") {
       setGenre("All");
       setChip((chips) => chips.filter((chip) => chip.key !== "G"));
-    } else {
+      cleanState()
+      setEndpoint(`?page=${page}&release_date=${year === 'All' ? '' : year}&genre=`)
+    }
+    else {
       setChip((chips) => chips.filter((chip) => chip.key !== "Y"));
       setYear("All");
+      cleanState()
+      setEndpoint(`?page=${page}&release_date=&genre=${genre === 'All' ? '' : genre}`)
     }
     const filtered = filters.filter((x, i) => i !== filters.length - 1);
     setFilters(filtered);
   };
+
   React.useEffect(() => {
-    setMovie(data.movies);
-    setYear("All");
-    setGenre("All");
-    setChip([]);
-    setfilterOpenChecked(false);
-    setUndoOpen(true);
-  }, [data]);
-  React.useEffect(() => {
-    filterUpdate();
     setUndoOpen(true);
   }, [filters]);
-  const filterUpdate = () => {
-    var filtering = data.movies;
-    if (filters.length > 0) {
-      filters.forEach((item1) => {
-        if (filtering && filtering.length > 0) {
-          filtering = filtering.filter(item1.value);
-        }
-      });
-      setMovie(filtering);
-    } else {
-      setMovie(data.movies);
-    }
-  };
+
+  React.useEffect(() => {
+    updateMovies(title)
+  }, [endpoint]);
+
   const handleDelete = (chipToDelete) => () => {
     setChip((chips) =>
       chips.filter((chip) => chip.value !== chipToDelete.value)
     );
+    console.log(chipToDelete)
     if (chipToDelete.key === "G") {
       setGenre("All");
-      setFilters((items) => items.filter((x) => x.key !== "G"));
+      cleanState()
+      setEndpoint(`?page=${page}&release_date=${year === 'All' ? '' : year}&genre=`)
     } else {
       setYear("All");
-      setFilters((items) => items.filter((x) => x.key !== "Y"));
+      cleanState()
+      setEndpoint(`?page=${page}&release_date=&genre=${genre === 'All' ? '' : genre}`);
     }
   };
 
   const handleChangeFilter = (event) => {
-    console.log(event.target.value, filters)
-    event.persist();
+
+
     switch (event.target.id) {
       case "genre":
         if (filterChip.filter((x) => x.key === "G").length > 0) {
@@ -215,26 +228,14 @@ const Body = (props) => {
             (x) => x.key === "G" && ((x.value = event.target.value), true)
           );
           setChip(filterChip);
-          const filterUpdated = filters.find(
-            (x) =>
-              x.key === "G" &&
-              ((x.value = (a) =>
-                a.genre.map(g => g.name.toLowerCase()).includes(event.target.value.toLowerCase())),
-                true)
-          );
-          setFilters((item) => item.concat(filterUpdated))
         } else {
           setChip((chips) =>
             chips.concat({ key: "G", value: event.target.value })
           );
-          setFilters((item) =>
-            item.concat({
-              key: "G",
-              value: (x) => x.genre.map(g => g.name.toLowerCase()).includes(event.target.value.toLowerCase()),
-            })
-          );
         }
-        setGenre(event.target.value);
+        setGenre(genre_list.filter(a => a.name === event.target.value)[0].key);
+        cleanState()
+        setEndpoint(`?page=${page}&release_date=${year === 'All' ? '' : year}&genre=${event.target.value === 'All' ? '' : genre_list.filter(a => a.name === event.target.value)[0].key}`)
         break;
       case "year":
         if (filterChip.filter((x) => x.key === "Y").length > 0) {
@@ -242,30 +243,20 @@ const Body = (props) => {
             (x) => x.key === "Y" && ((x.value = event.target.value), true)
           );
           setChip(filterChip);
-          const yearFilter = filters.find(
-            (x) =>
-              x.key === "Y" &&
-              ((x.value = (a) => new Date(a.release_date).getFullYear() + 1 === parseInt(event.target.value)), true)
-          );
-          setFilters(item => item.concat(yearFilter))
         } else {
           setChip((chips) =>
             chips.concat({ key: "Y", value: event.target.value })
           );
-          setFilters((item) =>
-            item.concat({
-              key: "Y",
-              value: (a) => (new Date(a.release_date).getFullYear() + 1) === parseInt(event.target.value),
-            })
-          );
         }
         setYear(event.target.value);
+        cleanState()
+        setEndpoint(`?page=${page}&release_date=${event.target.value === 'All' ? null : event.target.value}&genre=${genre === 'All' ? '' : genre}`)
         break;
       default:
         break;
     }
   };
-  // console.log(data, filters, movie)
+
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -353,8 +344,8 @@ const Main = (props) => {
     setfilterOpenChecked,
     filterChip,
     data,
-    genre,
     year,
+    genre,
     handleChangeFilter,
     handleDelete,
     movie,

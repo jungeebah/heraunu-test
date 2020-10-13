@@ -22,7 +22,7 @@ const initialState = {
 
 export const getMovies = createAsyncThunk('movie/getMovies',
     (endpoint) => {
-        return fetch(`https://healthy-system-267921.uc.r.appspot.com/api/movies/?page=${endpoint}&release_date=&genre=`, requestOptions)
+        return fetch(`https://healthy-system-267921.uc.r.appspot.com/api/movies${endpoint}`, requestOptions)
             .then(response => {
                 if (!response.ok) throw Error(response.statusText);
                 return response.json()
@@ -35,6 +35,9 @@ export const movieSlice = createSlice({
     name: 'movies',
     initialState,
     reducers: {
+        invalidateMovie: state => {
+            return initialState
+        }
     },
     extraReducers: {
         [getMovies.pending]: state => {
@@ -57,6 +60,7 @@ export const movieSlice = createSlice({
 })
 
 export const movieSelector = state => state.movies
+export const { invalidateMovie } = movieSlice.actions
 
 export default movieSlice.reducer;
 

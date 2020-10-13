@@ -9,11 +9,16 @@ import Divider from "@material-ui/core/Divider";
 import Grow from "@material-ui/core/Grow";
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
-import { Genre } from "../../data";
 import Chip from "@material-ui/core/Chip";
 import Avatar from "@material-ui/core/Avatar";
 import clsx from "clsx";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+
+const genre_list = [{ 'name': 'Comedy', 'key': 232 }, { 'name': 'Biography', 'key': 235 }, { 'name': 'Adventure', 'key': 234 },
+{ 'name': 'Documentary', 'key': 220 }, { 'name': 'Drama', 'key': 219 }, { 'name': 'Family', 'key': 225 },
+{ 'name': 'Fantasy', 'key': 222 }, { 'name': 'History', 'key': 229 }, { 'name': 'Action', 'key': 233 }, { 'name': 'Horror', 'key': 238 },
+{ 'name': 'Music', 'key': 228 }, { 'name': 'Musical', 'key': 226 }, { 'name': 'Mystery', 'key': 223 }, { 'name': 'Romance', 'key': 230 }, { 'name': 'Thriller', 'key': 224 },
+{ 'name': 'Western', 'key': 237 }, { 'name': 'Sport', 'key': 227 }];
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Filter = (props) => {
+  const genres = ['All'].concat(genre_list.map(a => a.name))
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down("xs"));
   const {
@@ -65,7 +71,6 @@ const Filter = (props) => {
     setfilterOpenChecked,
     yearList,
   } = props;
-
   const handleChange = () => {
     setfilterOpenChecked((prev) => !prev);
   };
@@ -124,7 +129,7 @@ const Filter = (props) => {
                 select
                 label="Genre"
                 size="small"
-                value={genre}
+                value={genre === 'All' ? genre : genre_list.filter(a => a.key === genre)[0].name}
                 onChange={handleChangeGenre}
                 SelectProps={{
                   native: true,
@@ -132,7 +137,7 @@ const Filter = (props) => {
                 helperText="Movie Genre"
                 variant="outlined"
               >
-                {Genre.map((option, index) => (
+                {genres.map((option, index) => (
                   <option key={index} value={option}>
                     {option}
                   </option>
