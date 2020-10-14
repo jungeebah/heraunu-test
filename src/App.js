@@ -21,14 +21,7 @@ const useStyles = makeStyles(() => ({
 const App = () => {
   const movies = useSelector(movieSelector);
   const [data, setData] = React.useState(movies);
-  const [individualMovie, setIndividual] = React.useState([]);
-  const [displayBody, setDisplayBody] = React.useState(true);
 
-  const changeBody = (event, data) => {
-    const individual = movie.filter((x) => x.name === data);
-    setIndividual(individual);
-    setDisplayBody(false);
-  };
   const searchFilter = (name, type) => {
     if (type !== "Movie") {
       const searchFiltered = movie.filter((item) =>
@@ -39,7 +32,7 @@ const App = () => {
       const searchFiltered = movie.filter((item) => item.name === name);
       setData(searchFiltered);
     }
-    setDisplayBody(true);
+    // setDisplayBody(true);
     // setTitle("Result");
   };
 
@@ -115,9 +108,6 @@ const App = () => {
         <Grid item xs={12}>
           <Paper variant="outlined" square>
             <Body
-              changeBody={changeBody}
-              individualMovie={individualMovie}
-              displayBody={displayBody}
               data={data}
               mobileDrawer={mobileDrawer}
               toggleDrawer={toggleDrawer}

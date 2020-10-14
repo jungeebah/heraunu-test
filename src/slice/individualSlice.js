@@ -19,8 +19,8 @@ const initialState = {
 
 
 export const getIndividualMovie = createAsyncThunk('movie/getIndividualMovie',
-    (movieId) => {
-        return fetch(`http://localhost:8000/api/movies/${movieId}`, requestOptions)
+    (url) => {
+        return fetch(`${url}?release_date=&genre=`, requestOptions)
             .then(response => {
                 if (!response.ok) throw Error(response.statusText);
                 return response.json()
@@ -41,7 +41,7 @@ export const individualSlice = createSlice({
         [getIndividualMovie.fulfilled]: (state, action) => {
             state.status = 'succeeded'
             // Add any fetched posts to the array
-            state.movies = action.payload
+            state.movie = action.payload
         },
         [getIndividualMovie.rejected]: (state, action) => {
             state.status = 'failed'
@@ -50,6 +50,6 @@ export const individualSlice = createSlice({
     }
 })
 
-export const individualMovie = state => state.individualMovie
+export const individualMovieSelector = state => state.individualMovie
 
-export default individualMovie.reducer;
+export default individualSlice.reducer;

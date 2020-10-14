@@ -20,6 +20,7 @@ import Pagination from '@material-ui/lab/Pagination';
 import { movieSelector, getMovies, invalidateMovie } from '../../slice/movieSlice';
 import { youtubeSelector, getYoutubeMovies, invalidateYoutube } from '../../slice/youtubeSlice';
 import { useSelector, useDispatch } from 'react-redux';
+import { getIndividualMovie } from '../../slice/individualSlice';
 
 const drawerWidth = 180;
 const useStyles = makeStyles((theme) => ({
@@ -94,6 +95,12 @@ const Body = (props) => {
   const [page, setPage] = React.useState(1);
   const [totalPage, setTotalPage] = React.useState(movies.count)
   const dispatch = useDispatch();
+  const [displayBody, setDisplayBody] = React.useState(true);
+
+  const changeBody = (event, url) => {
+    dispatch(getIndividualMovie(url.replace('youtubes', 'movies')))
+    setDisplayBody(false);
+  };
   // const [displayBody, setDisplayBody] = React.useState(true);
   const nextPage = number => {
     setPage(number)
@@ -116,6 +123,7 @@ const Body = (props) => {
 
   const updateMovies = (title) => {
     console.log(endpoint)
+    setDisplayBody(true);
     switch (title) {
       case ('Home'):
         setTotalPage(movies.count)
@@ -276,7 +284,7 @@ const Body = (props) => {
           [classes.contentShift]: mobile ? false : menuDrawerOpen,
         })}
       >
-        {props.displayBody ? (
+        {displayBody ? (
           <Main
             title={title}
             filterOpenChecked={filterOpenChecked}
@@ -294,13 +302,12 @@ const Body = (props) => {
             undoOpen={undoOpen}
             handleFilterUndo={handleFilterUndo}
             handleUndoClose={handleUndoClose}
-            changeBody={props.changeBody}
+            changeBody={changeBody}
           />
         ) : (
             <MoviePage
-              changeBody={props.changeBody}
+              changeBody={changeBody}
               data={props.data}
-              movie={props.individualMovie[0]}
               menuDrawerOpen={menuDrawerOpen}
             />
           )}
@@ -413,6 +420,7 @@ const Main = (props) => {
                 <MovieCard
                   changeBody={changeBody}
                   image={item.image}
+                  url={item.url}
                   movie={item.name}
                   key={index}
                 />

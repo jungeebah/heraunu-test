@@ -16,6 +16,8 @@ import Box from "@material-ui/core/Box";
 import Actor from "../Actor/Actor";
 import Year from "../Year/Year";
 import Genre from "../Genre/Genre";
+import { useSelector } from 'react-redux';
+import { individualMovieSelector } from '../../slice/individualSlice';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -80,6 +82,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MoviePage = (props) => {
+  const movie = useSelector(individualMovieSelector);
   const [displayPage, setDisplayPage] = React.useState("movie");
   const [actorInfo, setActorInfo] = React.useState([]);
   const [yearInfo, setYearInfo] = React.useState([]);
@@ -123,19 +126,18 @@ const MoviePage = (props) => {
     setgenreList(genreList);
     setDisplayPage("genre");
   };
-
-  const { movie } = props;
   return (
     <div>
       {(displayPage === "movie" && (
-        <Movie
-          movie={movie}
-          menuDrawnLength={props.menuDrawnLength}
-          actorClick={actorClick}
-          yearClick={yearClick}
-          genreClick={genreClick}
-          menuDrawerOpen={props.menuDrawerOpen}
-        />
+        movie.status === 'loading' ? <div></div> :
+          <Movie
+            movie={movie.movie}
+            menuDrawnLength={props.menuDrawnLength}
+            actorClick={actorClick}
+            yearClick={yearClick}
+            genreClick={genreClick}
+            menuDrawerOpen={props.menuDrawerOpen}
+          />
       )) ||
         (displayPage === "actor" && (
           <Actor
@@ -265,7 +267,7 @@ const Movie = (props) => {
                         variant={mobile ? "caption" : "subtitle2"}
                         className={classes.yearText}
                       >
-                        {movie.year}
+                        {new Date(movie.release_date).getFullYear()}
                       </Typography>
                     </IconButton>
                   </Grid>
@@ -301,10 +303,10 @@ const Movie = (props) => {
                         className={classes.button}
                         variant="contained"
                         color="primary"
-                        key={item}
-                        onClick={(e) => props.genreClick(e, item)}
+                        key={item.name}
+                        onClick={(e) => props.genreClick(e, item.name)}
                       >
-                        {item}
+                        {item.name}
                       </Button>
                     ))}
                   </Grid>
