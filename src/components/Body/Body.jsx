@@ -419,6 +419,7 @@ const Main = (props) => {
               <Grid item xs={6} sm={4} lg={3} xl={2} key={index}>
                 <MovieCard
                   changeBody={changeBody}
+                  video_thumbnail={item.video_thumbnail}
                   image={item.image}
                   url={item.url}
                   movie={item.name}

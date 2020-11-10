@@ -237,7 +237,7 @@ const Movie = (props) => {
           <Card className={classes.card}>
             <CardMedia
               component="img"
-              image={movie.image}
+              image={movie.image || movie.video_thumbnail}
               title={movie.name}
             ></CardMedia>
           </Card>

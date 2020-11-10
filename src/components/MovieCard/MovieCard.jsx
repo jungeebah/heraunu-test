@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MovieCard = (props) => {
+  console.log(props.video_thumbnail)
   const theme = useTheme();
   const transitionDuration = {
     enter: theme.transitions.duration.enteringScreen,
@@ -74,7 +75,7 @@ const MovieCard = (props) => {
           <CardMedia
             component="img"
             className={classes.card}
-            image={props.image}
+            image={props.image || props.video_thumbnail}
             title={props.movie}
           ></CardMedia>
 
