@@ -337,10 +337,6 @@ const Movie = (props) => {
           actor={movie.actor}
         />
       </div>
-
-      <Paper elevation={0}>
-        <Songs songs={movie.songs} />
-      </Paper>
     </Paper>
   );
 };
