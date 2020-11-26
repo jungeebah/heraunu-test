@@ -32,7 +32,7 @@ const Genre = (props) => {
       <Grid container>
         <Grid item xs={12}>
           <Typography variant={mobile ? "h4" : "h1"}>
-            {capitalize(genre.name)}
+            {genre.name}
           </Typography>
         </Grid>
       </Grid>
@@ -47,8 +47,9 @@ const Genre = (props) => {
             <Grid item xs={6} sm={4} lg={3} xl={2} key={index}>
               <MovieCard
                 changeBody={props.changeBody}
-                image={item.image}
+                image={item.image || item.video_thumbnail}
                 movie={item.name}
+                url={`https://healthy-system-267921.uc.r.appspot.com/api/youtubes/${item.movie_id}`}
                 key={index}
               />
             </Grid>
@@ -91,7 +92,7 @@ Genre.defaultProps = {
       },
     ],
   },
-  changeBody: () => {},
+  changeBody: () => { },
 };
 
 export default Genre;

@@ -83,12 +83,12 @@ const Actor = (props) => {
             {actor.image === "" ? (
               noImage
             ) : (
-              <CardMedia
-                component="img"
-                image={actor.image}
-                title={actor.name}
-              ></CardMedia>
-            )}
+                <CardMedia
+                  component="img"
+                  image={actor.image}
+                  title={actor.name}
+                ></CardMedia>
+              )}
           </Card>
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -121,8 +121,9 @@ const Actor = (props) => {
             <Grid item xs={6} sm={4} lg={3} xl={2} key={index}>
               <MovieCard
                 changeBody={props.changeBody}
-                image={item.image}
+                image={item.image || item.video_thumbnail}
                 movie={item.name}
+                url={`https://healthy-system-267921.uc.r.appspot.com/api/youtubes/${item.movie_id}`}
                 key={index}
               />
             </Grid>

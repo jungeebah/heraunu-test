@@ -248,7 +248,7 @@ const MovieCastnCrew = (props) => {
                       <CardActionArea
                         key={index}
                         onClick={(e) => {
-                          props.actorClick(item.name, item.image);
+                          props.actorClick(e, item.id);
                         }}
                       >
                         {item.image === null ? (

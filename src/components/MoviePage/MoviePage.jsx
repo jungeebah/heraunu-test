@@ -16,8 +16,10 @@ import Box from "@material-ui/core/Box";
 import Actor from "../Actor/Actor";
 import Year from "../Year/Year";
 import Genre from "../Genre/Genre";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { individualMovieSelector } from '../../slice/individualSlice';
+import { actorSelector, getActor } from '../../slice/actorSlice'
+import { genreSelector, getGenre } from '../../slice/genreSlice'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -82,7 +84,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MoviePage = (props) => {
+  const dispatch = useDispatch()
   const movie = useSelector(individualMovieSelector);
+  const genre = useSelector(genreSelector);
+  const actormovie = useSelector(actorSelector);
   const [displayPage, setDisplayPage] = React.useState("movie");
   const [actorInfo, setActorInfo] = React.useState([]);
   const [yearInfo, setYearInfo] = React.useState([]);
@@ -92,18 +97,19 @@ const MoviePage = (props) => {
     setDisplayPage("movie");
     props.changeBody(e, movieName);
   };
-  const actorClick = (name, image) => {
-    const movieList = props.data.filter((item) =>
-      item.actor.map((actor) => actor.name.includes(name)).includes(true)
-    );
-    const actorObject = {
-      name: name,
-      image: image,
-      movies: movieList.map((x) => ({ name: x.name, image: x.image })),
-    };
-    setActorInfo(actorObject);
+  const actorClick = (e, id) => {
+    dispatch(getActor(id))
     setDisplayPage("actor");
   };
+  React.useEffect(() => {
+    const movieList = actormovie.movies
+    const actorObject = {
+      name: actormovie.name,
+      image: actormovie.image,
+      movies: movieList,
+    };
+    setActorInfo(actorObject);
+  }, [actormovie]);
 
   const yearClick = (e, year) => {
     const movieList = props.data.filter((item) => item.year === year);
@@ -116,16 +122,19 @@ const MoviePage = (props) => {
     setDisplayPage("year");
   };
 
-  const genreClick = (e, genre) => {
-    const movieList = props.data.filter((item) => item.genre.includes(genre));
-    const genreList = {
-      name: genre,
-      movies: movieList.map((x) => ({ name: x.name, image: x.image })),
-    };
-
-    setgenreList(genreList);
+  const genreClick = (e, id) => {
+    dispatch(getGenre(id))
     setDisplayPage("genre");
   };
+  React.useEffect(() => {
+    const movieList = genre.movies
+    const genreList = {
+      name: genre.name,
+      movies: movieList,
+    };
+    console.log(genre)
+    setgenreList(genreList);
+  }, [genre]);
   return (
     <div>
       {(displayPage === "movie" && (
@@ -304,7 +313,7 @@ const Movie = (props) => {
                         variant="contained"
                         color="primary"
                         key={item.name}
-                        onClick={(e) => props.genreClick(e, item.name)}
+                        onClick={(e) => props.genreClick(e, item.id)}
                       >
                         {item.name}
                       </Button>

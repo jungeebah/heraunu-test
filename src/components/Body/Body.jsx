@@ -122,7 +122,6 @@ const Body = (props) => {
   }, [youtube]);
 
   const updateMovies = (title) => {
-    console.log(endpoint)
     setDisplayBody(true);
     switch (title) {
       case ('Home'):
