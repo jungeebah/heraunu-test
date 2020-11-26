@@ -40,8 +40,9 @@ const Year = (props) => {
             <Grid item xs={6} sm={4} lg={3} xl={2} key={index}>
               <MovieCard
                 changeBody={props.changeBody}
-                image={item.image}
+                image={item.image || item.video_thumbnail}
                 movie={item.name}
+                url={`https://healthy-system-267921.uc.r.appspot.com/api/youtubes/${item.movie_id}`}
                 key={index}
               />
             </Grid>
@@ -84,7 +85,7 @@ Year.defaultProps = {
       },
     ],
   },
-  changeBody: () => {},
+  changeBody: () => { },
   menuDrawerOpen: true,
 };
 

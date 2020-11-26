@@ -20,6 +20,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { individualMovieSelector } from '../../slice/individualSlice';
 import { actorSelector, getActor } from '../../slice/actorSlice'
 import { genreSelector, getGenre } from '../../slice/genreSlice'
+import { yearSelector, getYear } from '../../slice/yearSlice'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -87,6 +88,7 @@ const MoviePage = (props) => {
   const dispatch = useDispatch()
   const movie = useSelector(individualMovieSelector);
   const genre = useSelector(genreSelector);
+  const year = useSelector(yearSelector);
   const actormovie = useSelector(actorSelector);
   const [displayPage, setDisplayPage] = React.useState("movie");
   const [actorInfo, setActorInfo] = React.useState([]);
@@ -112,15 +114,18 @@ const MoviePage = (props) => {
   }, [actormovie]);
 
   const yearClick = (e, year) => {
-    const movieList = props.data.filter((item) => item.year === year);
-    const yearObject = {
-      name: year,
-      movies: movieList.map((x) => ({ name: x.name, image: x.image })),
-    };
-
-    setYearInfo(yearObject);
+    dispatch(getYear(year))
     setDisplayPage("year");
   };
+
+  React.useEffect(() => {
+    const movieList = year.movies
+    const yearObject = {
+      name: year.year,
+      movies: movieList,
+    };
+    setYearInfo(yearObject);
+  }, [year]);
 
   const genreClick = (e, id) => {
     dispatch(getGenre(id))
@@ -270,13 +275,13 @@ const Movie = (props) => {
                   <Grid item xs={2} md={2}>
                     <IconButton
                       className={classes.buttonYear}
-                      onClick={(e) => props.yearClick(e, movie.year)}
+                      onClick={(e) => props.yearClick(e, new Date(movie.release_date).getFullYear() + 1)}
                     >
                       <Typography
                         variant={mobile ? "caption" : "subtitle2"}
                         className={classes.yearText}
                       >
-                        {new Date(movie.release_date).getFullYear()}
+                        {new Date(movie.release_date).getFullYear() + 1}
                       </Typography>
                     </IconButton>
                   </Grid>
