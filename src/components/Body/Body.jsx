@@ -341,7 +341,7 @@ const yearList = ["All", ...rangeYear];
 const Main = (props) => {
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down("xs"));
-  const large = useMediaQuery(theme.breakpoints.up("lg"));
+  const large = useMediaQuery(theme.breakpoints.up("xl"));
   const classes = useStyles();
 
   const {
