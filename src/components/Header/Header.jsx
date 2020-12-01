@@ -52,7 +52,7 @@ const Header = (props) => {
   };
   const onMobileTitle = (
     <Typography variant="h6" edge="center" className={classes.title}>
-      Heraunu
+      Hearunu
     </Typography>
   );
   return (
