@@ -92,7 +92,7 @@ const Header = (props) => {
             onMobileTitle
           ) : (
               <Typography variant="h6" className={classes.title}>
-                Herchu
+                Hearunu
               </Typography>
             )}
           {mobile ? (
