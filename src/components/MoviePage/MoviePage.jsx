@@ -18,7 +18,7 @@ import Year from "../Year/Year";
 import Genre from "../Genre/Genre";
 import { useSelector, useDispatch } from 'react-redux';
 import { individualMovieSelector } from '../../slice/individualSlice';
-import { actorSelector, getActor } from '../../slice/actorSlice'
+import { actorSelector, getActor, invalidateActor } from '../../slice/actorSlice'
 import { genreSelector, getGenre } from '../../slice/genreSlice'
 import { yearSelector, getYear } from '../../slice/yearSlice'
 

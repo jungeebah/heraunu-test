@@ -52,7 +52,7 @@ const Header = (props) => {
   };
   const onMobileTitle = (
     <Typography variant="h6" edge="center" className={classes.title}>
-      Herchu
+      Heraunu
     </Typography>
   );
   return (
@@ -71,8 +71,8 @@ const Header = (props) => {
           </div>
         </Grow>
       ) : (
-        <div></div>
-      )}
+          <div></div>
+        )}
       <AppBar position="fixed" className={classes.appbar}>
         <Toolbar>
           {mobile ? (
@@ -86,15 +86,15 @@ const Header = (props) => {
               <MenuIcon />
             </IconButton>
           ) : (
-            <div></div>
-          )}
+              <div></div>
+            )}
           {mobile ? (
             onMobileTitle
           ) : (
-            <Typography variant="h6" className={classes.title}>
-              Herchu
-            </Typography>
-          )}
+              <Typography variant="h6" className={classes.title}>
+                Herchu
+              </Typography>
+            )}
           {mobile ? (
             <div>
               <IconButton color="inherit" onClick={handleChange}>
@@ -102,8 +102,8 @@ const Header = (props) => {
               </IconButton>
             </div>
           ) : (
-            <AutoComplete searchFilter={searchFilter} />
-          )}
+              <AutoComplete searchFilter={searchFilter} />
+            )}
           <IconButton
             edge="end"
             className={classes.menuButton}
@@ -127,8 +127,8 @@ Header.propsType = {
 
 Header.defaultProps = {
   theme: false,
-  toggleDrawer: () => {},
-  handleChangeTheme: () => {},
+  toggleDrawer: () => { },
+  handleChangeTheme: () => { },
 };
 
 export default Header;
