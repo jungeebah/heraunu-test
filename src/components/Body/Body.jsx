@@ -24,6 +24,7 @@ import { getIndividualMovie } from '../../slice/individualSlice';
 import { streamSelector, getStream, invalidateStream } from '../../slice/streamSlice';
 import { genreDataSelector, getGenreDataKey } from '../../slice/genreDataSlice'
 import { getStreamDataKey } from '../../slice/streamDataSlice'
+import { getallMovie } from '../../slice/allMovieSlice'
 
 const drawerWidth = 180;
 const useStyles = makeStyles((theme) => ({
@@ -117,6 +118,7 @@ const Body = (props) => {
   React.useEffect(() => {
     dispatch(getGenreDataKey())
     dispatch(getStreamDataKey())
+    dispatch(getallMovie())
     setGenreList(g.genres)
   }, [])
 

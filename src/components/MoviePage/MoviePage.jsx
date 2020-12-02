@@ -94,6 +94,7 @@ const MoviePage = (props) => {
   const [actorInfo, setActorInfo] = React.useState([]);
   const [yearInfo, setYearInfo] = React.useState([]);
   const [genreList, setgenreList] = React.useState([]);
+  
 
   const overRideChangeBody = (e, movieName) => {
     setDisplayPage("movie");
@@ -311,7 +312,7 @@ const Movie = (props) => {
                 </Grid>
                 <Grid container>
                   <Grid item xs={12}>
-                    {movie.genre.map((item) => (
+                    {movie ? movie.genre.map((item) => (
                       <Button
                         size={mobile ? "small" : "medium"}
                         className={classes.button}
@@ -322,7 +323,7 @@ const Movie = (props) => {
                       >
                         {item.name}
                       </Button>
-                    ))}
+                    )) : <div></div>}
                   </Grid>
                 </Grid>
               </Paper>

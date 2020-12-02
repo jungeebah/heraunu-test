@@ -1,7 +1,8 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { autoComplete } from "../../data";
+import { useSelector } from 'react-redux';
+import { allmovieSelector } from '../../slice/allMovieSlice'
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(
@@ -32,16 +33,21 @@ const useStyles = makeStyles(
 );
 
 const AutoComplete = (props) => {
+  const autoCompleteState = useSelector(allmovieSelector);
+  const [autoComplete, setAutoComplete] = React.useState([]);
   const { searchFilter } = props;
   const classes = useStyles();
+  React.useEffect(() => { setAutoComplete(autoCompleteState.allmovies) },
+    [autoCompleteState])
+  console.log(autoComplete[0], autoCompleteState)
   const defaultProps = {
     options: autoComplete,
-    getOptionLabel: (option) => option.title,
+    getOptionLabel: (option) => option.name,
   };
   const selected = (e, v) => {
     setOpenLabel(false);
     if (v) {
-      searchFilter(v.title, v.item);
+      searchFilter(v.name, v.item);
     }
   };
   const { width } = props;
@@ -59,9 +65,9 @@ const AutoComplete = (props) => {
         open={openLabel}
         id="search-box"
         onChange={selected}
-        options={autoComplete.sort((a, b) => -b.item.localeCompare(a.item))}
+        // options={autoComplete.sort((a, b) => -b.item.localeCompare(a.item))}
         groupBy={(option) => option.item}
-        getOptionLabel={(option) => option.title}
+        getOptionLabel={(option) => option.name}
         clearOnEscape
         onClose={(e, r) => {
           setOpenLabel(false);

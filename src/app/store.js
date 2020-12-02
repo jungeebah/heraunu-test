@@ -8,6 +8,7 @@ import yearReducer from '../slice/yearSlice'
 import streamReducer from '../slice/streamSlice'
 import genreDataReducer from '../slice/genreDataSlice'
 import streamDataReducer from '../slice/streamDataSlice'
+import allMovieReducer from '../slice/allMovieSlice'
 
 export default configureStore({
     reducer: {
@@ -19,6 +20,7 @@ export default configureStore({
         year: yearReducer,
         stream: streamReducer,
         genreData: genreDataReducer,
-        streamData: streamDataReducer
+        streamData: streamDataReducer,
+        allMovie: allMovieReducer,
     },
 });

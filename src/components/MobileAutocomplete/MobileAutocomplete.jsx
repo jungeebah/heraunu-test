@@ -5,6 +5,8 @@ import { autoComplete } from "../../data";
 import { makeStyles } from "@material-ui/core/styles";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
+import { useSelector } from 'react-redux';
+import { allmovieSelector } from '../../slice/allMovieSlice'
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 
@@ -43,16 +45,20 @@ const useStyles = makeStyles(
 );
 
 const MobileAutocomplete = (props) => {
+  const autoCompleteState = useSelector(allmovieSelector);
+  const [autoComplete, setAutoComplete] = React.useState([]);
+  React.useEffect(() => { setAutoComplete(autoCompleteState.allmovies) },
+    [autoCompleteState])
   const { searchFilter } = props;
   const classes = useStyles();
   const defaultProps = {
     options: autoComplete,
-    getOptionLabel: (option) => option.title,
+    getOptionLabel: (option) => option.name,
   };
   const selected = (e, v) => {
     setOpenLabel(false);
     if (v) {
-      searchFilter(v.title, v.item);
+      searchFilter(v.name, v.item);
     }
   };
   const [openLabel, setOpenLabel] = React.useState(false);
@@ -70,9 +76,9 @@ const MobileAutocomplete = (props) => {
             open={openLabel}
             id="search-box"
             onChange={selected}
-            options={autoComplete.sort((a, b) => -b.item.localeCompare(a.item))}
+            // options={autoComplete.sort((a, b) => -b.item.localeCompare(a.item))}
             groupBy={(option) => option.item}
-            getOptionLabel={(option) => option.title}
+            getOptionLabel={(option) => option.name}
             clearOnEscape
             onClose={(e, r) => {
               setOpenLabel(false);
