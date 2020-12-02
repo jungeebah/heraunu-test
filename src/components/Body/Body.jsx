@@ -447,7 +447,7 @@ const Main = (props) => {
                   changeBody={changeBody}
                   video_thumbnail={item.video_thumbnail}
                   image={item.image}
-                  url={item.url}
+                  url={item.url || `https://healthy-system-267921.uc.r.appspot.com/api/youtubes/${item.movie_id}`}
                   movie={item.name}
                   key={index}
                 />
