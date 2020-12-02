@@ -44,7 +44,7 @@ export const streamSlice = createSlice({
                 state.status = 'succeeded'
                 // Add any fetched posts to the array
                 // state.page = state.page.concat({ 'x': action.payload.page, y: action.payload.results.length })
-                state.movies = action.payload.results.reduce((a, b) => a.concat(b.movies), [])
+                state.movies = [...new Map(action.payload.results.reduce((a, b) => a.concat(b.movies), []).map(o => [o["name"], o])).values()]
             },
         [getStream
             .rejected]: (state, action) => {
