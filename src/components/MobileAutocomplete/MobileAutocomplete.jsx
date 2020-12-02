@@ -36,7 +36,7 @@ const useStyles = makeStyles(
     },
     option: {
       [theme.breakpoints.down("xs")]: {
-        fontSize: "0.8rem",
+        fontSize: "0.6rem",
         minHeight: "30px",
       },
     },
