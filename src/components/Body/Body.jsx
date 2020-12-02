@@ -22,6 +22,8 @@ import { youtubeSelector, getYoutubeMovies, invalidateYoutube } from '../../slic
 import { useSelector, useDispatch } from 'react-redux';
 import { getIndividualMovie } from '../../slice/individualSlice';
 import { streamSelector, getStream, invalidateStream } from '../../slice/streamSlice';
+import { genreDataSelector, getGenreDataKey } from '../../slice/genreDataSlice'
+import { getStreamDataKey } from '../../slice/streamDataSlice'
 
 const drawerWidth = 180;
 const useStyles = makeStyles((theme) => ({
@@ -72,17 +74,15 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 2, 2, 2),
   },
 }));
-const genre_list = [{ 'name': 'Comedy', 'key': 232 }, { 'name': 'Biography', 'key': 235 }, { 'name': 'Adventure', 'key': 234 },
-{ 'name': 'Documentary', 'key': 220 }, { 'name': 'Drama', 'key': 219 }, { 'name': 'Family', 'key': 225 },
-{ 'name': 'Fantasy', 'key': 222 }, { 'name': 'History', 'key': 229 }, { 'name': 'Action', 'key': 233 }, { 'name': 'Horror', 'key': 238 },
-{ 'name': 'Music', 'key': 228 }, { 'name': 'Musical', 'key': 226 }, { 'name': 'Mystery', 'key': 223 }, { 'name': 'Romance', 'key': 230 }, { 'name': 'Thriller', 'key': 224 },
-{ 'name': 'Western', 'key': 237 }, { 'name': 'Sport', 'key': 227 }];
+
 const Body = (props) => {
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down("xs"));
   const movies = useSelector(movieSelector);
   const youtube = useSelector(youtubeSelector)
   const stream = useSelector(streamSelector)
+  const g = useSelector(genreDataSelector)
+  const [genre_list, setGenreList] = React.useState([]);
   const [menuDrawerOpen, setMenuDrawerOpen] = React.useState(false);
   const { data, searchFilter } = props;
   const [filters, setFilters] = React.useState([]);
@@ -113,6 +113,16 @@ const Body = (props) => {
       setEndpoint(`?page=${number}&release_date=${year === 'All' ? '' : year}&genre=${genre === 'All' ? '' : genre}`)
     }
   }
+
+  React.useEffect(() => {
+    dispatch(getGenreDataKey())
+    dispatch(getStreamDataKey())
+    setGenreList(g.genres)
+  }, [])
+
+  React.useEffect(() => {
+    setGenreList(g.genres)
+  }, [g])
 
   React.useEffect(() => {
     const page_item = movies.page.filter(a => a.x === page)

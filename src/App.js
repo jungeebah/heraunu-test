@@ -11,6 +11,7 @@ import Body from "./components/Body/Body";
 import { movieSelector } from './slice/movieSlice';
 import { movie } from "./data";
 
+
 const useStyles = makeStyles(() => ({
   grid: {
     width: "100%",
@@ -21,7 +22,6 @@ const useStyles = makeStyles(() => ({
 const App = () => {
   const movies = useSelector(movieSelector);
   const [data, setData] = React.useState(movies);
-
   const searchFilter = (name, type) => {
     if (type !== "Movie") {
       const searchFiltered = movie.filter((item) =>
