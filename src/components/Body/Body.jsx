@@ -21,6 +21,7 @@ import { movieSelector, getMovies, invalidateMovie } from '../../slice/movieSlic
 import { youtubeSelector, getYoutubeMovies, invalidateYoutube } from '../../slice/youtubeSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { getIndividualMovie } from '../../slice/individualSlice';
+import { streamSelector, getStream, invalidateStream } from '../../slice/streamSlice';
 
 const drawerWidth = 180;
 const useStyles = makeStyles((theme) => ({
@@ -81,6 +82,7 @@ const Body = (props) => {
   const mobile = useMediaQuery(theme.breakpoints.down("xs"));
   const movies = useSelector(movieSelector);
   const youtube = useSelector(youtubeSelector)
+  const stream = useSelector(streamSelector)
   const [menuDrawerOpen, setMenuDrawerOpen] = React.useState(false);
   const { data, searchFilter } = props;
   const [filters, setFilters] = React.useState([]);
@@ -104,7 +106,12 @@ const Body = (props) => {
   // const [displayBody, setDisplayBody] = React.useState(true);
   const nextPage = number => {
     setPage(number)
-    setEndpoint(`?page=${number}&release_date=${year === 'All' ? '' : year}&genre=${genre === 'All' ? '' : genre}`)
+    if (title === 'Streaming') {
+      setMovie(stream.movies.slice((number - 1) * 10, number * 10 > stream.movies.length ? stream.movies.length : number * 10))
+    } else {
+      setPage(number)
+      setEndpoint(`?page=${number}&release_date=${year === 'All' ? '' : year}&genre=${genre === 'All' ? '' : genre}`)
+    }
   }
 
   React.useEffect(() => {
@@ -120,6 +127,11 @@ const Body = (props) => {
     setMovie(youtube.movies.slice(page_index * 10, page_index * 10 + (page_item.length > 0 ? page_item[0].y : 0)))
     setTotalPage(youtube.count)
   }, [youtube]);
+
+  React.useEffect(() => {
+    setMovie(stream.movies.slice(0, 10))
+    setTotalPage(stream.movies.length)
+  }, [stream]);
 
   const updateMovies = (title) => {
     setDisplayBody(true);
@@ -144,8 +156,9 @@ const Body = (props) => {
         }
         break;
       case ("Streaming"):
-        setTotalPage(0)
+        setTotalPage(stream.movies.length)
         setMovie([])
+        dispatch(getStream())
         break;
       case ("Theater"):
         setTotalPage(0)
@@ -171,6 +184,10 @@ const Body = (props) => {
         dispatch(invalidateYoutube());
         setPage(1)
         break;
+      case ('Streaming'):
+        console.log(stream)
+        dispatch(invalidateStream())
+        setPage(1)
       default:
         break;
     }
@@ -357,10 +374,10 @@ const Main = (props) => {
     handleChangeFilter,
     handleDelete,
     movie,
-    undoOpen,
-    handleFilterUndo,
-    handleUndoClose,
   } = props;
+  if (movie) {
+    console.log(movie.length)
+  }
   return (
     <div>
       {title === "About" ? (
@@ -426,40 +443,8 @@ const Main = (props) => {
                 />
               </Grid>
             ))
-          ) : filters && filters.length > 0 ?
-                  (
-                    <Snackbar
-                      className={classes.snackBar}
-                      anchorOrigin={{
-                        vertical: mobile ? "top" : "bottom",
-                        horizontal: mobile ? "right" : "left",
-                      }}
-                      open={undoOpen}
-                      autoHideDuration={6000}
-                      onClose={handleFilterUndo}
-                      message="No movies to Display"
-                      action={
-                        <React.Fragment>
-                          <Button
-                            color="secondary"
-                            size="small"
-                            onClick={handleFilterUndo}
-                          >
-                            UNDO
-                  </Button>
-                          <IconButton
-                            size="small"
-                            aria-label="close"
-                            color="inherit"
-                            onClick={handleUndoClose}
-                          >
-                            <CloseIcon fontSize="small" />
-                          </IconButton>
-                        </React.Fragment>
-                      }
-                    />
-                  ) :
-                  <div></div>}
+          ) :
+                <div></div>}
         </Grid>
       </div>
     </div>

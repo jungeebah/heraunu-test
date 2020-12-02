@@ -5,6 +5,7 @@ import individualMovieReducer from '../slice/individualSlice'
 import actorReducer from '../slice/actorSlice'
 import genreReducer from '../slice/genreSlice'
 import yearReducer from '../slice/yearSlice'
+import streamReducer from '../slice/streamSlice'
 
 export default configureStore({
     reducer: {
@@ -13,6 +14,7 @@ export default configureStore({
         youtubeMovies: youtubeReducer,
         actor: actorReducer,
         genre: genreReducer,
-        year: yearReducer
+        year: yearReducer,
+        stream: streamReducer
     },
 });
